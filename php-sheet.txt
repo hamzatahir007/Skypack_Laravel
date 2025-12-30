@@ -1,0 +1,13 @@
+add new migration : php artisan migrate
+Start php project : php artisan serve
+Rollback the migration : php artisan migrate:rollback --step=1
+Reset the database : php artisan migrate:fresh
+php artisan optimize:clear
+composer dump-autoload
+php artisan optimize:clear
+php artisan route:clear
+php artisan config:clear
+php artisan cache:clear
+
+
+1) In a live/production environment, the safe way is to create a new migration to modify the table (for example, to add softDeletes()) — that way you don’t lose data.

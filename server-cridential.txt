@@ -1,0 +1,13 @@
+url = https://hgws2.win.hostgator.com:8443/smb/file-manager/list
+
+USER ID  : dimaldxb
+paSS : Dima@98!2
+
+liveurl = http://laravel.dimalaundrydxb.com/
+
+
+Stripe Pass:
+
+Email: Sidrahsameer20@gmail.com 
+
+Pass: Tamkinat1906
