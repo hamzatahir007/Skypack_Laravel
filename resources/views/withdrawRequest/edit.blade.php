@@ -182,6 +182,49 @@
             </div>
         </div>
 
+
+          @if ($bankAccount)
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Bank Details</h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-2">
+                        <div class="col-md-4">
+                            <label>Bank Name</label>
+                            <input disabled class="form-control mb-2" name="bank_name" placeholder="Bank Name"
+                                value="{{ $bankAccount->bank_name ?? '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Account Title</label>
+                            <input disabled class="form-control mb-2" name="account_title" placeholder="Bank Name"
+                                value="{{ $bankAccount->account_title ?? '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Account Bank Number</label>
+                            <input disabled class="form-control mb-2" name="account_number" placeholder="Bank Name"
+                                value="{{ $bankAccount->account_number ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-md-4">
+                            <label>Account Bank IBAN</label>
+                            <input disabled class="form-control mb-2" name="iban" placeholder="Bank Name"
+                                value="{{ $bankAccount->iban ?? '' }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Swift Code</label>
+                            <input disabled class="form-control mb-2" name="swift_code" placeholder="Bank Name"
+                                value="{{ $bankAccount->swift_code ?? '' }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+
+
         <div class="card mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Withdraw Request</h6>

@@ -33,11 +33,11 @@ class Traveler extends Model
         'gender',
         'passport_pic',
         'profile_image',
-         'create_by',
-    'update_by',
-    'delete_by',
-    'deleted_at',
-    'active'
+        'create_by',
+        'update_by',
+        'delete_by',
+        'deleted_at',
+        'active'
     ];
 
     // Hidden fields for arrays/JSON
@@ -51,5 +51,10 @@ class Traveler extends Model
         if ($value) {
             $this->attributes['password'] = Hash::make($value);
         }
+    }
+
+    public function bankAccount()
+    {
+        return $this->hasOne(\App\Models\TravelerBankAccount::class);
     }
 }

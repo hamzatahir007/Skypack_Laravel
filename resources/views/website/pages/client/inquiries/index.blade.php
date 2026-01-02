@@ -57,6 +57,10 @@
                                 <td>{{ $inq->status }}</td>
                                 <td>{{ $inq->ucode ?? '-' }}</td>
                                 <td>
+                                   <a href="{{ route('client.messages.thread', [$inq->id, $inq->travel_flight_id]) }}"
+                                    class="btn btn-info btn-sm">
+                                    Message
+                                </a>
                                     <a href="{{ route('client.inquiries.edit', $inq->id) }}"
                                         class="btn btn-sm btn-primary">Edit</a>
                                     <form method="POST" action="{{ route('client.inquiries.delete', $inq->id) }}"

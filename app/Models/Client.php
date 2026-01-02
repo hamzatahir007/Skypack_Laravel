@@ -33,11 +33,11 @@ class Client extends Model
         'gender',
         'passport_pic',
         'profile_image',
-         'create_by',
-    'update_by',
-    'delete_by',
-    'deleted_at',
-    'active'
+        'create_by',
+        'update_by',
+        'delete_by',
+        'deleted_at',
+        'active'
     ];
 
     // Hidden fields for arrays/JSON

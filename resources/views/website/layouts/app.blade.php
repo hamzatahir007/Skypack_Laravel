@@ -52,35 +52,35 @@
 
      <!-- Bootstrap JS -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
- 
- <!--====== Jquery js ======-->
-    <script src="{{ asset('Home _ ClassiFied_files/jquery-1.12.4.min.js') }}"></script>
-    <script src="{{ asset('Home _ ClassiFied_files/modernizr-3.7.1.min.js')}}"></script>
 
-    <!--====== Bootstrap js ======-->
-    <script src="{{ asset('Home _ ClassiFied_files/popper.min.js')}}"></script>
-    <script src="{{ asset('Home _ ClassiFied_files/bootstrap.min.js')}}"></script>
+     <!--====== Jquery js ======-->
+     <script src="{{ asset('Home _ ClassiFied_files/jquery-1.12.4.min.js') }}"></script>
+     <script src="{{ asset('Home _ ClassiFied_files/modernizr-3.7.1.min.js') }}"></script>
 
-    <!--====== Slick js ======-->
-    <script src="{{ asset('Home _ ClassiFied_files/slick.min.js')}}"></script>
+     <!--====== Bootstrap js ======-->
+     <script src="{{ asset('Home _ ClassiFied_files/popper.min.js') }}"></script>
+     <script src="{{ asset('Home _ ClassiFied_files/bootstrap.min.js') }}"></script>
 
-    <!--====== Magnific Popup js ======-->
-    <script src="{{ asset('Home _ ClassiFied_files/jquery.magnific-popup.min.js')}}"></script>
+     <!--====== Slick js ======-->
+     <script src="{{ asset('Home _ ClassiFied_files/slick.min.js') }}"></script>
 
-    <!--====== Nice Select js ======-->
-    <script src="{{ asset('Home _ ClassiFied_files/jquery.nice-select.min.js')}}"></script>
+     <!--====== Magnific Popup js ======-->
+     <script src="{{ asset('Home _ ClassiFied_files/jquery.magnific-popup.min.js') }}"></script>
 
-    <!--====== Counter Up js ======-->
-    <script ssrc="{{ asset('Home _ ClassiFied_files/waypoints.min.js')}}"></script>
-    <script src="{{ asset('Home _ ClassiFied_files/jquery.counterup.min.js')}}"></script>
+     <!--====== Nice Select js ======-->
+     <script src="{{ asset('Home _ ClassiFied_files/jquery.nice-select.min.js') }}"></script>
 
-    <!--====== Price Range js ======-->
-    <script src="{{ asset('Home _ ClassiFied_files/ion.rangeSlider.min.js')}}"></script>
+     <!--====== Counter Up js ======-->
+     <script ssrc="{{ asset('Home _ ClassiFied_files/waypoints.min.js') }}"></script>
+     <script src="{{ asset('Home _ ClassiFied_files/jquery.counterup.min.js') }}"></script>
 
-    <!--====== Ajax Contact js ======-->
-    <script src="{{ asset('Home _ ClassiFied_files/ajax-contact.js')}}"></script>
+     <!--====== Price Range js ======-->
+     <script src="{{ asset('Home _ ClassiFied_files/ion.rangeSlider.min.js') }}"></script>
 
-    <!--====== Main js ======-->
-    <script src="{{ asset('Home _ ClassiFied_files/main.js')}}"></script>
-    
-    </body>
+     <!--====== Ajax Contact js ======-->
+     <script src="{{ asset('Home _ ClassiFied_files/ajax-contact.js') }}"></script>
+
+     <!--====== Main js ======-->
+     <script src="{{ asset('Home _ ClassiFied_files/main.js') }}"></script>
+
+ </body>

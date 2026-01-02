@@ -3,7 +3,7 @@
 <div class="header_navbar" style="background-color:#3167ff;">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light p-0">
-            <a class="navbar-brand" href="#index.html">
+            <a class="navbar-brand" href="{{ route('/') }}">
                 <img src="{{ asset('img/logo.png') }}" width="180" alt="logo" class="img-fluid">
             </a>
 
@@ -63,6 +63,12 @@
                                     href="{{ session()->has('client_id') ? route('client.dashboard') : route('traveler.dashboard') }}">
                                     <i class="fa fa-tachometer-alt"></i> Dashboard
                                 </a>
+                                @if (session()->has('traveler_id'))
+                                    <a class="dropdown-item" href="{{ route('traveler.bank.index') }}">
+                                        <i class="fa fa-university"></i>
+                                        Bank Account
+                                    </a>
+                                @endif
 
                                 <a class="dropdown-item" href="#"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -100,8 +106,9 @@
 
     @media (max-width: 768px) {
         .navbar-collapse {
-        background-color: #3167ff;
+            background-color: #3167ff;
         }
+
         .navbar-brand img {
             max-width: 140px;
         }

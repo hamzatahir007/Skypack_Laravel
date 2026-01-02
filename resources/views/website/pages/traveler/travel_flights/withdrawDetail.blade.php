@@ -196,11 +196,13 @@
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Transaction Image</label>
-                        <input type="file" name="screenshot" class="form-control">
+                        {{-- <input type="file" name="screenshot" class="form-control"> --}}
 
                         @if ($widthreq->screenshot)
-                            <img src="{{ asset('storage/' . $widthreq->screenshot) }}" width="120"
-                                class="mt-2 rounded border">
+                            <a href="{{ asset('storage/' . $widthreq->screenshot) }}">
+                                <img src="{{ asset('storage/' . $widthreq->screenshot) }}" width="120"
+                                    class="mt-2 rounded border">
+                            </a>
                         @endif
                     </div>
                 </div>

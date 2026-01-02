@@ -57,6 +57,14 @@
                             </td>
 
                             <td>
+                                <a href="{{ route('traveler.messages.thread', [$inq->id, $inq->travel_flight_id]) }}"
+                                    class="btn btn-info btn-sm">
+                                    Message
+                                </a>
+                                    <a href="{{ route('traveler.inquiry.withdrawDetail', $inq->id) }}"
+                                        class="btn btn-secondary btn-sm"> View
+                                    </a>
+
                                 @if ($inq->status == 'Pending')
                                     <a href="{{ route('traveler.inquiry.accept', $inq->id) }}"
                                         class="btn btn-success btn-sm">
@@ -79,10 +87,10 @@
                                         class="btn btn-success btn-sm">
                                         ${{ $inq->details->sum('amount') }} Withdraw
                                     </a>
-                                @elseif ($inq->status == 'Completed')
+                                {{-- @elseif ($inq->status == 'Completed')
                                     <a href="{{ route('traveler.inquiry.withdrawDetail', $inq->id) }}"
                                         class="btn btn-secondary btn-sm"> View
-                                    </a>
+                                    </a> --}}
                                 @else
                                     <span class="text-secondary">No Action</span>
                                 @endif

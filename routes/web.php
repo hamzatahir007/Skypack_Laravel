@@ -11,7 +11,9 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\Website\WebsiteAuthController;
 use App\Http\Controllers\Website\ClientAuthController;
 use App\Http\Controllers\Website\IndexAuthController;
+use App\Http\Controllers\Website\MessageController;
 use App\Http\Controllers\Website\TravelerAuthController;
+use App\Http\Controllers\Website\TravelerBankAccountController;
 use App\Http\Controllers\WithdrawReqController;
 
 Route::get('/admin', function () {
@@ -105,6 +107,13 @@ Route::prefix('client')->name('client.')->group(function () {
         Route::get('inquiries/payment/cancel', [ClientAuthController::class, 'paymentCancel'])->name('inquiries.cancel');
 
 
+        Route::get('messages/view/{message}', [MessageController::class, 'show'])->name('messages.show');
+        Route::get('messages/{inquiry}/{flight}', [MessageController::class, 'thread'])->name('messages.thread');
+        Route::get('messages/{inquiry}/{flight}/create', [MessageController::class, 'create'])->name('messages.create');
+        Route::post('messages/send', [MessageController::class, 'store'])->name('messages.store');
+        Route::delete('messages/{message}', [MessageController::class, 'destroy'])->name('messages.delete');
+
+
 
         Route::post('logout', [ClientAuthController::class, 'logout'])->name('logout');
     });
@@ -144,12 +153,23 @@ Route::prefix('traveler')->name('traveler.')->group(function () {
             ->name('inquiry.reject');
 
         Route::post('inquiry/{id}/verify-code', [TravelerAuthController::class, 'verifyCode'])->name('inquiry.verify');
-
         Route::get('inquiry/{inquiry}/withdraw', [TravelerAuthController::class, 'withdrawCreate'])->name('inquiry.withdrawCreate');
-
         Route::post('withdraw', [TravelerAuthController::class, 'storeWithdraw'])->name('inquiry.storeWithdraw');
-
         Route::get('inquiry/{inquiry}/withdraw-detail', [TravelerAuthController::class, 'withdrawDetail'])->name('inquiry.withdrawDetail');
+
+
+        Route::get('messages/view/{message}', [MessageController::class, 'show'])->name('messages.show');
+        Route::get('messages/{inquiry}/{flight}', [MessageController::class, 'thread'])->name('messages.thread');
+        Route::get('messages/{inquiry}/{flight}/create', [MessageController::class, 'create'])->name('messages.create');
+        Route::post('messages/send', [MessageController::class, 'store'])->name('messages.store');
+        Route::delete('messages/{message}', [MessageController::class, 'destroy'])->name('messages.delete');
+
+
+        Route::get('bank-account', [TravelerBankAccountController::class, 'index'])->name('bank.index');
+        Route::get('bank-account/create', [TravelerBankAccountController::class, 'create'])->name('bank.create');
+        Route::post('bank-account', [TravelerBankAccountController::class, 'store'])->name('bank.store');
+        Route::get('bank-account/{account}/edit', [TravelerBankAccountController::class, 'edit'])->name('bank.edit');
+        Route::put('bank-account/{account}', [TravelerBankAccountController::class, 'update'])->name('bank.update');
 
 
         Route::post('logout', [TravelerAuthController::class, 'logout'])->name('logout');

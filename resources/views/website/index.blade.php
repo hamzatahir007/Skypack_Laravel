@@ -382,7 +382,7 @@
                                                 </p>
 
                                                 <div class="ads_price_date d-flex justify-content-between">
-                                                    <span class="price">{{ number_format($flight->total, 2) }} AED</span>
+                                                    <span class="price">{{ number_format($flight->total, 2) }} USD</span>
                                                     <span
                                                         class="date">{{ optional($flight->flight_date)->format('d M, Y') ?? '-' }}</span>
                                                 </div>
@@ -433,7 +433,7 @@
                                                 </p>
 
                                                 <div class="ads_price_date d-flex justify-content-between">
-                                                    <span class="price">{{ number_format($flight->total, 2) }} AED</span>
+                                                    <span class="price">{{ number_format($flight->total, 2) }} USD</span>
                                                     <span
                                                         class="date">{{ optional($flight->flight_date)->format('d M, Y') ?? '-' }}</span>
                                                 </div>

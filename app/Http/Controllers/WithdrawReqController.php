@@ -30,7 +30,23 @@ class WithdrawReqController extends Controller
         $widthreq = WithdrawRequest::where('inquiry_master_id', $id)->latest()->first();
         $items = Inventory::where('active', 1)->get();
 
-        return view('withdrawRequest.edit', compact('inquiry', 'clients', 'travelers', 'flights', 'items', 'widthreq'));
+        // 🔹 Traveler linked with inquiry
+        $traveler = \App\Models\Traveler::with('bankAccount')
+            ->where('id', $inquiry->traveler_id)
+            ->first();
+
+        $bankAccount = $traveler?->bankAccount;
+
+        return view('withdrawRequest.edit', compact(
+            'inquiry',
+            'clients',
+            'travelers',
+            'flights',
+            'items',
+            'widthreq',
+            'traveler',
+            'bankAccount'
+        ));
     }
 
     public function update(Request $request, $id)

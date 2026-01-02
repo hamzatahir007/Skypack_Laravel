@@ -75,7 +75,7 @@
                                         <div>{{ $flight->weight ?? '-' }}</div>
                                     </div>
                                     <div class="col-6">
-                                        <small class="text-muted">Rate / Unit (AED)</small>
+                                        <small class="text-muted">Rate / Unit (USD)</small>
                                         <div>{{ $flight->rate_per_unit ? number_format($flight->rate_per_unit, 2) : '-' }}
                                         </div>
                                     </div>
@@ -153,7 +153,7 @@
 
                         <div class="d-flex justify-content-between mt-2">
                             <div>Rate / Unit</div>
-                            <div>{{ $flight->rate_per_unit ? number_format($flight->rate_per_unit, 2) . ' AED' : '-' }}
+                            <div>{{ $flight->rate_per_unit ? number_format($flight->rate_per_unit, 2) . ' USD' : '-' }}
                             </div>
                         </div>
 
@@ -163,7 +163,7 @@
                             <div>
                                 <small class="text-muted d-block">Total</small>
                                 <strong class="h4">{{ $flight->total ? number_format($flight->total, 2) : '0.00' }}
-                                    AED</strong>
+                                    USD</strong>
                             </div>
                         </div>
 
