@@ -236,9 +236,9 @@ class TravelerAuthController extends Controller
         $inq->save();
 
         // optional email/send notification
-        if ($inq->client && $inq->client->email) {
-            Mail::to($inq->client->email)->send(new InquiryStatusMail($inq));
-        }
+        // if ($inq->client && $inq->client->email) {
+        //     Mail::to($inq->client->email)->send(new InquiryStatusMail($inq));
+        // }
         return back()->with('success', 'Inquiry Accepted');
     }
 

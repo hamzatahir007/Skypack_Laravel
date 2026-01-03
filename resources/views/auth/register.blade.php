@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <title>SB Admin 2 - Register</title>
 
@@ -29,8 +30,8 @@
                 <!-- Nested Row within Card Body -->
                 <div class="row">
                     <div class="col-lg-5 d-none d-lg-block bg-register-image">
-                         <img src="{{ asset('img/undraw_posting_photo.svg') }}" class="img-fluid w-100 h-100"
-                                    style="object-fit: contain;" alt="Login Image">
+                        <img src="{{ asset('img/undraw_posting_photo.svg') }}" class="img-fluid w-100 h-100"
+                            style="object-fit: contain;" alt="Login Image">
                     </div>
 
                     <div class="col-lg-7">
@@ -55,7 +56,8 @@
 
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user" id="name"
-                                        name="name" value="{{ old('name') }}" placeholder="Name" required autofocus>
+                                        name="name" value="{{ old('name') }}" placeholder="Name" required
+                                        autofocus>
                                 </div>
 
                                 <div class="form-group">
@@ -65,8 +67,8 @@
 
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="password" name="password" placeholder="Password" required>
+                                        <input type="password" class="form-control form-control-user" id="password"
+                                            name="password" placeholder="Password" required>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user"
@@ -102,6 +104,52 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                timer: 3000,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+                timer: 3000,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
+        </script>
+    @endif
+
+    @if ($errors->any())
+<script>
+Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    html: `{!! implode('<br>', $errors->all()) !!}`,
+    timer: 5000,
+    showConfirmButton: false,
+    toast: true,
+    position: 'top-end'
+});
+</script>
+@endif
+
+
 
 </body>
 

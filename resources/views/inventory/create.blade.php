@@ -43,8 +43,8 @@
                 </div>
 
                 <div class="col-md-3 mb-3">
-                    <label class="form-label">Rate</label>
-                    <input type="number" step="0.01" name="rate" class="form-control">
+                    <label class="form-label">Rate *</label>
+                    <input type="number" step="0.01" name="rate" required class="form-control">
                 </div>
 
                 <div class="col-md-3 mb-3">

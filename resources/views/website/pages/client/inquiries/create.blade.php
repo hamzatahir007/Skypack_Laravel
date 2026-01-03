@@ -68,13 +68,13 @@
                         <input type="date" name="entry_date" class="form-control" value="{{ old('entry_date') }}">
                     </div>
 
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <label>Status</label>
                         <select name="status" class="form-control">
                             <option>Pending</option>
                             <option>Completed</option>
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="col-md-3">
                         <label>Contact Person</label>
