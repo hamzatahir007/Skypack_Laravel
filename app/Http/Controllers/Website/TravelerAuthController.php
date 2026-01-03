@@ -62,7 +62,8 @@ class TravelerAuthController extends Controller
         ]);
 
 
-        return redirect()->route('traveler.dashboard');
+        return redirect()->route('traveler.dashboard')
+            ->with('success', 'Welcome back, ' . $traveler->full_name . ' 👋');
     }
 
     public function register(Request $request): RedirectResponse
@@ -102,7 +103,7 @@ class TravelerAuthController extends Controller
         Traveler::create($validated);
 
         return redirect()->route('traveler.login')
-            ->with('success', 'Traveler created successfully.');
+            ->with('success', 'Account created successfully. Please login.');
     }
 
     public function dashboard()
@@ -270,9 +271,15 @@ class TravelerAuthController extends Controller
 
     public function withdrawCreate($inquiryId)
     {
-        $inquiry = InquiryMaster::with('details')->findOrFail($inquiryId);
+        $inquiry = InquiryMaster::with('details', 'travelFlight', 'traveler')->findOrFail($inquiryId);
+        $items = Inventory::where('active', 1)->get();
 
-        return view('website.pages.traveler.travel_flights.withdraw', compact('inquiry'));
+        $widthreq = WithdrawRequest::where('inquiry_master_id', $inquiryId)
+            ->where('traveler_id', session('traveler_id'))
+            ->exists();
+
+
+        return view('website.pages.traveler.travel_flights.withdraw', compact('inquiry', 'items', 'widthreq'));
     }
 
     public function withdrawDetail($id)
@@ -319,7 +326,10 @@ class TravelerAuthController extends Controller
         session()->forget('traveler_id');
         session()->forget('traveler_name');
         session()->forget('traveler_data');
-        return redirect()->route('traveler.login');
+        return redirect()->route('traveler.login')
+            ->with('success', 'Logged out successfully.');
+
+
         // return redirect()->route('website.pages.client.login');
     }
 }

@@ -28,6 +28,7 @@
      <link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.min.css') }}">
      <link rel="stylesheet" href="{{ asset('css/nice-select.css') }}">
 
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 
  </head>
@@ -83,4 +84,34 @@
      <!--====== Main js ======-->
      <script src="{{ asset('Home _ ClassiFied_files/main.js') }}"></script>
 
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+     @if (session('success'))
+         <script>
+             Swal.fire({
+                 icon: 'success',
+                 title: 'Success',
+                 text: "{{ session('success') }}",
+                 timer: 3000,
+                 showConfirmButton: false,
+                 toast: true,
+                 position: 'top-end'
+             });
+         </script>
+     @endif
+
+     @if (session('error'))
+         <script>
+             Swal.fire({
+                 icon: 'error',
+                 title: 'Error',
+                 text: "{{ session('error') }}",
+                 timer: 3000,
+                 showConfirmButton: false,
+                 toast: true,
+                 position: 'top-end'
+             });
+         </script>
+     @endif
  </body>

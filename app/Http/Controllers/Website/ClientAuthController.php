@@ -61,7 +61,8 @@ class ClientAuthController extends Controller
 
         // session(['client_id' => $user->id]);
 
-        return redirect()->route('client.dashboard');
+        return redirect()->route('client.dashboard')
+            ->with('success', 'Welcome back, ' . $client->full_name . ' 👋');
     }
 
     public function register(Request $request): RedirectResponse
@@ -101,7 +102,7 @@ class ClientAuthController extends Controller
         Client::create($validated);
 
         return redirect()->route('client.login')
-            ->with('success', 'Client created successfully.');
+            ->with('success', 'Account created successfully. Please login.');
     }
 
     public function dashboard()
@@ -261,8 +262,9 @@ class ClientAuthController extends Controller
     {
         $inq = InquiryMaster::with(['client', 'traveler', 'travelFlight', 'details'])->findOrFail($id);
         $totalAmount = $inq->details->sum('amount');
+        $items = Inventory::where('active', 1)->get();
 
-        return view('website.pages.client.inquiries.deposit', compact('inq', 'totalAmount'));
+        return view('website.pages.client.inquiries.deposit', compact('inq', 'totalAmount', 'items'));
     }
 
     public function checkout($id)
@@ -346,7 +348,9 @@ class ClientAuthController extends Controller
         session()->forget('client_id');
         session()->forget('client_name');
         session()->forget('client_data');
-        return redirect()->route('client.login');
+        return redirect()->route('client.login')
+            ->with('success', 'Logged out successfully.');
+
         // return redirect()->route('website.pages.client.login');
     }
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Traveler Login | Skypack</title>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -100,5 +101,37 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+     @if (session('success'))
+         <script>
+             Swal.fire({
+                 icon: 'success',
+                 title: 'Success',
+                 text: "{{ session('success') }}",
+                 timer: 3000,
+                 showConfirmButton: false,
+                 toast: true,
+                 position: 'top-end'
+             });
+         </script>
+     @endif
+
+     @if (session('error'))
+         <script>
+             Swal.fire({
+                 icon: 'error',
+                 title: 'Error',
+                 text: "{{ session('error') }}",
+                 timer: 3000,
+                 showConfirmButton: false,
+                 toast: true,
+                 position: 'top-end'
+             });
+         </script>
+     @endif
+     
 </body>
 </html>

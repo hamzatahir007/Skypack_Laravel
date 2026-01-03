@@ -77,9 +77,12 @@ class MessageController extends Controller
             'image' => $path,
         ]);
 
-        if (session()->has('client_id'))  return redirect()->route('client.messages.thread', [$request->inquiry_id, $request->travel_flight_id]);
+        if (session()->has('client_id'))  return redirect()->route('client.messages.thread', [$request->inquiry_id, $request->travel_flight_id])
+            ->with('success', 'Message sent successfully.');
 
-        if (session()->has('traveler_id'))  return redirect()->route('traveler.messages.thread', [$request->inquiry_id, $request->travel_flight_id]);
+
+        if (session()->has('traveler_id'))  return redirect()->route('traveler.messages.thread', [$request->inquiry_id, $request->travel_flight_id])
+            ->with('success', 'Message sent successfully.');
     }
 
     public function show(Message $message)
@@ -91,7 +94,8 @@ class MessageController extends Controller
                 ($message->sender_id == $me['id'] && $message->sender_type == $me['type']) ||
                 ($message->receiver_id == $me['id'] && $message->receiver_type == $me['type'])
             ),
-            403
+            403,
+            'You are not allowed to view this message.'
         );
 
         if (!$message->read_at && $message->receiver_id == $me['id']) {
@@ -110,10 +114,11 @@ class MessageController extends Controller
                 ($message->sender_id == $me['id'] && $message->sender_type == $me['type']) ||
                 ($message->receiver_id == $me['id'] && $message->receiver_type == $me['type'])
             ),
-            403
+            403,
+            'You are not allowed to delete this message.'
         );
 
         $message->delete();
-        return back()->with('success', 'Message deleted');
+        return back()->with('success', 'Message deleted successfully.');
     }
 }
