@@ -54,7 +54,7 @@ class WithdrawReqController extends Controller
         $request->validate([
             'inquirystatus' => 'required|in:Pending,Completed',
             'status'     => 'required|in:Pending,Completed',
-            'screenshot' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'screenshot' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
 
         DB::beginTransaction();

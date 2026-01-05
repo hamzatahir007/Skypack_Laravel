@@ -361,7 +361,7 @@
                                                 <div class="ads_card_image">
                                                     @if ($flight->ticket_pic)
                                                         <img src="{{ asset('storage/' . $flight->ticket_pic) }}"
-                                                            alt="ticket">
+                                                            alt="ticket" style="object-fit: cover">
                                                     @else
                                                         <img src="{{ asset('img/itlay.jpeg') }}" alt="ticket">
                                                     @endif

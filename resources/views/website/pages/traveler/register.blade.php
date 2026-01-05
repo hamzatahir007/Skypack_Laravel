@@ -1,3 +1,5 @@
+@extends('website.layouts.app')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,7 +60,7 @@
 </head>
 <body>
 
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 100px">
     <div class="row min-vh-100">
 
         <!-- Left Image Column -->
