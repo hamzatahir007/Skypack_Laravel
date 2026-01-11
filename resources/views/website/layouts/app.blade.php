@@ -31,6 +31,41 @@
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 
+     <style>
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.dashboard-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: #333;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.dashboard-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.dashboard-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+</style>
+
+
  </head>
 
  @stack('scripts')

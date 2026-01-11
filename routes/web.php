@@ -84,8 +84,7 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post('register', [ClientAuthController::class, 'register'])->name('register.post');
 
     Route::middleware('clientAuth')->group(function () {
-        Route::get('dashboard', [IndexAuthController::class, 'dashboard'])->name('dashboard');
-        // Route::get('dashboard', [ClientAuthController::class, 'dashboard'])->name('dashboard');
+        Route::get('dashboard', [ClientAuthController::class, 'dashboard'])->name('dashboard');
 
         // flights route 
         Route::get('inquiries', [ClientAuthController::class, 'inquiries'])->name('inquiries');
@@ -129,8 +128,7 @@ Route::prefix('traveler')->name('traveler.')->group(function () {
     Route::post('register', [TravelerAuthController::class, 'register'])->name('register.post');
 
     Route::middleware('travelerAuth')->group(function () {
-        Route::get('dashboard', [IndexAuthController::class, 'dashboard'])->name('dashboard');
-        // Route::get('dashboard', [TravelerAuthController::class, 'dashboard'])->name('dashboard');
+        Route::get('dashboard', [TravelerAuthController::class, 'dashboard'])->name('dashboard');
 
         // flights route 
         Route::get('flights', [TravelerAuthController::class, 'flights'])->name('flights');

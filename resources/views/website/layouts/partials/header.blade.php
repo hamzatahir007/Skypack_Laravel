@@ -14,6 +14,7 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav m-auto text-center">
+                   
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ route('/') }}">Home</a>
                     </li>
@@ -55,14 +56,14 @@
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item"
                                     href="{{ session()->has('client_id') ? route('client.dashboard') : route('traveler.dashboard') }}">
-                                    <i class="fa fa-user"></i>
+                                    <i class="fa fa-layer-group"></i>
                                     {{ session()->has('client_id') ? session('client_name') : session('traveler_name') }}
                                 </a>
 
-                                <a class="dropdown-item"
+                                {{-- <a class="dropdown-item"
                                     href="{{ session()->has('client_id') ? route('client.dashboard') : route('traveler.dashboard') }}">
-                                    <i class="fa fa-tachometer-alt"></i> Dashboard
-                                </a>
+                                    <i class="fa fa-layer-group"></i> Dashboard
+                                </a> --}}
                                 @if (session()->has('traveler_id'))
                                     <a class="dropdown-item" href="{{ route('traveler.bank.index') }}">
                                         <i class="fa fa-university"></i>
