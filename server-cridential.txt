@@ -7,7 +7,15 @@ liveurl = http://laravel.dimalaundrydxb.com/
 
 
 Stripe Pass:
-
 Email: Sidrahsameer20@gmail.com 
-
 Pass: Tamkinat1906
+
+
+Cpanel
+| Domain: luggagelink.org
+| UserName: luggagelink
+| PassWord: pta*fo,v$P4d
+
+DB
+| UserName: luggagel_luggagelink
+| PassWord: pta*fo,v$P4d
