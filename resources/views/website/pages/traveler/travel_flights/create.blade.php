@@ -88,7 +88,7 @@
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Weight (kg)</label>
-                        <input type="number" step="0.01" name="weight" class="form-control">
+                        <input type="text" step="0.01" name="weight" class="form-control">
                     </div>
 
                     <div class="col-md-6 mb-3">

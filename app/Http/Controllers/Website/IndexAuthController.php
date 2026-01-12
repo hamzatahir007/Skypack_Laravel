@@ -77,18 +77,17 @@ class IndexAuthController extends Controller
     }
 
     public function show($id)
-{
-    // Eager load relations to avoid N+1
-    $flight = TravelFlight::with([
-        'traveler:id,full_name',
-        'cityOrigin:id,name,country_id',
-        'cityDestination:id,name,country_id'
-    ])->whereNull('deleted_at')->findOrFail($id);
+    {
+        // Eager load relations to avoid N+1
+        $flight = TravelFlight::with([
+            'traveler:id,full_name',
+            'cityOrigin:id,name,country_id',
+            'cityDestination:id,name,country_id'
+        ])->whereNull('deleted_at')->findOrFail($id);
 
-    // Optional: format data or compute derived fields if needed
-    // e.g. formatted date strings will be handled in blade using optional(...)
+        // Optional: format data or compute derived fields if needed
+        // e.g. formatted date strings will be handled in blade using optional(...)
 
-    return view('website.pages.flightDetails', compact('flight'));
-}
-
+        return view('website.pages.flightDetails', compact('flight'));
+    }
 }

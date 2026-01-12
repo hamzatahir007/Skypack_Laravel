@@ -12,7 +12,7 @@ class TravelFlight extends Model
 
     // Table name (optional if it follows Laravel convention)
     protected $table = 'travel_flights';
-        protected $dates = ['deleted_at']; // Laravel will use this column
+    protected $dates = ['deleted_at']; // Laravel will use this column
 
     protected $fillable = [
         'traveler_id',
@@ -35,6 +35,13 @@ class TravelFlight extends Model
         'delete_by',
         'deleted_at'
     ];
+    
+    protected $casts = [
+        'flight_date' => 'datetime',
+        'origin_date_time' => 'datetime',
+        'destination_date_time' => 'datetime',
+        'deleted_at' => 'datetime',
+    ];
 
     public function traveler()
     {
@@ -42,12 +49,12 @@ class TravelFlight extends Model
     }
 
     public function cityOrigin()
-{
-    return $this->belongsTo(City::class, 'origin');
-}
+    {
+        return $this->belongsTo(City::class, 'origin');
+    }
 
-public function cityDestination()
-{
-    return $this->belongsTo(City::class, 'destination');
-}
+    public function cityDestination()
+    {
+        return $this->belongsTo(City::class, 'destination');
+    }
 }

@@ -49,7 +49,7 @@
                         <select name="travel_flight_id" class="form-control">
                             <option value="">-- Select Flight --</option>
                             @foreach ($flights as $f)
-                                <option value="{{ $f->id }}"  {{ $selectedFlightId == $f->id ? 'selected' : '' }}>
+                                <option value="{{ $f->id }}" {{ $selectedFlightId == $f->id ? 'selected' : '' }}>
                                     {{ $f->pnr_no ?? 'Flight #' . $f->id }}
                                 </option>
                             @endforeach

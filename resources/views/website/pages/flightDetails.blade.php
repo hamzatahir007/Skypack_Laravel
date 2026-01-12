@@ -24,8 +24,8 @@
                         <div class="col-md-7">
                             <div class="card-body">
                                 <h3 class="card-title mb-1">PNR: {{ $flight->pnr_no ?? '—' }}</h3>
-                                <p class="text-muted mb-2">Posted:
-                                    {{ optional($flight->created_at)->format('d M, Y H:i') ?? '-' }}</p>
+                                <p class="text-muted mb-2">Travel Date:
+                                    {{ optional($flight->flight_date)->format('d M, Y H:i') ?? '-' }}</p>
 
                                 <div class="mb-3">
                                     <strong>Traveler:</strong>

@@ -39,21 +39,117 @@
 
         <div class="header_content bg_cover" style="background: url('{{ asset('img/bags.jpeg') }}')">
             <div class="container">
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-lg-10">
                         <div class="content_wrapper">
-                            <h3 class="title">Welcome to SKY PACK Traveller</h3>
+                            <h3 class="title">Ship with Fellow Travellers</h3>
                             <p style="color: #ff0707;font-weight: bold;font-size: 21px;"><mark
-                                    style="background-color: #3167ff;color:white;">Send & Receive Everything From Regular
-                                    Flights. Your Luggage Transfer with few Clicks</mark></p>
-                            <ul class="header_btn">
-                                <li><a class="main-btn" href="#product.html">Browse Ads</a></li>
-                                <li><a class="main-btn main-btn-2" href="#post-ads.html">Post Listing</a></li>
-                            </ul>
+                                    style="background-color: #3167ff;color:white;">Connect with passangers who have spare
+                                    baggage space on their flights. Send packages worldwide safely and affordably.</mark>
+                            </p>
+                        </div>
+                    </div>
+                </div> --}}
+
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="content_wrapper text-center">
+
+                            <h3 class="title">
+                                Ship with Fellow<br>
+                                Travellers
+                            </h3>
+
+                            <p style="color:#ff0707;font-weight:bold;font-size:18px;">
+                                <mark style="background-color:transparent;color:white;">
+                                    Connect with passengers who have spare baggage space<br>
+                                    on their flights. Send packages worldwide safely and affordably.
+                                </mark>
+                            </p>
+
                         </div>
                     </div>
                 </div>
+
                 <div class="header_search">
+
+                    <form id="flight-search-form" action="{{ route('/') }}" method="GET">
+
+                        @php
+                            $grouped = $cities->groupBy(fn($c) => $c->country->name ?? 'Other');
+                        @endphp
+
+                        <div class="search_card">
+
+                            <div class="search_row">
+
+                                <!-- From -->
+                                <div class="search_box">
+                                    <label>From City</label>
+                                    <div class="custom-dropdown">
+                                        <div class="selected">
+                                            <span class="selected-text">Select City</span>
+                                            <i class="fa fa-chevron-down"></i>
+                                        </div>
+                                        <ul class="options">
+                                            @foreach ($grouped as $country => $groupCities)
+                                                <li class="optgroup">{{ $country }}</li>
+                                                @foreach ($groupCities as $city)
+                                                    <li class="option" data-value="{{ $city->id }}">{{ $city->name }}
+                                                    </li>
+                                                @endforeach
+                                            @endforeach
+                                        </ul>
+                                        <input type="hidden" name="pickup" id="pickup">
+                                    </div>
+                                </div>
+
+                                <!-- To -->
+                                <div class="search_box">
+                                    <label>To City</label>
+                                    <div class="custom-dropdown">
+                                        <div class="selected">
+                                            <span class="selected-text">Select City</span>
+                                            <i class="fa fa-chevron-down"></i>
+                                        </div>
+                                        <ul class="options">
+                                            @foreach ($grouped as $country => $groupCities)
+                                                <li class="optgroup">{{ $country }}</li>
+                                                @foreach ($groupCities as $city)
+                                                    <li class="option" data-value="{{ $city->id }}">{{ $city->name }}
+                                                    </li>
+                                                @endforeach
+                                            @endforeach
+                                        </ul>
+                                        <input type="hidden" name="dropoff" id="dropoff">
+                                    </div>
+                                </div>
+
+                                <!-- Date -->
+                                <div class="search_box">
+                                    <label>Travel Date</label>
+                                    <input type="date" name="flight_date" class="travel-date">
+                                </div>
+
+                                <!-- Capacity -->
+                                {{-- <div class="search_box">
+                                    <label>Min Capacity (kg)</label>
+                                    <input type="number" name="capacity" class="form-control" placeholder="e.g. 5">
+                                </div> --}}
+
+                            </div>
+
+                            <button type="submit" class="search_btn">
+                                <i class="fa fa-search"></i> Find Baggage Space
+                            </button>
+
+                        </div>
+
+                    </form>
+                </div>
+
+
+                {{-- <div class="header_search">
                     <form id="flight-search-form" action="{{ route('/') }}" method="GET">
                         <div class="search_wrapper d-flex flex-wrap">
                             <div class="search_column d-flex flex-wrap">
@@ -117,19 +213,19 @@
                     </form>
                     <div class="header_keyword d-sm-flex">
                         <!-- <span class="title">Trending Keywords:</span>
-                                                                                                        <ul class="tags media-body">
-                                                                                                            <li><a href="#">Camera</a></li>
-                                                                                                            <li><a href="#">Mobile</a></li>
-                                                                                                            <li><a href="#">DSLR</a></li>
-                                                                                                            <li><a href="#">Packet</a></li>
-                                                                                                            <li><a href="#">Dress</a></li>
-                                                                                                            <li><a href="#">Shirt</a></li>
-                                                                                                            <li><a href="#">Pant</a></li>
-                                                                                                            <li><a href="#">Shoe</a></li>
-                                                                                                            <li><a href="#">Table</a></li>
-                                                                                                        </ul> -->
+                                                                                                            <ul class="tags media-body">
+                                                                                                                <li><a href="#">Camera</a></li>
+                                                                                                                <li><a href="#">Mobile</a></li>
+                                                                                                                <li><a href="#">DSLR</a></li>
+                                                                                                                <li><a href="#">Packet</a></li>
+                                                                                                                <li><a href="#">Dress</a></li>
+                                                                                                                <li><a href="#">Shirt</a></li>
+                                                                                                                <li><a href="#">Pant</a></li>
+                                                                                                                <li><a href="#">Shoe</a></li>
+                                                                                                                <li><a href="#">Table</a></li>
+                                                                                                            </ul> -->
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -361,9 +457,10 @@
                                                 <div class="ads_card_image">
                                                     @if ($flight->ticket_pic)
                                                         <img src="{{ asset('storage/' . $flight->ticket_pic) }}"
-                                                            alt="ticket" style="object-fit: cover">
+                                                            alt="ticket" class="ads-img">
                                                     @else
-                                                        <img src="{{ asset('img/itlay.jpeg') }}" alt="ticket">
+                                                        <img src="{{ asset('img/itlay.jpeg') }}" alt="ticket"
+                                                            class="ads-img">
                                                     @endif
                                                     {{-- <img src="{{ asset('img/itlay.jpg') }}" /> --}}
 
@@ -854,10 +951,10 @@
                             </p>
 
                             <!-- <ul class="list">
-                                                                                                            <li><i class="fa fa-check"></i> Powerful feature one.</li>
-                                                                                                            <li><i class="fa fa-check"></i> Much needed and important feature two.</li>
-                                                                                                            <li><i class="fa fa-check"></i> Essential features to rock.</li>
-                                                                                                        </ul> -->
+                                                                                                                            <li><i class="fa fa-check"></i> Powerful feature one.</li>
+                                                                                                                            <li><i class="fa fa-check"></i> Much needed and important feature two.</li>
+                                                                                                                            <li><i class="fa fa-check"></i> Essential features to rock.</li>
+                                                                                                                        </ul> -->
                             <!-- <a href="#" class="main-btn">Read More</a> -->
                         </div>
                     </div>
@@ -916,10 +1013,10 @@
                 </div>
             </div>
             <!-- <div class="choose_image">
-                                                                                            <div class="image">
-                                                                                                <img src="{{ asset('img/bags.jpeg') }}"choose.png" alt="choose">
-                                                                                            </div>
-                                                                                        </div> -->
+                                                                                                            <div class="image">
+                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"choose.png" alt="choose">
+                                                                                                            </div>
+                                                                                                        </div> -->
         </section>
 
         <!--====== CHOOSE PART ENDS ======-->
@@ -929,225 +1026,225 @@
         <!--====== COUNETR PART START ======-->
 
         <!-- <section class="counter_area bg_cover" style="background-image: url(assets/images/counter-bg.jpg)">
-                                                                                        <div class="container">
-                                                                                            <div class="row justify-content-end">
-                                                                                                <div class="col-lg-9">
-                                                                                                    <div class="counter_wrapper d-flex flex-wrap justify-content-between">
-                                                                                                        <div class="single_counter">
-                                                                                                            <div class="counter_items d-flex">
-                                                                                                                <div class="counter_icon">
-                                                                                                                    <img src="{{ asset('img/bags.jpeg') }}"counter-1.svg" alt="counter">
-                                                                                                                </div>
-                                                                                                                <div class="counter_count media-body">
-                                                                                                                    <span class="count"><span class="counter">5000</span>+</span>
+                                                                                                        <div class="container">
+                                                                                                            <div class="row justify-content-end">
+                                                                                                                <div class="col-lg-9">
+                                                                                                                    <div class="counter_wrapper d-flex flex-wrap justify-content-between">
+                                                                                                                        <div class="single_counter">
+                                                                                                                            <div class="counter_items d-flex">
+                                                                                                                                <div class="counter_icon">
+                                                                                                                                    <img src="{{ asset('img/bags.jpeg') }}"counter-1.svg" alt="counter">
+                                                                                                                                </div>
+                                                                                                                                <div class="counter_count media-body">
+                                                                                                                                    <span class="count"><span class="counter">5000</span>+</span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                            <p>Published Ads Here</p>
+                                                                                                                        </div>
+                                                                                                                        <div class="single_counter">
+                                                                                                                            <div class="counter_items d-flex">
+                                                                                                                                <div class="counter_icon">
+                                                                                                                                    <img src="{{ asset('img/bags.jpeg') }}"counter-2.svg" alt="counter">
+                                                                                                                                </div>
+                                                                                                                                <div class="counter_count media-body">
+                                                                                                                                    <span class="count"><span class="counter">300</span>+</span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                            <p>Register User Using</p>
+                                                                                                                        </div>
+                                                                                                                        <div class="single_counter">
+                                                                                                                            <div class="counter_items d-flex">
+                                                                                                                                <div class="counter_icon">
+                                                                                                                                    <img src="{{ asset('img/bags.jpeg') }}"counter-3.svg" alt="counter">
+                                                                                                                                </div>
+                                                                                                                                <div class="counter_count media-body">
+                                                                                                                                    <span class="count"><span class="counter">200</span>+</span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                            <p>Verified User Using</p>
+                                                                                                                        </div>
+                                                                                                                    </div>
                                                                                                                 </div>
                                                                                                             </div>
-                                                                                                            <p>Published Ads Here</p>
                                                                                                         </div>
-                                                                                                        <div class="single_counter">
-                                                                                                            <div class="counter_items d-flex">
-                                                                                                                <div class="counter_icon">
-                                                                                                                    <img src="{{ asset('img/bags.jpeg') }}"counter-2.svg" alt="counter">
-                                                                                                                </div>
-                                                                                                                <div class="counter_count media-body">
-                                                                                                                    <span class="count"><span class="counter">300</span>+</span>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                            <p>Register User Using</p>
-                                                                                                        </div>
-                                                                                                        <div class="single_counter">
-                                                                                                            <div class="counter_items d-flex">
-                                                                                                                <div class="counter_icon">
-                                                                                                                    <img src="{{ asset('img/bags.jpeg') }}"counter-3.svg" alt="counter">
-                                                                                                                </div>
-                                                                                                                <div class="counter_count media-body">
-                                                                                                                    <span class="count"><span class="counter">200</span>+</span>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                            <p>Verified User Using</p>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </section> -->
+                                                                                                    </section> -->
 
         <!--====== COUNETR PART ENDS ======-->
 
         <!--====== PUBLISHED PART START ======-->
 
         <!-- <section class="published_area pt-115">
-                                                                                        <div class="container">
-                                                                                            <div class="row">
-                                                                                                <div class="col-lg-6">
-                                                                                                    <div class="section_title pb-15">
-                                                                                                        <h3 class="title">Recently Published Ads</h3>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="published_wrapper">
-                                                                                                <div class="row">
-                                                                                                    <div class="col-lg-3 col-sm-6">
-                                                                                                        <div class="single_ads_card mt-30">
-                                                                                                            <div class="ads_card_image">
-                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-1.png" alt="ads">
-                                                                                                            </div>
-                                                                                                            <div class="ads_card_content">
-                                                                                                                <div class="meta d-flex justify-content-between">
-                                                                                                                    <p>Ram &amp; Laptop</p>
-                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
+                                                                                                        <div class="container">
+                                                                                                            <div class="row">
+                                                                                                                <div class="col-lg-6">
+                                                                                                                    <div class="section_title pb-15">
+                                                                                                                        <h3 class="title">Recently Published Ads</h3>
+                                                                                                                    </div>
                                                                                                                 </div>
-                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
-                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
-                                                                                                                <div class="ads_price_date d-flex justify-content-between">
-                                                                                                                    <span class="price">$299.00</span>
-                                                                                                                    <span class="date">25 Jan, 2023</span>
+                                                                                                            </div>
+                                                                                                            <div class="published_wrapper">
+                                                                                                                <div class="row">
+                                                                                                                    <div class="col-lg-3 col-sm-6">
+                                                                                                                        <div class="single_ads_card mt-30">
+                                                                                                                            <div class="ads_card_image">
+                                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-1.png" alt="ads">
+                                                                                                                            </div>
+                                                                                                                            <div class="ads_card_content">
+                                                                                                                                <div class="meta d-flex justify-content-between">
+                                                                                                                                    <p>Ram &amp; Laptop</p>
+                                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
+                                                                                                                                </div>
+                                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
+                                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
+                                                                                                                                <div class="ads_price_date d-flex justify-content-between">
+                                                                                                                                    <span class="price">$299.00</span>
+                                                                                                                                    <span class="date">25 Jan, 2023</span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-lg-3 col-sm-6">
+                                                                                                                        <div class="single_ads_card mt-30">
+                                                                                                                            <div class="ads_card_image">
+                                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-2.png" alt="ads">
+                                                                                                                                <p class="sticker sticker_color-1">New</p>
+                                                                                                                            </div>
+                                                                                                                            <div class="ads_card_content">
+                                                                                                                                <div class="meta d-flex justify-content-between">
+                                                                                                                                    <p>Ram &amp; Laptop</p>
+                                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
+                                                                                                                                </div>
+                                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
+                                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
+                                                                                                                                <div class="ads_price_date d-flex justify-content-between">
+                                                                                                                                    <span class="price">$299.00</span>
+                                                                                                                                    <span class="date">25 Jan, 2023</span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-lg-3 col-sm-6">
+                                                                                                                        <div class="single_ads_card mt-30">
+                                                                                                                            <div class="ads_card_image">
+                                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-3.png" alt="ads">
+                                                                                                                            </div>
+                                                                                                                            <div class="ads_card_content">
+                                                                                                                                <div class="meta d-flex justify-content-between">
+                                                                                                                                    <p>Ram &amp; Laptop</p>
+                                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
+                                                                                                                                </div>
+                                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
+                                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
+                                                                                                                                <div class="ads_price_date d-flex justify-content-between">
+                                                                                                                                    <span class="price">$299.00</span>
+                                                                                                                                    <span class="date">25 Jan, 2023</span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-lg-3 col-sm-6">
+                                                                                                                        <div class="single_ads_card mt-30">
+                                                                                                                            <div class="ads_card_image">
+                                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-4.png" alt="ads">
+                                                                                                                            </div>
+                                                                                                                            <div class="ads_card_content">
+                                                                                                                                <div class="meta d-flex justify-content-between">
+                                                                                                                                    <p>Ram &amp; Laptop</p>
+                                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
+                                                                                                                                </div>
+                                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
+                                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
+                                                                                                                                <div class="ads_price_date d-flex justify-content-between">
+                                                                                                                                    <span class="price">$299.00</span>
+                                                                                                                                    <span class="date">25 Jan, 2023</span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-lg-3 col-sm-6">
+                                                                                                                        <div class="single_ads_card mt-30">
+                                                                                                                            <div class="ads_card_image">
+                                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-5.png" alt="ads">
+                                                                                                                            </div>
+                                                                                                                            <div class="ads_card_content">
+                                                                                                                                <div class="meta d-flex justify-content-between">
+                                                                                                                                    <p>Ram &amp; Laptop</p>
+                                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
+                                                                                                                                </div>
+                                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
+                                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
+                                                                                                                                <div class="ads_price_date d-flex justify-content-between">
+                                                                                                                                    <span class="price">$299.00</span>
+                                                                                                                                    <span class="date">25 Jan, 2023</span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-lg-3 col-sm-6">
+                                                                                                                        <div class="single_ads_card mt-30">
+                                                                                                                            <div class="ads_card_image">
+                                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-6.png" alt="ads">
+                                                                                                                            </div>
+                                                                                                                            <div class="ads_card_content">
+                                                                                                                                <div class="meta d-flex justify-content-between">
+                                                                                                                                    <p>Ram &amp; Laptop</p>
+                                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
+                                                                                                                                </div>
+                                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
+                                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
+                                                                                                                                <div class="ads_price_date d-flex justify-content-between">
+                                                                                                                                    <span class="price">$299.00</span>
+                                                                                                                                    <span class="date">25 Jan, 2023</span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-lg-3 col-sm-6">
+                                                                                                                        <div class="single_ads_card mt-30">
+                                                                                                                            <div class="ads_card_image">
+                                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-7.png" alt="ads">
+                                                                                                                                <p class="sticker sticker_color-2">Popular</p>
+                                                                                                                            </div>
+                                                                                                                            <div class="ads_card_content">
+                                                                                                                                <div class="meta d-flex justify-content-between">
+                                                                                                                                    <p>Ram &amp; Laptop</p>
+                                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
+                                                                                                                                </div>
+                                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
+                                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
+                                                                                                                                <div class="ads_price_date d-flex justify-content-between">
+                                                                                                                                    <span class="price">$299.00</span>
+                                                                                                                                    <span class="date">25 Jan, 2023</span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-lg-3 col-sm-6">
+                                                                                                                        <div class="single_ads_card mt-30">
+                                                                                                                            <div class="ads_card_image">
+                                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-8.png" alt="ads">
+                                                                                                                            </div>
+                                                                                                                            <div class="ads_card_content">
+                                                                                                                                <div class="meta d-flex justify-content-between">
+                                                                                                                                    <p>Ram &amp; Laptop</p>
+                                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
+                                                                                                                                </div>
+                                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
+                                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
+                                                                                                                                <div class="ads_price_date d-flex justify-content-between">
+                                                                                                                                    <span class="price">$299.00</span>
+                                                                                                                                    <span class="date">25 Jan, 2023</span>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="published_btn">
+                                                                                                                    <a href="#product.html" class="main-btn">View all Ads</a>
                                                                                                                 </div>
                                                                                                             </div>
                                                                                                         </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-lg-3 col-sm-6">
-                                                                                                        <div class="single_ads_card mt-30">
-                                                                                                            <div class="ads_card_image">
-                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-2.png" alt="ads">
-                                                                                                                <p class="sticker sticker_color-1">New</p>
-                                                                                                            </div>
-                                                                                                            <div class="ads_card_content">
-                                                                                                                <div class="meta d-flex justify-content-between">
-                                                                                                                    <p>Ram &amp; Laptop</p>
-                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
-                                                                                                                </div>
-                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
-                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
-                                                                                                                <div class="ads_price_date d-flex justify-content-between">
-                                                                                                                    <span class="price">$299.00</span>
-                                                                                                                    <span class="date">25 Jan, 2023</span>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-lg-3 col-sm-6">
-                                                                                                        <div class="single_ads_card mt-30">
-                                                                                                            <div class="ads_card_image">
-                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-3.png" alt="ads">
-                                                                                                            </div>
-                                                                                                            <div class="ads_card_content">
-                                                                                                                <div class="meta d-flex justify-content-between">
-                                                                                                                    <p>Ram &amp; Laptop</p>
-                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
-                                                                                                                </div>
-                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
-                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
-                                                                                                                <div class="ads_price_date d-flex justify-content-between">
-                                                                                                                    <span class="price">$299.00</span>
-                                                                                                                    <span class="date">25 Jan, 2023</span>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-lg-3 col-sm-6">
-                                                                                                        <div class="single_ads_card mt-30">
-                                                                                                            <div class="ads_card_image">
-                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-4.png" alt="ads">
-                                                                                                            </div>
-                                                                                                            <div class="ads_card_content">
-                                                                                                                <div class="meta d-flex justify-content-between">
-                                                                                                                    <p>Ram &amp; Laptop</p>
-                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
-                                                                                                                </div>
-                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
-                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
-                                                                                                                <div class="ads_price_date d-flex justify-content-between">
-                                                                                                                    <span class="price">$299.00</span>
-                                                                                                                    <span class="date">25 Jan, 2023</span>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-lg-3 col-sm-6">
-                                                                                                        <div class="single_ads_card mt-30">
-                                                                                                            <div class="ads_card_image">
-                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-5.png" alt="ads">
-                                                                                                            </div>
-                                                                                                            <div class="ads_card_content">
-                                                                                                                <div class="meta d-flex justify-content-between">
-                                                                                                                    <p>Ram &amp; Laptop</p>
-                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
-                                                                                                                </div>
-                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
-                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
-                                                                                                                <div class="ads_price_date d-flex justify-content-between">
-                                                                                                                    <span class="price">$299.00</span>
-                                                                                                                    <span class="date">25 Jan, 2023</span>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-lg-3 col-sm-6">
-                                                                                                        <div class="single_ads_card mt-30">
-                                                                                                            <div class="ads_card_image">
-                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-6.png" alt="ads">
-                                                                                                            </div>
-                                                                                                            <div class="ads_card_content">
-                                                                                                                <div class="meta d-flex justify-content-between">
-                                                                                                                    <p>Ram &amp; Laptop</p>
-                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
-                                                                                                                </div>
-                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
-                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
-                                                                                                                <div class="ads_price_date d-flex justify-content-between">
-                                                                                                                    <span class="price">$299.00</span>
-                                                                                                                    <span class="date">25 Jan, 2023</span>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-lg-3 col-sm-6">
-                                                                                                        <div class="single_ads_card mt-30">
-                                                                                                            <div class="ads_card_image">
-                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-7.png" alt="ads">
-                                                                                                                <p class="sticker sticker_color-2">Popular</p>
-                                                                                                            </div>
-                                                                                                            <div class="ads_card_content">
-                                                                                                                <div class="meta d-flex justify-content-between">
-                                                                                                                    <p>Ram &amp; Laptop</p>
-                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
-                                                                                                                </div>
-                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
-                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
-                                                                                                                <div class="ads_price_date d-flex justify-content-between">
-                                                                                                                    <span class="price">$299.00</span>
-                                                                                                                    <span class="date">25 Jan, 2023</span>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-lg-3 col-sm-6">
-                                                                                                        <div class="single_ads_card mt-30">
-                                                                                                            <div class="ads_card_image">
-                                                                                                                <img src="{{ asset('img/bags.jpeg') }}"ads-8.png" alt="ads">
-                                                                                                            </div>
-                                                                                                            <div class="ads_card_content">
-                                                                                                                <div class="meta d-flex justify-content-between">
-                                                                                                                    <p>Ram &amp; Laptop</p>
-                                                                                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
-                                                                                                                </div>
-                                                                                                                <h4 class="title"><a href="#product-details.html">8 GB DDR4 Ram, 4th Gen</a></h4>
-                                                                                                                <p><i class="fa fa-map-marker-alt"></i>New York, USA</p>
-                                                                                                                <div class="ads_price_date d-flex justify-content-between">
-                                                                                                                    <span class="price">$299.00</span>
-                                                                                                                    <span class="date">25 Jan, 2023</span>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="published_btn">
-                                                                                                    <a href="#product.html" class="main-btn">View all Ads</a>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </section> -->
+                                                                                                    </section> -->
 
         <!--====== PUBLISHED PART ENDS ======-->
 
@@ -1167,7 +1264,7 @@
                     </div>
                 </div>
 
-                <h4 class="title" style="color: black"><a href="#">For Travelers</a></h4>
+                <h4 class="title" style="color: black">For Travelers</h4>
 
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
@@ -1177,7 +1274,8 @@
                             </div>
                             <div class="services_content media-body">
                                 <h4 class="title"><a href="#">Air Travel</a></h4>
-                                <p>Utilize your unused baggage allowance when flying to transport packages and earn extra income.</p>
+                                <p>Utilize your unused baggage allowance when flying to transport packages and earn extra
+                                    income.</p>
                                 <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
                             </div>
                         </div>
@@ -1189,7 +1287,8 @@
                             </div>
                             <div class="services_content media-body">
                                 <h4 class="title"><a href="#">Utilize Extra Space</a></h4>
-                                <p>Make the most of your baggage allowance by carrying packages for others and earning extra income.</p>
+                                <p>Make the most of your baggage allowance by carrying packages for others and earning extra
+                                    income.</p>
                                 <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
                             </div>
                         </div>
@@ -1201,52 +1300,53 @@
                             </div>
                             <div class="services_content media-body">
                                 <h4 class="title"><a href="#">Earn Extra Income</a></h4>
-                                <p>Set your own rates based on package size, weight, and destination. Get paid securely through our platform.</p>
+                                <p>Set your own rates based on package size, weight, and destination. Get paid securely
+                                    through our platform.</p>
                                 <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <h4 class="title" style="color: black"><a href="#">For Customers</a></h4>
+                <h4 class="title" style="padding-top: 20px">For Customers</h4>
 
                 <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_services d-flex mt-30">
-                        <div class="services_icon">
-                            <i class="fa fa-wallet"></i>
-                        </div>
-                        <div class="services_content media-body">
-                            <h4 class="title"><a href="#">Find Trusted Travelers</a></h4>
-                            <p>Connect with verified travelers heading to your package's destination.</p>
-                            <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_services d-flex mt-30">
-                        <div class="services_icon">
-                            <i class="fa fa-headset"></i>
-                        </div>
-                        <div class="services_content media-body">
-                            <h4 class="title"><a href="#">Safe & Secure</a></h4>
-                            <p>All travelers are verified, and packages are insured for safe delivery.</p>
-                            <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single_services d-flex mt-30">
+                            <div class="services_icon">
+                                <i class="fa fa-wallet"></i>
+                            </div>
+                            <div class="services_content media-body">
+                                <h4 class="title"><a href="#">Find Trusted Travelers</a></h4>
+                                <p>Connect with verified travelers heading to your package's destination.</p>
+                                <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_services d-flex mt-30">
-                        <div class="services_icon">
-                            <i class="fal fa-certificate"></i>
-                        </div>
-                        <div class="services_content media-body">
-                            <h4 class="title"><a href="#">Flexible Transport Options</a></h4>
-                            <p>Choose between air and land transport based on your needs and budget.</p>
-                            <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single_services d-flex mt-30">
+                            <div class="services_icon">
+                                <i class="fa fa-headset"></i>
+                            </div>
+                            <div class="services_content media-body">
+                                <h4 class="title"><a href="#">Safe & Secure</a></h4>
+                                <p>All travelers are verified, and packages are insured for safe delivery.</p>
+                                <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single_services d-flex mt-30">
+                            <div class="services_icon">
+                                <i class="fal fa-certificate"></i>
+                            </div>
+                            <div class="services_content media-body">
+                                <h4 class="title"><a href="#">Flexible Transport Options</a></h4>
+                                <p>Choose between air and land transport based on your needs and budget.</p>
+                                <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1258,68 +1358,68 @@
         <section class="pricing_area pt-115">
             <div class="container">
                 <!--<div class="row justify-content-center">
-                                                                                                <div class="col-lg-6">
-                                                                                                    <div class="section_title text-center pb-15">
-                                                                                                        <h3 class="title">Find a Plan <br> That's Right For You</h3>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                          <div class="row no-gutters align-items-center justify-content-center">
-                                                                                                <div class="col-lg-4 col-md-7 col-sm-9">
-                                                                                                    <div class="single_pricing text-center">
-                                                                                                        <div class="pricing_icon iconbox">
-                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"pricing-1.svg" alt="Icon">
-                                                                                                        </div>
-                                                                                                        <div class="pricing_title">
-                                                                                                            <h4 class="title">Beginners</h4>
-                                                                                                            <p>Lorem ipsum dolor sit amet, consetetur.</p>
-                                                                                                        </div>
-                                                                                                        <div class="pricing_content">
-                                                                                                            <p>Lorem ipsum dolor. Sit amet, consetetur dost. sadipscing elitr, sed. Diam nonumy eirmod. Tempor invidunt ut labore. Pet dolore magna. Aliquyam erat iamvoluptua.</p>
-                                                                                                            <span class="price">$50.00</span>
-                                                                                                        </div>
-                                                                                                        <div class="pricing_btn">
-                                                                                                            <a href="#" class="main-btn">View all Ads</a>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-lg-4 col-md-7 col-sm-9">
-                                                                                                    <div class="single_pricing pricing_active text-center">
-                                                                                                        <div class="pricing_icon">
-                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"pricing-2.svg" alt="Icon">
-                                                                                                        </div>
-                                                                                                        <div class="pricing_title">
-                                                                                                            <h4 class="title">Standard</h4>
-                                                                                                            <p>Lorem ipsum dolor sit amet, consetetur.</p>
-                                                                                                        </div>
-                                                                                                        <div class="pricing_content">
-                                                                                                            <p>Lorem ipsum dolor. Sit amet, consetetur dost. sadipscing elitr, sed. Diam nonumy eirmod. Tempor invidunt ut labore. Pet dolore magna. Aliquyam erat iamvoluptua.</p>
-                                                                                                            <span class="price">$100.00</span>
-                                                                                                        </div>
-                                                                                                        <div class="pricing_btn">
-                                                                                                            <a href="#" class="main-btn main-btn-2">View all Ads</a>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-lg-4 col-md-7 col-sm-9">
-                                                                                                    <div class="single_pricing text-center">
-                                                                                                        <div class="pricing_icon">
-                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"pricing-3.svg" alt="Icon">
-                                                                                                        </div>
-                                                                                                        <div class="pricing_title">
-                                                                                                            <h4 class="title">Premium</h4>
-                                                                                                            <p>Lorem ipsum dolor sit amet, consetetur.</p>
-                                                                                                        </div>
-                                                                                                        <div class="pricing_content">
-                                                                                                            <p>Lorem ipsum dolor. Sit amet, consetetur dost. sadipscing elitr, sed. Diam nonumy eirmod. Tempor invidunt ut labore. Pet dolore magna. Aliquyam erat iamvoluptua.</p>
-                                                                                                            <span class="price">$500.00</span>
-                                                                                                        </div>
-                                                                                                        <div class="pricing_btn">
-                                                                                                            <a href="#" class="main-btn">View all Ads</a>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div> -->
+                                                                                                                <div class="col-lg-6">
+                                                                                                                    <div class="section_title text-center pb-15">
+                                                                                                                        <h3 class="title">Find a Plan <br> That's Right For You</h3>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                          <div class="row no-gutters align-items-center justify-content-center">
+                                                                                                                <div class="col-lg-4 col-md-7 col-sm-9">
+                                                                                                                    <div class="single_pricing text-center">
+                                                                                                                        <div class="pricing_icon iconbox">
+                                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"pricing-1.svg" alt="Icon">
+                                                                                                                        </div>
+                                                                                                                        <div class="pricing_title">
+                                                                                                                            <h4 class="title">Beginners</h4>
+                                                                                                                            <p>Lorem ipsum dolor sit amet, consetetur.</p>
+                                                                                                                        </div>
+                                                                                                                        <div class="pricing_content">
+                                                                                                                            <p>Lorem ipsum dolor. Sit amet, consetetur dost. sadipscing elitr, sed. Diam nonumy eirmod. Tempor invidunt ut labore. Pet dolore magna. Aliquyam erat iamvoluptua.</p>
+                                                                                                                            <span class="price">$50.00</span>
+                                                                                                                        </div>
+                                                                                                                        <div class="pricing_btn">
+                                                                                                                            <a href="#" class="main-btn">View all Ads</a>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="col-lg-4 col-md-7 col-sm-9">
+                                                                                                                    <div class="single_pricing pricing_active text-center">
+                                                                                                                        <div class="pricing_icon">
+                                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"pricing-2.svg" alt="Icon">
+                                                                                                                        </div>
+                                                                                                                        <div class="pricing_title">
+                                                                                                                            <h4 class="title">Standard</h4>
+                                                                                                                            <p>Lorem ipsum dolor sit amet, consetetur.</p>
+                                                                                                                        </div>
+                                                                                                                        <div class="pricing_content">
+                                                                                                                            <p>Lorem ipsum dolor. Sit amet, consetetur dost. sadipscing elitr, sed. Diam nonumy eirmod. Tempor invidunt ut labore. Pet dolore magna. Aliquyam erat iamvoluptua.</p>
+                                                                                                                            <span class="price">$100.00</span>
+                                                                                                                        </div>
+                                                                                                                        <div class="pricing_btn">
+                                                                                                                            <a href="#" class="main-btn main-btn-2">View all Ads</a>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="col-lg-4 col-md-7 col-sm-9">
+                                                                                                                    <div class="single_pricing text-center">
+                                                                                                                        <div class="pricing_icon">
+                                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"pricing-3.svg" alt="Icon">
+                                                                                                                        </div>
+                                                                                                                        <div class="pricing_title">
+                                                                                                                            <h4 class="title">Premium</h4>
+                                                                                                                            <p>Lorem ipsum dolor sit amet, consetetur.</p>
+                                                                                                                        </div>
+                                                                                                                        <div class="pricing_content">
+                                                                                                                            <p>Lorem ipsum dolor. Sit amet, consetetur dost. sadipscing elitr, sed. Diam nonumy eirmod. Tempor invidunt ut labore. Pet dolore magna. Aliquyam erat iamvoluptua.</p>
+                                                                                                                            <span class="price">$500.00</span>
+                                                                                                                        </div>
+                                                                                                                        <div class="pricing_btn">
+                                                                                                                            <a href="#" class="main-btn">View all Ads</a>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div> -->
             </div>
         </section>
 
@@ -1328,63 +1428,63 @@
         <!--====== BLOG PART START ======-->
 
         <!-- <section class="blog_area pt-115 pb-120">
-                                                                                        <div class="container">
-                                                                                            <div class="row justify-content-center">
-                                                                                                <div class="col-lg-6">
-                                                                                                    <div class="section_title text-center pb-15">
-                                                                                                        <h3 class="title">Latest<br> From The Blog</h3>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row justify-content-center">
-                                                                                                <div class="col-lg-4 col-md-7">
-                                                                                                    <div class="single_blog mt-30">
-                                                                                                        <div class="blog_image">
-                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"blog-1.jpg" alt="blog">
+                                                                                                        <div class="container">
+                                                                                                            <div class="row justify-content-center">
+                                                                                                                <div class="col-lg-6">
+                                                                                                                    <div class="section_title text-center pb-15">
+                                                                                                                        <h3 class="title">Latest<br> From The Blog</h3>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="row justify-content-center">
+                                                                                                                <div class="col-lg-4 col-md-7">
+                                                                                                                    <div class="single_blog mt-30">
+                                                                                                                        <div class="blog_image">
+                                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"blog-1.jpg" alt="blog">
+                                                                                                                        </div>
+                                                                                                                        <div class="blog_content">
+                                                                                                                            <h4 class="title"><a href="#blog-details.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></h4>
+                                                                                                                            <ul class="meta">
+                                                                                                                                <li><i class="fal fa-clock"></i><a href="#">23 Jan, 2023</a></li>
+                                                                                                                                <li><i class="fal fa-comment-dots"></i><a href="#">4 Comments</a></li>
+                                                                                                                            </ul>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="col-lg-4 col-md-7">
+                                                                                                                    <div class="single_blog mt-30">
+                                                                                                                        <div class="blog_image">
+                                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"blog-2.jpg" alt="blog">
+                                                                                                                        </div>
+                                                                                                                        <div class="blog_content">
+                                                                                                                            <h4 class="title"><a href="#blog-details.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></h4>
+                                                                                                                            <ul class="meta">
+                                                                                                                                <li><i class="fal fa-clock"></i><a href="#">23 Jan, 2023</a></li>
+                                                                                                                                <li><i class="fal fa-comment-dots"></i><a href="#">4 Comments</a></li>
+                                                                                                                            </ul>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="col-lg-4 col-md-7">
+                                                                                                                    <div class="single_blog mt-30">
+                                                                                                                        <div class="blog_image">
+                                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"blog-3.jpg" alt="blog">
+                                                                                                                        </div>
+                                                                                                                        <div class="blog_content">
+                                                                                                                            <h4 class="title"><a href="#blog-details.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></h4>
+                                                                                                                            <ul class="meta">
+                                                                                                                                <li><i class="fal fa-clock"></i><a href="#">23 Jan, 2023</a></li>
+                                                                                                                                <li><i class="fal fa-comment-dots"></i><a href="#">4 Comments</a></li>
+                                                                                                                            </ul>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="blog_btn text-center mt-50">
+                                                                                                                <a href="#blog.html" class="main-btn">View All Post</a>
+                                                                                                            </div>
                                                                                                         </div>
-                                                                                                        <div class="blog_content">
-                                                                                                            <h4 class="title"><a href="#blog-details.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></h4>
-                                                                                                            <ul class="meta">
-                                                                                                                <li><i class="fal fa-clock"></i><a href="#">23 Jan, 2023</a></li>
-                                                                                                                <li><i class="fal fa-comment-dots"></i><a href="#">4 Comments</a></li>
-                                                                                                            </ul>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-lg-4 col-md-7">
-                                                                                                    <div class="single_blog mt-30">
-                                                                                                        <div class="blog_image">
-                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"blog-2.jpg" alt="blog">
-                                                                                                        </div>
-                                                                                                        <div class="blog_content">
-                                                                                                            <h4 class="title"><a href="#blog-details.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></h4>
-                                                                                                            <ul class="meta">
-                                                                                                                <li><i class="fal fa-clock"></i><a href="#">23 Jan, 2023</a></li>
-                                                                                                                <li><i class="fal fa-comment-dots"></i><a href="#">4 Comments</a></li>
-                                                                                                            </ul>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-lg-4 col-md-7">
-                                                                                                    <div class="single_blog mt-30">
-                                                                                                        <div class="blog_image">
-                                                                                                            <img src="{{ asset('img/bags.jpeg') }}"blog-3.jpg" alt="blog">
-                                                                                                        </div>
-                                                                                                        <div class="blog_content">
-                                                                                                            <h4 class="title"><a href="#blog-details.html">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></h4>
-                                                                                                            <ul class="meta">
-                                                                                                                <li><i class="fal fa-clock"></i><a href="#">23 Jan, 2023</a></li>
-                                                                                                                <li><i class="fal fa-comment-dots"></i><a href="#">4 Comments</a></li>
-                                                                                                            </ul>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="blog_btn text-center mt-50">
-                                                                                                <a href="#blog.html" class="main-btn">View All Post</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </section> -->
+                                                                                                    </section> -->
 
         <!--====== BLOG PART ENDS ======-->
 
@@ -1425,16 +1525,16 @@
         <!--====== PART START ======-->
 
         <!--
-                                                                                    <section class="">
-                                                                                        <div class="container">
-                                                                                            <div class="row">
-                                                                                                <div class="col-lg-">
-                                                                                                    
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </section>
-                                                                                -->
+                                                                                                    <section class="">
+                                                                                                        <div class="container">
+                                                                                                            <div class="row">
+                                                                                                                <div class="col-lg-">
+                                                                                                                    
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </section>
+                                                                                                -->
 
         <!--====== PART ENDS ======-->
 

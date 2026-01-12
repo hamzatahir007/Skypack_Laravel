@@ -104,7 +104,7 @@
 
         <div class="col-md-6">
             <label>Weight (kg)</label>
-            <input type="number" name="weight" class="form-control">
+            <input type="text" name="weight" class="form-control">
         </div>
 
         <div class="col-md-6">
