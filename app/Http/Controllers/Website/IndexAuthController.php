@@ -76,6 +76,11 @@ class IndexAuthController extends Controller
         // return view('website.index');
     }
 
+    public function listspace()
+    {
+        return view('website.pages.flightList');
+    }
+
     public function show($id)
     {
         // Eager load relations to avoid N+1

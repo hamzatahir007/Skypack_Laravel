@@ -82,7 +82,7 @@ body {
 
 .rounded-country {
   width: 325px;
-  height: 300px;
+  height: 250px;
   border-radius: 100%;
   object-fit: cover;
   display: block;
@@ -173,6 +173,7 @@ p {
   color: #6D7588;
   margin: 0px;
 }
+
 
 .bg_cover {
   background-position: center center;
@@ -701,6 +702,7 @@ p {
   top: 0;
   left: 0;
   width: 100%;
+  height: 80px;
   z-index: 999;
   background-color: #fff;
 }
@@ -1445,8 +1447,8 @@ p {
 .header_content {
   /* position: relative; */
   z-index: 5;
-  padding-top: 200px;
-  padding-bottom: 130px;
+  padding-top: 150px;
+  padding-bottom: 50px;
 }
 
 .header_content::before {

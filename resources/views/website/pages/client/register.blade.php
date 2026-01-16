@@ -8,13 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Registration | Skypack</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-
+   
     <style>
         body,
         html {
@@ -64,7 +58,7 @@
 
 <body>
 
-    <div class="container-fluid"  style="margin-top: 100px">
+    <div class="container-fluid"  style="margin-top: 80px">
         <div class="row min-vh-100">
 
             <!-- Left Image Column -->

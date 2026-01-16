@@ -73,6 +73,8 @@ Route::middleware(['auth'])->group(function () {
 // })->name('website.home');
 
 Route::get('/', [IndexAuthController::class, 'dashboard'])->name('/');
+Route::get('/listspace', [IndexAuthController::class, 'listspace'])->name('/listspace');
+Route::get('/browsespace', [IndexAuthController::class, 'listspace'])->name('/browsespace');
 Route::get('/flight/{id}', [IndexAuthController::class, 'show'])->name('flight.details');
 
 // Website Login & Register

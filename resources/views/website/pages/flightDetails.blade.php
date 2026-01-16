@@ -27,7 +27,7 @@
                                 <p class="text-muted mb-2">Travel Date:
                                     {{ optional($flight->flight_date)->format('d M, Y H:i') ?? '-' }}</p>
 
-                                <div class="mb-3">
+                                <div class="text-muted  mb-3">
                                     <strong>Traveler:</strong>
                                     <div>{{ $flight->traveler->full_name ?? 'Traveler' }}</div>
                                 </div>
@@ -35,7 +35,7 @@
                                 <div class="row">
                                     <div class="col-sm-6 mb-2">
                                         <small class="text-muted">Origin</small>
-                                        <div class="fw-medium">
+                                        <div class="fw-medium text-muted ">
                                             <i class="fa fa-map-marker-alt text-primary me-1"></i>
                                             {{ $flight->cityOrigin->name ?? ($flight->origin ?? '-') }}
                                         </div>
@@ -46,7 +46,7 @@
 
                                     <div class="col-sm-6 mb-2">
                                         <small class="text-muted">Destination</small>
-                                        <div class="fw-medium">
+                                        <div class="fw-medium text-muted ">
                                             <i class="fa fa-map-marker-alt text-danger me-1"></i>
                                             {{ $flight->cityDestination->name ?? ($flight->destination ?? '-') }}
                                         </div>
@@ -58,7 +58,7 @@
 
                                 <hr>
 
-                                <div class="mb-2">
+                                <div class="mb-2 text-muted ">
                                     <strong>Status:</strong>
                                     <span
                                         class="badge
@@ -70,23 +70,23 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-6 text-muted ">
                                         <small class="text-muted">Weight (kg)</small>
                                         <div>{{ $flight->weight ?? '-' }}</div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6 text-muted ">
                                         <small class="text-muted">Rate / Unit (USD)</small>
                                         <div>{{ $flight->rate_per_unit ? number_format($flight->rate_per_unit, 2) : '-' }}
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="mt-3">
+                                <div class="mt-3 text-muted ">
                                     <small class="text-muted">Keyfield:</small>
                                     <div>{{ $flight->keyfield ?? '-' }}</div>
                                 </div>
 
-                                <div class="mt-3">
+                                <div class="mt-3 text-muted ">
                                     <small class="text-muted">QR Code:</small>
                                     <div>
                                         @if ($flight->Qrcode)
@@ -114,22 +114,22 @@
                         <h5 class="mb-3">Additional Details</h5>
 
                         <div class="row">
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-6 mb-2 text-muted ">
                                 <small class="text-muted">Created by (user id)</small>
                                 <div>{{ $flight->create_by ?? '-' }}</div>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-6 mb-2 text-muted ">
                                 <small class="text-muted">Updated by</small>
                                 <div>{{ $flight->update_by ?? '-' }}</div>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-6 mb-2 text-muted ">
                                 <small class="text-muted">Deleted by</small>
                                 <div>{{ $flight->delete_by ?? '-' }}</div>
                             </div>
 
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-6 mb-2 text-muted ">
                                 <small class="text-muted">Soft Deleted At</small>
                                 <div>{{ optional($flight->deleted_at)->format('d M, Y H:i') ?? '-' }}</div>
                             </div>
@@ -142,7 +142,7 @@
 
             {{-- Right / Sidebar --}}
             <div class="col-lg-4">
-                <div class="card shadow-sm mb-3">
+                <div class="card shadow-sm mb-3 text-muted ">
                     <div class="card-body">
                         <h5 class="mb-3">Booking Summary</h5>
 

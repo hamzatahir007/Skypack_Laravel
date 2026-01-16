@@ -1,194 +1,166 @@
-<!-- Responsive header code will be added here. Please paste your original header code again so I can restructure it into a fully responsive version. -->
-<!-- Responsive Updated Header -->
-<div class="header_navbar" style="background-color:#3167ff;">
+<div class="header_navbar shadow-sm" style="background-color:white;">
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light p-0">
-            <a class="navbar-brand" href="{{ route('/') }}">
-                <img src="{{ asset('img/logo.png') }}" width="180" alt="logo" class="img-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light p-0" style="height: 80px">
+
+            {{-- LOGO --}}
+            <a class="navbar-brand font-weight-bold d-flex align-items-center" href="{{ url('/') }}">
+                <img src="{{ asset('img/logo.png') }}" width="36" class="mr-2" alt="logo">
+                BagSpace
             </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            {{-- MOBILE TOGGLE --}}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu"
+                aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav m-auto text-center">
-                   
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('/') }}">Home</a>
+            {{-- MENU --}}
+            <div class="collapse navbar-collapse justify-content-center" id="mainMenu">
+                <ul class="navbar-nav text-center">
+
+                    <li class="nav-item mx-lg-3">
+                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item mx-lg-3">
+                        <a class="nav-link" href="{{ route('/listspace') }}">List Space</a>
+                    </li>
+
+                    <li class="nav-item mx-lg-3">
+                        <a class="nav-link" href="{{ route('/browsespace') }}">Browse Space</a>
                     </li>
 
                     @if (session()->has('client_id'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('client.inquiries') }}">My Inquiries</a>
-                        </li>
-                    @elseif (session()->has('traveler_id'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('traveler.flights') }}">My Flights</a>
+                        <li class="nav-item mx-lg-3">
+                            <a class="nav-link {{ request()->is('client/inquiries*') ? 'active' : '' }}"
+                                href="{{ route('client.inquiries') }}">
+                                My Inquiries
+                            </a>
                         </li>
                     @endif
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            About Us
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="aboutDropdown">
-                            <a class="dropdown-item" href="#about.html">About</a>
-                            <a class="dropdown-item" href="#product.html">Listing</a>
-                            <a class="dropdown-item" href="#product-details.html">Lead Details</a>
-                            <a class="dropdown-item" href="#faq.html">FAQ</a>
-                        </div>
-                    </li>
+                    @if (session()->has('traveler_id'))
+                        <li class="nav-item mx-lg-3">
+                            <a class="nav-link {{ request()->is('traveler/flights*') ? 'active' : '' }}"
+                                href="{{ route('traveler.flights') }}">
+                                My Flights
+                            </a>
+                        </li>
+                    @endif
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact.html">Contact Us</a>
-                    </li>
-                </ul>
 
-                <ul class="navbar-nav ml-auto text-center">
-                    <li class="nav-item dropdown">
+
+                    {{-- MOBILE AUTH (ONLY MOBILE) --}}
+                    <li class="nav-item d-lg-none mt-3">
+
                         @if (session()->has('client_id') || session()->has('traveler_id'))
-                            <a class="nav-link dropdown-toggle" href="#" id="accountMenu" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">My Account</a>
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item"
-                                    href="{{ session()->has('client_id') ? route('client.dashboard') : route('traveler.dashboard') }}">
-                                    <i class="fa fa-layer-group"></i>
-                                    {{ session()->has('client_id') ? session('client_name') : session('traveler_name') }}
+                            <div class="dropdown text-center">
+                                <a style="color: black !important"  href="#" class="btn btn-outline-primary dropdown-toggle"
+                                    data-toggle="dropdown">
+                                    {{ session('client_name') ?? session('traveler_name') }}
                                 </a>
 
-                                {{-- <a class="dropdown-item"
-                                    href="{{ session()->has('client_id') ? route('client.dashboard') : route('traveler.dashboard') }}">
-                                    <i class="fa fa-layer-group"></i> Dashboard
-                                </a> --}}
-                                @if (session()->has('traveler_id'))
-                                    <a class="dropdown-item" href="{{ route('traveler.bank.index') }}">
-                                        <i class="fa fa-university"></i>
-                                        Bank Account
+                                <div class="dropdown-menu dropdown-menu-center shadow">
+
+                                    <a style="color: black !important" class="dropdown-item"
+                                        href="{{ session()->has('client_id') ? route('client.dashboard') : route('traveler.dashboard') }}">
+                                        Dashboard
                                     </a>
-                                @endif
 
-                                <a class="dropdown-item" href="#"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="fa fa-sign-out"></i> Sign Out
-                                </a>
-                                <form id="logout-form"
-                                    action="{{ session()->has('client_id') ? route('client.logout') : route('traveler.logout') }}"
-                                    method="POST" style="display:none;">@csrf</form>
+                                    @if (session()->has('traveler_id'))
+                                        <a style="color: black !important" class="dropdown-item" href="{{ route('traveler.bank.index') }}">
+                                            Bank Account
+                                        </a>
+                                    @endif
+
+                                    <div class="dropdown-divider"></div>
+
+                                    <a style="color: black !important" class="dropdown-item text-danger" href="#"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+                                </div>
                             </div>
                         @else
-                            <a class="nav-link dropdown-toggle" href="#" id="signinMenu" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Sign In</a>
+                            <div class="dropdown text-center">
+                                <a class="btn btn-primary dropdown-toggle btn-block" href="#"
+                                    data-toggle="dropdown">
+                                    Sign In
+                                </a>
 
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="{{ route('client.login') }}">
-                                    <i class="fa fa-user"></i> Login as Client
-                                </a>
-                                <a class="dropdown-item" href="{{ route('traveler.login') }}">
-                                    <i class="fa fa-plane"></i> Login as Traveler
-                                </a>
+                                <div class="dropdown-menu dropdown-menu-center shadow text-center">
+                                    <a class="dropdown-item"style="color: black !important"
+                                        href="{{ route('client.login') }}">Login as Client</a>
+                                    <a class="dropdown-item" style="color: black !important"
+                                        href="{{ route('traveler.login') }}">Login as Traveler</a>
+                                </div>
                             </div>
                         @endif
+
                     </li>
+
                 </ul>
             </div>
+
+            {{-- RIGHT SIDE USER --}}
+            <div class="ml-auto d-none d-lg-flex align-items-center">
+
+                @if (session()->has('client_id') || session()->has('traveler_id'))
+
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="https://i.pravatar.cc/40" class="rounded-circle mr-2" width="36">
+                            <span class="font-weight-semibold text-dark">
+                                {{ session('client_name') ?? session('traveler_name') }}
+                            </span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right shadow">
+
+                            <a style="color: black !important"  class="dropdown-item"
+                                href="{{ session()->has('client_id') ? route('client.dashboard') : route('traveler.dashboard') }}">
+                                Dashboard
+                            </a>
+
+                            @if (session()->has('traveler_id'))
+                                <a style="color: black !important"  class="dropdown-item" href="{{ route('traveler.bank.index') }}">
+                                    Bank Account
+                                </a>
+                            @endif
+
+                            <div class="dropdown-divider"></div>
+
+                            <a style="color: black !important"  class="dropdown-item text-danger" href="#"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+
+                    <form id="logout-form"
+                        action="{{ session()->has('client_id') ? route('client.logout') : route('traveler.logout') }}"
+                        method="POST" style="display:none;">
+                        @csrf
+                    </form>
+                @else
+                    <div class="dropdown">
+                        <a class="btn btn-outline-primary dropdown-toggle" href="#" data-toggle="dropdown">
+                            Sign In
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow">
+                            <a class="dropdown-item" href="{{ route('client.login') }}"
+                                style="color: black !important">Login as Client</a>
+                            <a class="dropdown-item" href="{{ route('traveler.login') }}"
+                                style="color: black !important">Login as Traveler</a>
+                        </div>
+                    </div>
+                @endif
+
+            </div>
+
         </nav>
     </div>
 </div>
-
-<style>
-    /* Responsive Tweaks */
-    .navbar-brand img {
-        max-width: 160px;
-    }
-
-    @media (max-width: 768px) {
-        .navbar-collapse {
-            background-color: #3167ff;
-        }
-
-        .navbar-brand img {
-            max-width: 140px;
-        }
-
-        .navbar-nav>li>a {
-            color: #ffffff !important;
-        }
-
-        .navbar-nav .nav-link {
-            padding: 10px 0;
-            color: #000 !important;
-        }
-
-        .dropdown-menu {
-            width: 100%;
-            text-align: center;
-        }
-
-        .navbar-nav {
-            margin-top: 10px;
-        }
-
-        .navbar-toggler {
-            border: none;
-        }
-
-        .dropdown-menu .dropdown-item:hover {
-            background: #FF4367 !important;
-            /* Pink background */
-            color: #000 !important;
-            /* White text */
-        }
-    }
-</style>
-<style>
-    /* ============================
-   MAIN MENU
-============================ */
-
-    /* Main menu default text */
-    .navbar-nav .nav-link,
-    .navbar-nav>li>a {
-        color: #ffffff !important;
-        /* White */
-        font-weight: 500;
-        transition: 0.3s ease;
-    }
-
-    /* Main menu hover text */
-    .navbar-nav .nav-link:hover,
-    .navbar-nav>li>a:hover {
-        color: #FF4367 !important;
-        /* Pink */
-    }
-
-    /* Active menu item */
-    .navbar-nav .nav-link.active {
-        color: #FF4367 !important;
-        /* Pink */
-    }
-
-
-    /* ============================
-   SUBMENU (Dropdown)
-============================ */
-
-    /* Submenu default text */
-    .dropdown-menu .dropdown-item {
-        color: #000 !important;
-        /* Black */
-        padding: 10px 15px;
-        transition: 0.3s ease;
-    }
-
-    /* Submenu hover state */
-    .dropdown-menu .dropdown-item:hover {
-        background: #FF4367 !important;
-        /* Pink background */
-        color: #ffffff !important;
-        /* White text */
-    }
-</style>
