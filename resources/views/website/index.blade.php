@@ -1,19 +1,31 @@
 @extends('website/layouts.app') <!-- Use your admin layout -->
 
+<style>
+    /* ===============================
+   PRELOADER – THIS PAGE ONLY
+   =============================== */
+    #ll-preloader {
+        position: fixed;
+        inset: 0;
+        background: #ffffff;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* prevent scroll while loading */
+    body.ll-loading {
+        overflow: hidden;
+    }
+</style>
+
+
 @section('content')
 
-    <div class="gray-bg">
+ <!--====== PRELOADER PART START ======-->
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
-
-        <!--====== PRELOADER PART START ======-->
-
-        <div class="preloader" style="display: none;">
+        <div class="preloader" id="ll-preloader">
             <div class="loader">
                 <div class="ytp-spinner">
                     <div class="ytp-spinner-container">
@@ -31,6 +43,17 @@
         </div>
 
         <!--====== PRELOADER PART ENDS ======-->
+
+    <div class="gray-bg" >
+
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
+       
 
         <!--====== HEADER PART START ======-->
 
@@ -691,5 +714,32 @@
                 });
             });
         </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const preloader = document.getElementById('ll-preloader');
+    const page = document.getElementById('ll-page-wrapper');
+
+    document.body.classList.add('ll-loading');
+
+    // FORCE loader for 3 seconds
+    setTimeout(function () {
+
+        if (preloader) {
+            preloader.style.opacity = '0';
+            preloader.style.transition = 'opacity 0.4s ease';
+        }
+
+        setTimeout(function () {
+            if (preloader) preloader.style.display = 'none';
+            if (page) page.style.display = 'block';
+            document.body.classList.remove('ll-loading');
+        }, 400);
+
+    }, 3000); // ⏱️ 3 seconds guaranteed
+});
+</script>
+
 
     </div>
