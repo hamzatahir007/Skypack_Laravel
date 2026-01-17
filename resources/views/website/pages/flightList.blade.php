@@ -2,496 +2,405 @@
 
 @section('title', 'Available Baggage Space')
 
-@push('style')
+@section('content')
+
+    {{-- PAGE-ONLY STYLES --}}
+
     <style>
-        .header-section {
-            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
-            color: white;
+        .flightlist-page {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --accent-color: #198754;
+            background: #f8f9fa;
+            padding-bottom: 40px;
+        }
+
+        .flightlist-page .header-section {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: #fff;
             padding: 2rem 0;
-            border-radius: 0.5rem;
+            border-radius: .5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .1)
         }
 
-        .header-section h1 {
+        .filter-options {
+            border-radius: .75rem;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+            transition: .3s;
+            overflow: hidden;
+            /* height: 100% */
+        }
+
+        .flightlist-page .flight-card {
+            border-radius: .75rem;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+            transition: .3s;
+            overflow: hidden;
+            height: 100%
+        }
+
+        .flightlist-page .flight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .12)
+        }
+
+        .flightlist-page .airline-badge {
             font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .header-section p {
             font-size: 1.1rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto;
+            color: var(--primary-color)
         }
 
-        .flight-card {
-            border-radius: 0.75rem;
+        .flightlist-page .price-tag {
+            background: var(--accent-color);
+            color: #fff;
+            padding: .4rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600
+        }
+
+        .flightlist-page .capacity-badge {
+            background: rgba(25, 135, 84, .1);
+            color: var(--accent-color);
+            font-weight: 600;
+            padding: .4rem 1rem;
+            border-radius: 2rem;
+            display: inline-block
+        }
+
+        .flightlist-page .restriction-item {
+            background: rgba(108, 117, 125, .08);
+            padding: .4rem .85rem;
+            border-radius: .5rem;
+            font-size: .85rem;
+            margin-right: .4rem;
+            margin-bottom: .4rem;
+            display: inline-block
+        }
+
+        .flightlist-page .contact-btn {
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: .6rem 1.75rem;
+            border-radius: .5rem;
+            font-weight: 500
+        }
+
+        .flightlist-page .contact-btn:hover {
+            background: #0a58ca
+        }
+
+        .flightlist-page .stats-box {
+            background: #fff;
+            border-radius: .75rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .06)
+        }
+
+        .flightlist-page .stats-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color)
+        }
+
+        .flightlist-page footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, .1);
+            color: #6c757d;
+            text-align: center;
+            font-size: .9rem
+        }
+
+
+        /* BOOTSTRAP 4 FLIGHT CARD ONLY */
+        .flight-card-bs4 {
+            background: #ffffff;
+            border-radius: 12px;
             border: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin-bottom: 1.5rem;
-            overflow: hidden;
+            transition: all 0.3s ease;
             height: 100%;
         }
 
-        .flight-card:hover {
+        .flight-card-bs4:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
 
-        .card-body {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .flight-header {
+        .flight-card-bs4 .flight-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1.25rem;
-            flex-wrap: wrap;
-            gap: 0.75rem;
+            margin-bottom: 15px;
         }
 
-        .airline-badge {
+        .flight-card-bs4 .airline-badge {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #0d6efd;
+        }
+
+        .flight-card-bs4 .price-tag {
+            background: #198754;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .flight-card-bs4 .flight-route {
             font-weight: 600;
             font-size: 1.1rem;
-            color: var(--primary-color);
-            line-height: 1.3;
+            margin-bottom: 4px;
         }
 
-        .price-tag {
-            background-color: var(--accent-color);
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            font-weight: 600;
-            font-size: 1rem;
-            white-space: nowrap;
-        }
-
-        .flight-details {
-            margin-bottom: 1.25rem;
-        }
-
-        .flight-route {
-            font-weight: 600;
-            font-size: 1.15rem;
-            margin-bottom: 0.5rem;
-            color: #333;
-            line-height: 1.4;
-        }
-
-        .departure-date {
-            color: var(--secondary-color);
+        .flight-card-bs4 .departure-date {
+            color: #6c757d;
             font-size: 0.95rem;
-            margin-bottom: 0.75rem;
+            margin-bottom: 8px;
         }
 
-        .capacity-badge {
-            background-color: rgba(25, 135, 84, 0.1);
-            color: var(--accent-color);
-            font-weight: 600;
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.95rem;
+        .flight-card-bs4 .capacity-badge {
             display: inline-block;
-            margin-bottom: 1rem;
+            background: rgba(25, 135, 84, 0.12);
+            color: #198754;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
         }
 
-        .flight-description {
+        .flight-card-bs4 .flight-description {
+            margin: 15px 0;
             color: #555;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
         }
 
-        .restrictions-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .restrictions-label {
+        .flight-card-bs4 .restrictions-label {
             font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: #444;
-            font-size: 0.95rem;
+            margin-bottom: 6px;
         }
 
-        .restriction-item {
-            background-color: rgba(108, 117, 125, 0.08);
-            padding: 0.4rem 0.85rem;
-            border-radius: 0.5rem;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
+        .flight-card-bs4 .restriction-item {
             display: inline-block;
+            background: rgba(108, 117, 125, 0.1);
+            padding: 6px 12px;
+            border-radius: 8px;
             font-size: 0.85rem;
-            color: #555;
-            line-height: 1.4;
+            margin-right: 6px;
+            margin-bottom: 6px;
         }
 
-        .traveler-info {
+        .flight-card-bs4 .traveler-info {
             border-top: 1px dashed rgba(0, 0, 0, 0.1);
-            padding-top: 1.25rem;
-            margin-top: auto;
+            padding-top: 15px;
+            margin-top: 20px;
         }
 
-        .traveler-details {
+        .flight-card-bs4 .traveler-details {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
 
-        .traveler-name-rating {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .traveler-name {
+        .flight-card-bs4 .traveler-name {
             font-weight: 600;
-            margin-bottom: 0.25rem;
-            color: #333;
-            font-size: 1.05rem;
+            margin-bottom: 3px;
         }
 
-        .rating {
+        .flight-card-bs4 .rating {
             color: #ffc107;
             font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
         }
 
-        .rating-text {
-            color: #666;
-            margin-left: 0.5rem;
+        .flight-card-bs4 .rating-text {
+            color: #6c757d;
+            margin-left: 6px;
         }
 
-        .contact-btn {
-            background-color: var(--primary-color);
-            color: white;
+        .flight-card-bs4 .contact-btn {
+            background: #0d6efd;
+            color: #fff;
             border: none;
-            padding: 0.6rem 1.75rem;
-            border-radius: 0.5rem;
+            padding: 8px 24px;
+            border-radius: 8px;
             font-weight: 500;
-            transition: background-color 0.2s;
-            white-space: nowrap;
-            font-size: 0.95rem;
+            transition: background 0.2s;
         }
 
-        .contact-btn:hover {
-            background-color: #0a58ca;
-            color: white;
-        }
-
-        .section-title {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid rgba(13, 110, 253, 0.2);
-            font-weight: 600;
-        }
-
-        .filter-section {
-            background-color: white;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-            margin-bottom: 2rem;
-        }
-
-        .filter-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            align-items: flex-end;
-        }
-
-        .filter-group {
-            flex: 1;
-            min-width: 180px;
-        }
-
-        .filter-label {
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: #444;
-            font-size: 0.95rem;
-        }
-
-        .stats-box {
-            background-color: white;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-            margin-bottom: 2rem;
-            height: 100%;
-        }
-
-        .stats-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            line-height: 1.2;
-            margin-bottom: 0.25rem;
-        }
-
-        .stats-label {
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        footer {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            color: var(--secondary-color);
-            text-align: center;
-            font-size: 0.9rem;
-            line-height: 1.6;
+        .flight-card-bs4 .contact-btn:hover {
+            background: #0a58ca;
         }
     </style>
-@endpush
 
-@section('content')
-    <div class="container">
-        <!-- Header Section -->
-        <div class="header-section text-center">
-            <h1>Available Baggage Space</h1>
-            <p class="px-3">Connect with verified travelers who have spare baggage capacity on their flights</p>
-        </div>
+    <div class="flightlist-page text-muted">
+        <div class="container">
+            {{-- HEADER --}}
+            <div class="header-section text-center">
+                <h1 style="color: white">Available Baggage Space</h1>
+                <p class="px-3" style="color: white">Connect with verified travelers who have spare baggage capacity on
+                    their flights</p>
+            </div>
 
-        <!-- Stats Section -->
-        <div class="row mb-4">
-            <div class="col-md-3 col-6 mb-3">
-                <div class="stats-box">
-                    <div class="stats-number">6</div>
-                    <div class="stats-label">Available Flights</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 mb-3">
-                <div class="stats-box">
-                    <div class="stats-number">112kg</div>
-                    <div class="stats-label">Total Capacity</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 mb-3">
-                <div class="stats-box">
-                    <div class="stats-number">2</div>
-                    <div class="stats-label">Verified Travelers</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 mb-3">
-                <div class="stats-box">
-                    <div class="stats-number">4.8</div>
-                    <div class="stats-label">Avg. Rating</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Filter Section -->
-        <div class="filter-section">
-            <h3 class="section-title">Filter Options</h3>
-            <div class="filter-row d-flex flex-wrap align-items-end">
-                <div class="filter-group flex-fill mr-2 mb-2">
-                    <div class="filter-label">Departure City</div>
-                    <select class="form-control" id="departureCity">
-                        <option selected>All Cities</option>
-                        <option>New York, NY</option>
-                        <option>Los Angeles, CA</option>
-                        <option>Miami, FL</option>
-                        <option>Chicago, IL</option>
-                        <option>Boston, MA</option>
-                        <option>Seattle, WA</option>
-                    </select>
-                </div>
-                <div class="filter-group flex-fill mr-2 mb-2">
-                    <div class="filter-label">Destination City</div>
-                    <select class="form-control" id="destinationCity">
-                        <option selected>All Cities</option>
-                        <option>London, UK</option>
-                        <option>Paris, France</option>
-                        <option>Barcelona, Spain</option>
-                        <option>Frankfurt, Germany</option>
-                        <option>Amsterdam, Netherlands</option>
-                        <option>Tokyo, Japan</option>
-                    </select>
-                </div>
-                <div class="filter-group flex-fill mr-2 mb-2">
-                    <div class="filter-label">Max Price per kg</div>
-                    <input type="range" class="custom-range" id="maxPrice" min="5" max="20" value="20">
-                    <div class="d-flex justify-content-between mt-1">
-                        <small class="text-muted">$5</small>
-                        <small class="text-muted" id="priceValue">$20</small>
+            {{-- STATS --}}
+            <div class="row mb-4">
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="stats-box">
+                        <div class="stats-number">6</div>
+                        <div class="text-muted">Available Flights</div>
                     </div>
                 </div>
-                <div class="filter-group flex-fill mb-2">
-                    <button class="btn btn-primary w-100">Apply Filters</button>
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="stats-box">
+                        <div class="stats-number">112kg</div>
+                        <div class="text-muted">Total Capacity</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="stats-box">
+                        <div class="stats-number">2</div>
+                        <div class="text-muted">Verified Travelers</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="stats-box">
+                        <div class="stats-number">4.8</div>
+                        <div class="text-muted">Avg. Rating</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Flight Listings -->
-        <h3 class="section-title">Available Flights</h3>
-        <div class="row">
-            @php
-                $flights = [
-                    [
-                        'airline' => 'UA123 • United Airlines',
-                        'price' => '$8/kg',
-                        'route' => 'New York, NY → London, UK',
-                        'departure' => '2/14/2025',
-                        'capacity' => '15kg available',
-                        'description' =>
-                            'Traveling light with extra baggage allowance. Happy to help with small packages!',
-                        'restrictions' => ['No liquids', 'No electronics', '+1 more'],
-                        'traveler' => 'Sarah Johnson',
-                        'rating' => '4.8',
-                        'reviews' => 24,
-                    ],
-                    [
-                        'airline' => 'BA456 • British Airways',
-                        'price' => '$12/kg',
-                        'route' => 'Los Angeles, CA → Paris, France',
-                        'departure' => '2/17/2025',
-                        'capacity' => '20kg available',
-                        'description' => 'Business traveler with premium baggage allowance. Reliable and experienced.',
-                        'restrictions' => ['No food items', 'No batteries'],
-                        'traveler' => 'Emma Wilson',
-                        'rating' => '4.8',
-                        'reviews' => 24,
-                    ],
-                    [
-                        'airline' => 'DL789 • Delta Airlines',
-                        'price' => '$10/kg',
-                        'route' => 'Miami, FL → Barcelona, Spain',
-                        'departure' => '2/21/2025',
-                        'capacity' => '12kg available',
-                        'description' => 'Perfect for documents and small business items. Quick and secure delivery.',
-                        'restrictions' => ['Documents only', 'Max 5kg per item'],
-                        'traveler' => 'Sarah Johnson',
-                        'rating' => '4.8',
-                        'reviews' => 24,
-                    ],
-                    [
-                        'airline' => 'LH321 • Lufthansa',
-                        'price' => '$9/kg',
-                        'route' => 'Chicago, IL → Frankfurt, Germany',
-                        'departure' => '2/24/2025',
-                        'capacity' => '18kg available',
-                        'description' => 'Frequent flyer with excellent track record. Professional service guaranteed.',
-                        'restrictions' => ['No liquids over 100ml', 'No sharp objects'],
-                        'traveler' => 'Emma Wilson',
-                        'rating' => '4.8',
-                        'reviews' => 24,
-                    ],
-                    [
-                        'airline' => 'AF654 • Air France',
-                        'price' => '$11/kg',
-                        'route' => 'Boston, MA → Amsterdam, Netherlands',
-                        'departure' => '2/27/2025',
-                        'capacity' => '25kg available',
-                        'description' => 'Large capacity available for fashion items and personal goods.',
-                        'restrictions' => ['No hazardous materials', 'Clothing and accessories only'],
-                        'traveler' => 'Sarah Johnson',
-                        'rating' => '4.8',
-                        'reviews' => 24,
-                    ],
-                    [
-                        'airline' => 'KL987 • KLM',
-                        'price' => '$15/kg',
-                        'route' => 'Seattle, WA → Tokyo, Japan',
-                        'departure' => '3/4/2025',
-                        'capacity' => '22kg available',
-                        'description' => 'Tech-friendly traveler. Perfect for electronics and gadgets.',
-                        'restrictions' => ['Electronics welcome', 'No food items'],
-                        'traveler' => 'Emma Wilson',
-                        'rating' => '4.8',
-                        'reviews' => 24,
-                    ],
-                ];
-            @endphp
-
-            @foreach ($flights as $flight)
-                <div class="col-lg-6 mb-4">
-                    <div class="flight-card">
-                        <div class="card-body d-flex flex-column">
-                            <div class="flight-header d-flex justify-content-between flex-wrap mb-3">
-                                <div class="airline-badge">{{ $flight['airline'] }}</div>
-                                <div class="price-tag">{{ $flight['price'] }}</div>
-                            </div>
-                            <div class="flight-details mb-3">
-                                <div class="flight-route">{{ $flight['route'] }}</div>
-                                <div class="departure-date"><strong>Departs:</strong> {{ $flight['departure'] }}</div>
-                                <div class="capacity-badge">{{ $flight['capacity'] }}</div>
-                            </div>
-                            <div class="flight-description">{{ $flight['description'] }}</div>
-                            <div class="restrictions-section mb-3">
-                                <div class="restrictions-label">Restrictions:</div>
-                                <div>
-                                    @foreach ($flight['restrictions'] as $r)
-                                        <span class="restriction-item">{{ $r }}</span>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="traveler-info mt-auto pt-3 border-top">
-                                <div class="traveler-details d-flex justify-content-between flex-wrap">
-                                    <div class="traveler-name-rating">
-                                        <div class="traveler-name">{{ $flight['traveler'] }}</div>
-                                        <div class="rating text-warning">
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                @if ($i <= floor($flight['rating']))
-                                                    <i class="bi bi-star-fill"></i>
-                                                @elseif($i - $flight['rating'] < 1)
-                                                    <i class="bi bi-star-half"></i>
-                                                @else
-                                                    <i class="bi bi-star"></i>
-                                                @endif
-                                            @endfor
-                                            <span class="rating-text text-muted">{{ $flight['rating'] }}
-                                                ({{ $flight['reviews'] }} reviews)</span>
-                                        </div>
-                                    </div>
-                                    <button class="contact-btn btn btn-primary">Contact</button>
-                                </div>
-                            </div>
+            {{-- FILTER --}}
+            <div class="card mb-4 filter-options">
+                <div class="card-body">
+                    <h4 class="text-primary mb-3">Filter Options</h4>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label>Departure City</label>
+                            <select class="form-control">
+                                <option>All Cities</option>
+                                <option>New York</option>
+                                <option>Los Angeles</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label>Destination City</label>
+                            <select class="form-control">
+                                <option>All Cities</option>
+                                <option>London</option>
+                                <option>Paris</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label>Max Price / kg</label>
+                            <input type="range" class="custom-range" min="5" max="20" value="20"
+                                id="priceRange">
+                            <small id="priceValue">$20</small>
+                        </div>
+                        <div class="col-md-3 mb-3 d-flex align-items-end">
+                            <button class="btn btn-primary btn-block">Apply Filters</button>
                         </div>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
 
-        <!-- Footer -->
-        <footer class="mt-4 text-center text-muted">
-            <p>Available Baggage Space &copy; 2025. Connect with verified travelers who have spare baggage capacity on their
-                flights.</p>
-            <p>This is a demonstration page. Actual booking and transactions would be handled through secure channels.</p>
-        </footer>
+            <h4 class="text-primary mb-3">Available Flights
+            </h4>
+
+            {{-- FLIGHTS --}}
+            <div class="row">
+                @foreach ([['UA123 • United Airlines', '$8/kg', 'New York → London', '2/14/2025', '15kg', 'Sarah Johnson'], ['BA456 • British Airways', '$12/kg', 'Los Angeles → Paris', '2/17/2025', '20kg', 'Emma Wilson'], ['DL789 • Delta', '$10/kg', 'Miami → Barcelona', '2/21/2025', '12kg', 'Sarah Johnson'], ['LH321 • Lufthansa', '$9/kg', 'Chicago → Frankfurt', '2/24/2025', '18kg', 'Emma Wilson'], ['AF654 • Air France', '$11/kg', 'Boston → Amsterdam', '2/27/2025', '25kg', 'Sarah Johnson'], ['KL987 • KLM', '$15/kg', 'Seattle → Tokyo', '3/4/2025', '22kg', 'Emma Wilson']] as $flight)
+                    <div class="col-lg-6 mb-4">
+                        <div class="flight-card-bs4">
+                            <div class="card-body">
+
+                                <div class="flight-header">
+                                    <div class="airline-badge">UA123 • United Airlines</div>
+                                    <div class="price-tag">$8/kg</div>
+                                </div>
+
+                                <div class="flight-details">
+                                    <div class="flight-route">New York, NY → London, UK</div>
+                                    <div class="departure-date">
+                                        <strong>Departs:</strong> 2/14/2025
+                                    </div>
+                                    <div class="capacity-badge">15kg available</div>
+                                </div>
+
+                                <div class="flight-description">
+                                    Traveling light with extra baggage allowance. Happy to help with small packages!
+                                </div>
+
+                                <div class="restrictions-section">
+                                    <div class="restrictions-label">Restrictions:</div>
+                                    <span class="restriction-item">No liquids</span>
+                                    <span class="restriction-item">No electronics</span>
+                                    <span class="restriction-item">+1 more</span>
+                                </div>
+
+                                <div class="traveler-info">
+                                    <div class="traveler-details">
+                                        <div>
+                                            <div class="traveler-name">Sarah Johnson</div>
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                                <span class="rating-text">4.8 (24 reviews)</span>
+                                            </div>
+                                        </div>
+
+                                        <button class="contact-btn">Contact</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <div class="col-lg-6 mb-4">
+        <div class="flight-card p-3">
+            <div class="d-flex justify-content-between mb-2">
+                <div class="airline-badge">{{ $flight[0] }}</div>
+                <div class="price-tag">{{ $flight[1] }}</div>
+            </div>
+            <h5>{{ $flight[2] }}</h5>
+            <p class="text-muted"><strong>Departs:</strong> {{ $flight[3] }}</p>
+            <span class="capacity-badge">{{ $flight[4] }} available</span>
+
+            <div class="mt-3">
+                <span class="restriction-item">No liquids</span>
+                <span class="restriction-item">No batteries</span>
+            </div>
+
+            <hr>
+            <div class="d-flex justify-content-between align-items-center">
+                <strong>{{ $flight[5] }}</strong>
+                <button class="contact-btn">Contact</button>
+            </div>
+        </div>
+    </div> --}}
+                @endforeach
+            </div>
+
+
+        </div>
     </div>
 
-    <!-- Custom JS -->
-    @push('scripts')
-        <script>
-            document.getElementById('maxPrice').addEventListener('input', function() {
-                document.getElementById('priceValue').textContent = '$' + this.value;
-            });
+    {{-- PAGE JS --}}
 
-            document.querySelectorAll('.contact-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const flightCard = this.closest('.flight-card');
-                    const airline = flightCard.querySelector('.airline-badge').textContent.split('•')[0].trim();
-                    const traveler = flightCard.querySelector('.traveler-name').textContent;
-                    alert(
-                        `Contacting ${traveler} for ${airline}. In a real application, this would connect you with the traveler.`);
-                });
-            });
-        </script>
-    @endpush
+    <script>
+        document.getElementById('priceRange').addEventListener('input', function() {
+            document.getElementById('priceValue').innerText = '$' + this.value
+        })
+    </script>
+
 @endsection

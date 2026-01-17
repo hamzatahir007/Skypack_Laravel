@@ -7,7 +7,7 @@
     </div>
 
 
-    <form method="POST" action="{{ route('client.inquiries.update', $inquiry->id) }}">
+    <form method="POST" action="{{ route('client.inquiries.update', $inquiry->id) }}" class="text-muted">
         @csrf
         @method('PUT')
 

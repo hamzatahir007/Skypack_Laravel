@@ -37,7 +37,7 @@
 </head>
 <body>
 
-<div class="container-fluid h-100" style="margin-top: 80px">
+<div class="container-fluid h-100 text-muted" style="margin-top: 80px" >
     <div class="row h-100">
 
         <!-- Left Image Column -->
@@ -48,9 +48,9 @@
         <!-- Login Form Column -->
         <div class="col-md-6 d-flex align-items-center justify-content-center bg-light">
             <div class="card login-card p-4 w-100" style="max-width: 400px;">
-                <div class="text-center mb-4 logo">
+                {{-- <div class="text-center mb-4 logo">
                     <img  src="{{ asset('img/logo.png') }}"  src="{{ asset('img/logo.png') }}" alt="ClassiFied Logo">
-                </div>
+                </div> --}}
 
                 <h3 class="text-center mb-4 fw-bold">Traveler Login</h3>
 

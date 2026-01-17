@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="container py-4">
+    <div class="container py-4 text-muted">
 
         {{-- Page Header --}}
         <div class="mb-4">

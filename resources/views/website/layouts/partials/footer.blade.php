@@ -59,7 +59,7 @@
             <div class="container">
                 <div class="footer_copyright_wrapper text-center d-sm-flex justify-content-between align-items-center">
                     <div class="copyright mt-15">
-                        <p>© 2025 Skypack Ltd. All rights reserved</p>
+                        <p>© 2025 Lauggagelink Ltd. All rights reserved</p>
                     </div>
                     <div class="payment mt-15">
                         <ul>

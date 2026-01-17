@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Registration | Skypack</title>
-   
+
     <style>
         body,
         html {
@@ -58,19 +58,19 @@
 
 <body>
 
-    <div class="container-fluid"  style="margin-top: 80px">
+    <div class="container-fluid" style="margin-top: 80px">
         <div class="row min-vh-100">
 
             <!-- Left Image Column -->
             <div class="col-md-6 d-none d-md-block bg-left"></div>
 
             <!-- Registration Form Column -->
-            <div class="col-md-6 d-flex align-items-center justify-content-center">
-                <div class="registration-card w-100" style="max-width: 600px;">
+            <div class="col-md-6 d-flex align-items-center justify-content-center bg-light  text-muted">
+                <div class="card registration-card w-100" style="max-width: 600px; margin-top:20px;">
 
-                    <div class="text-center mb-4 logo">
+                    {{-- <div class="text-center mb-4 logo">
                         <img src="{{ asset('img/logo.png') }}" alt="Skypack Logo">
-                    </div>
+                    </div> --}}
 
                     <h2 class="text-center mb-4">Client Registration</h2>
 
@@ -157,7 +157,7 @@
 
                             <div class="col-md-6">
                                 <label class="form-label">Gender</label>
-                                <select name="gender" class="form-select">
+                                <select name="gender" class="form-control">
                                     <option value="">Select</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -202,38 +202,38 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-     @if (session('success'))
-         <script>
-             Swal.fire({
-                 icon: 'success',
-                 title: 'Success',
-                 text: "{{ session('success') }}",
-                 timer: 3000,
-                 showConfirmButton: false,
-                 toast: true,
-                 position: 'top-end'
-             });
-         </script>
-     @endif
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                timer: 3000,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
+        </script>
+    @endif
 
-     @if (session('error'))
-         <script>
-             Swal.fire({
-                 icon: 'error',
-                 title: 'Error',
-                 text: "{{ session('error') }}",
-                 timer: 3000,
-                 showConfirmButton: false,
-                 toast: true,
-                 position: 'top-end'
-             });
-         </script>
-     @endif
-     
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+                timer: 3000,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
+        </script>
+    @endif
+
 </body>
 
 </html>

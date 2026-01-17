@@ -9,7 +9,7 @@
     </div>
 
 
-    <form method="POST" action="{{ route('client.inquiries.store') }}">
+    <form method="POST" action="{{ route('client.inquiries.store') }}" class="text-muted">
         @csrf
 
         {{-- MASTER SECTION --}}

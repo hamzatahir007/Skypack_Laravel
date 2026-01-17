@@ -1,11 +1,10 @@
 <div class="header_navbar shadow-sm" style="background-color:white;">
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light p-0" style="height: 80px">
+        <nav class="navbar navbar-expand-lg navbar-light p-0" style="height:80px">
 
             {{-- LOGO --}}
             <a class="navbar-brand font-weight-bold d-flex align-items-center" href="{{ url('/') }}">
-                <img src="{{ asset('img/logo.png') }}" width="36" class="mr-2" alt="logo">
-                BagSpace
+                <img src="{{ asset('img/bagspacelogo.png') }}" width="400" class="mr-2" alt="logo">
             </a>
 
             {{-- MOBILE TOGGLE --}}
@@ -57,8 +56,8 @@
 
                         @if (session()->has('client_id') || session()->has('traveler_id'))
                             <div class="dropdown text-center">
-                                <a style="color: black !important"  href="#" class="btn btn-outline-primary dropdown-toggle"
-                                    data-toggle="dropdown">
+                                <a style="color: black !important" href="#"
+                                    class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
                                     {{ session('client_name') ?? session('traveler_name') }}
                                 </a>
 
@@ -70,7 +69,8 @@
                                     </a>
 
                                     @if (session()->has('traveler_id'))
-                                        <a style="color: black !important" class="dropdown-item" href="{{ route('traveler.bank.index') }}">
+                                        <a style="color: black !important" class="dropdown-item"
+                                            href="{{ route('traveler.bank.index') }}">
                                             Bank Account
                                         </a>
                                     @endif
@@ -114,26 +114,27 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="https://i.pravatar.cc/40" class="rounded-circle mr-2" width="36">
                             <span class="font-weight-semibold text-dark">
-                                {{ session('client_name') ?? session('traveler_name') }}
+                                {{ collect(explode(' ', session('client_name') ?? session('traveler_name')))->take(2)->implode(' ') }}
                             </span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right shadow">
 
-                            <a style="color: black !important"  class="dropdown-item"
+                            <a style="color: black !important" class="dropdown-item"
                                 href="{{ session()->has('client_id') ? route('client.dashboard') : route('traveler.dashboard') }}">
                                 Dashboard
                             </a>
 
                             @if (session()->has('traveler_id'))
-                                <a style="color: black !important"  class="dropdown-item" href="{{ route('traveler.bank.index') }}">
+                                <a style="color: black !important" class="dropdown-item"
+                                    href="{{ route('traveler.bank.index') }}">
                                     Bank Account
                                 </a>
                             @endif
 
                             <div class="dropdown-divider"></div>
 
-                            <a style="color: black !important"  class="dropdown-item text-danger" href="#"
+                            <a style="color: black !important" class="dropdown-item text-danger" href="#"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Logout
                             </a>

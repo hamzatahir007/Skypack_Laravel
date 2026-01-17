@@ -3,7 +3,7 @@
 @section('title', 'Flight Details - ' . ($flight->pnr_no ?? 'PNR'))
 
 @section('content')
-    <div class="container py-4">
+    <div class="container py-4 text-muted">
         <div class="row g-3">
 
             {{-- Left / Main Column --}}

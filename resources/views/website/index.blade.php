@@ -23,28 +23,28 @@
 
 @section('content')
 
- <!--====== PRELOADER PART START ======-->
+    <!--====== PRELOADER PART START ======-->
 
-        <div class="preloader" id="ll-preloader">
-            <div class="loader">
-                <div class="ytp-spinner">
-                    <div class="ytp-spinner-container">
-                        <div class="ytp-spinner-rotator">
-                            <div class="ytp-spinner-left">
-                                <div class="ytp-spinner-circle"></div>
-                            </div>
-                            <div class="ytp-spinner-right">
-                                <div class="ytp-spinner-circle"></div>
-                            </div>
+    <div class="preloader" id="ll-preloader">
+        <div class="loader">
+            <div class="ytp-spinner">
+                <div class="ytp-spinner-container">
+                    <div class="ytp-spinner-rotator">
+                        <div class="ytp-spinner-left">
+                            <div class="ytp-spinner-circle"></div>
+                        </div>
+                        <div class="ytp-spinner-right">
+                            <div class="ytp-spinner-circle"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!--====== PRELOADER PART ENDS ======-->
+    <!--====== PRELOADER PART ENDS ======-->
 
-    <div class="gray-bg" >
+    <div class="gray-bg">
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -53,7 +53,7 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
-       
+
 
         <!--====== HEADER PART START ======-->
 
@@ -184,34 +184,37 @@
 
                         @foreach ($countries as $country)
                             <div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
-                                <div class="single_locations mt-30">
-                                    <div class="locations_image">
-                                        {{-- IMAGE — If you stored country flags/photos in DB --}}
-                                        @if ($country->image)
-                                            <img src="{{ asset('storage/' . $country->image) }}" class="rounded-country"
-                                                alt="{{ $country->name }}">
-                                        @else
-                                            <img src="{{ asset('img/default-country.jpg') }}">
-                                        @endif
-                                    </div>
+                                <a href="{{ route('/listspace', ['country' => $country->id]) }}"
+                                    class="text-decoration-none d-block">
+                                    <div class="single_locations mt-30">
+                                        <div class="locations_image">
+                                            {{-- IMAGE — If you stored country flags/photos in DB --}}
+                                            @if ($country->image)
+                                                <img src="{{ asset('storage/' . $country->image) }}"
+                                                    class="rounded-country" alt="{{ $country->name }}">
+                                            @else
+                                                <img src="{{ asset('img/default-country.jpg') }}">
+                                            @endif
+                                        </div>
 
-                                    <div class="locations_content">
-                                        <h5 class="title">
-                                            <a href="#">
-                                                <i class="fa fa-map-marker-alt"></i>
-                                                {{ $country->name }}
+                                        <div class="locations_content">
+                                            <h5 class="title">
+                                                <a href="#">
+                                                    <i class="fa fa-map-marker-alt"></i>
+                                                    {{ $country->name }}
+                                                </a>
+                                            </h5>
+
+                                            <p>
+                                                {{ $country->cities_count }} Cities in this country
+                                            </p>
+
+                                            <a class="view" href="#">
+                                                View All Ads Here <i class="fa fa-angle-right"></i>
                                             </a>
-                                        </h5>
-
-                                        <p>
-                                            {{ $country->cities_count }} Cities in this country
-                                        </p>
-
-                                        <a class="view" href="#">
-                                            View All Ads Here <i class="fa fa-angle-right"></i>
-                                        </a>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         @endforeach
 
@@ -715,31 +718,31 @@
             });
         </script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
 
-    const preloader = document.getElementById('ll-preloader');
-    const page = document.getElementById('ll-page-wrapper');
+                const preloader = document.getElementById('ll-preloader');
+                const page = document.getElementById('ll-page-wrapper');
 
-    document.body.classList.add('ll-loading');
+                document.body.classList.add('ll-loading');
 
-    // FORCE loader for 3 seconds
-    setTimeout(function () {
+                // FORCE loader for 3 seconds
+                setTimeout(function() {
 
-        if (preloader) {
-            preloader.style.opacity = '0';
-            preloader.style.transition = 'opacity 0.4s ease';
-        }
+                    if (preloader) {
+                        preloader.style.opacity = '0';
+                        preloader.style.transition = 'opacity 0.4s ease';
+                    }
 
-        setTimeout(function () {
-            if (preloader) preloader.style.display = 'none';
-            if (page) page.style.display = 'block';
-            document.body.classList.remove('ll-loading');
-        }, 400);
+                    setTimeout(function() {
+                        if (preloader) preloader.style.display = 'none';
+                        if (page) page.style.display = 'block';
+                        document.body.classList.remove('ll-loading');
+                    }, 400);
 
-    }, 3000); // ⏱️ 3 seconds guaranteed
-});
-</script>
+                }, 3000); // ⏱️ 3 seconds guaranteed
+            });
+        </script>
 
 
     </div>

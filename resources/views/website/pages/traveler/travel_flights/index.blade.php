@@ -10,7 +10,7 @@
         </a>
     </div>
 
-    <div class="card shadow-sm border-0">
+    <div class="card shadow-sm border-0 text-muted">
         <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">All Flights</h6>
         </div>

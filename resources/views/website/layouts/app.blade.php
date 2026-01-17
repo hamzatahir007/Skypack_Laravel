@@ -1,7 +1,7 @@
  <head>
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
      <!--====== Title ======-->
-     <title>BagSpace</title>
+     <title>LauggaeLink</title>
 
      <meta name="description" content="">
      <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -178,7 +178,60 @@
              color: #888;
          }
 
-         
+         .client-dashboard-page .dashboard-card {
+             background: #ffffff;
+             border-radius: 10px;
+             padding: 30px 15px;
+             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+             text-decoration: none;
+             color: #333;
+             transition: all 0.3s ease;
+             height: 100%;
+         }
+
+         .client-dashboard-page .dashboard-card:hover {
+             transform: translateY(-5px);
+             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+             text-decoration: none;
+         }
+
+         .client-dashboard-page .dashboard-icon {
+             font-size: 36px;
+             margin-bottom: 10px;
+         }
+
+         .client-dashboard-page .dashboard-title {
+             font-size: 15px;
+             font-weight: 600;
+         }
+
+         .traveler-dashboard-page .dashboard-card {
+             background: #ffffff;
+             border-radius: 10px;
+             padding: 30px 15px;
+             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+             color: #333;
+             text-decoration: none;
+             transition: all 0.3s ease;
+             height: 100%;
+         }
+
+         .traveler-dashboard-page .dashboard-card:hover {
+             transform: translateY(-5px);
+             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+             text-decoration: none;
+         }
+
+         .traveler-dashboard-page .dashboard-icon {
+             font-size: 36px;
+             margin-bottom: 12px;
+         }
+
+         .traveler-dashboard-page .dashboard-title {
+             font-size: 15px;
+             font-weight: 600;
+         }
+
      </style>
 
 
@@ -201,6 +254,8 @@
 
      <!-- Bootstrap JS -->
      {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script> --}}
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
      <!--====== Jquery js ======-->
      <script src="{{ asset('Home _ ClassiFied_files/jquery-1.12.4.min.js') }}"></script>
