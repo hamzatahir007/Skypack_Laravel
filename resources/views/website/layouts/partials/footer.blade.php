@@ -1,7 +1,7 @@
 <!--====== FOOTER PART START ======-->
 
     <footer class="footer_area">
-        <div class="footer_widget pt-70 pb-120">
+        <div style="background: #F4F5F7" class="footer_widget pt-70 pb-120">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-sm-6">

@@ -638,7 +638,7 @@
 
 
 
-        <section class="call_to_action_area pt-20 pb-70">
+        <section class="call_to_action_area pt-20 pb-70" >
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-5">

@@ -58,7 +58,7 @@
 
                                 <hr>
 
-                                <div class="mb-2 text-muted ">
+                                {{-- <div class="mb-2 text-muted ">
                                     <strong>Status:</strong>
                                     <span
                                         class="badge
@@ -67,7 +67,7 @@
                                     @else bg-secondary @endif">
                                         {{ $flight->status }}
                                     </span>
-                                </div>
+                                </div> --}}
 
                                 <div class="row">
                                     <div class="col-6 text-muted ">

@@ -76,9 +76,71 @@ class IndexAuthController extends Controller
         // return view('website.index');
     }
 
-    public function listspace()
+    public function listspace(Request $request)
     {
-        return view('website.pages.flightList');
+        // Dropdown data
+        $cities = City::with('country')->orderBy('name')->get();
+        $countries = Country::orderBy('name')->get();
+
+        // Base flight query
+        $query = TravelFlight::with([
+            'traveler:id,full_name',
+            'cityOrigin:id,name,country_id',
+            'cityDestination:id,name,country_id'
+        ])
+            ->whereNull('deleted_at')
+            ->where('active', 1);
+
+        // FILTER: Departure City
+        if ($request->filled('pickup')) {
+            $query->where('origin', $request->pickup);
+        }
+
+        // FILTER: Destination City
+        if ($request->filled('dropoff')) {
+            $query->where('destination', $request->dropoff);
+        }
+
+        // FILTER: Max Price per kg
+        if ($request->filled('max_price')) {
+            $query->where('rate_per_unit', '<=', $request->max_price);
+        }
+
+        // 🔥 AUTO FILTER FROM URL (country)
+        // /listspace?country=3
+        if ($request->filled('country')) {
+            // $query->whereHas('cityDestination', function ($q) use ($request) {
+            //     $q->where('country_id', $request->country);
+            // });
+            $query->where(function ($q) use ($request) {
+                $q->whereHas('cityOrigin', function ($q2) use ($request) {
+                    $q2->where('country_id', $request->country);
+                })
+                    ->orWhereHas('cityDestination', function ($q2) use ($request) {
+                        $q2->where('country_id', $request->country);
+                    });
+            });
+        }
+
+        // Flights
+        $flights = $query
+            ->orderByDesc('flight_date')
+            ->paginate(12)
+            ->withQueryString();
+
+        // Stats
+        $stats = [
+            'total_flights' => $flights->total(),
+            'total_capacity' => $query->sum('weight'),
+            'verified_travelers' => $query->distinct('traveler_id')->count('traveler_id'),
+        ];
+
+        return view('website.pages.flightList', compact(
+            'flights',
+            'cities',
+            'countries',
+            'stats'
+        ));
     }
 
     public function show($id)

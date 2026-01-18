@@ -37,7 +37,7 @@
          body {
              /* background: linear-gradient(135deg, #0d6efd 0%, #1158d6 100%); */
              color: #fff;
-             background: #F4F5F7
+                 /* background: #F4F5F7 */
          }
 
          .navbar {
@@ -65,7 +65,7 @@
          .select2-container .select2-selection--single {
              background-color: #f3f3f3 !important;
              height: 45px !important;
-             width: 150px;
+             /* width: 150px; */
              /* full width of parent column */
              border-radius: 8px !important;
              border: none !important;
@@ -232,6 +232,11 @@
              font-weight: 600;
          }
 
+         .select2-container {
+             display: block;
+             background-color: #f3f3f3;
+             border-radius: 10px;
+         }
      </style>
 
 
@@ -303,12 +308,15 @@
          $('#fromCity').select2({
              placeholder: "From City",
              allowClear: true,
+             width: '100%'
 
          });
          $('#toCity').select2({
              placeholder: "To City",
-             allowClear: true
+             allowClear: true,
+             width: '100%'
          });
+
 
          // Datepicker
          flatpickr("#travelDate", {

@@ -11,7 +11,7 @@
             --primary-color: #0d6efd;
             --secondary-color: #6c757d;
             --accent-color: #198754;
-            background: #f8f9fa;
+            /* background: #f8f9fa; */
             padding-bottom: 40px;
         }
 
@@ -21,13 +21,13 @@
             padding: 2rem 0;
             border-radius: .5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .1)
+            box-shadow: 0 14px 42px rgba(0, 0, 0, .08);
         }
 
         .filter-options {
             border-radius: .75rem;
             border: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+            box-shadow: 0 14px 42px rgba(0, 0, 0, .08);
             transition: .3s;
             overflow: hidden;
             /* height: 100% */
@@ -36,7 +36,7 @@
         .flightlist-page .flight-card {
             border-radius: .75rem;
             border: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+            box-shadow: 0 14px 42px rgba(0, 0, 0, .08);
             transition: .3s;
             overflow: hidden;
             height: 100%
@@ -98,7 +98,7 @@
             border-radius: .75rem;
             padding: 1.5rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .06)
+            box-shadow: 0 14px 42px rgba(0, 0, 0, .08);
         }
 
         .flightlist-page .stats-number {
@@ -252,19 +252,19 @@
             <div class="row mb-4">
                 <div class="col-md-3 col-6 mb-3">
                     <div class="stats-box">
-                        <div class="stats-number">6</div>
+                        <div class="stats-number"> {{ $stats['total_flights'] ?? '6' }}</div>
                         <div class="text-muted">Available Flights</div>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-3">
                     <div class="stats-box">
-                        <div class="stats-number">112kg</div>
+                        <div class="stats-number">{{ $stats['total_capacity'] ?? '112' }}kg</div>
                         <div class="text-muted">Total Capacity</div>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-3">
                     <div class="stats-box">
-                        <div class="stats-number">2</div>
+                        <div class="stats-number">{{ $stats['verified_travelers'] ?? '2' }}</div>
                         <div class="text-muted">Verified Travelers</div>
                     </div>
                 </div>
@@ -280,33 +280,47 @@
             <div class="card mb-4 filter-options">
                 <div class="card-body">
                     <h4 class="text-primary mb-3">Filter Options</h4>
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <label>Departure City</label>
-                            <select class="form-control">
-                                <option>All Cities</option>
-                                <option>New York</option>
-                                <option>Los Angeles</option>
-                            </select>
+                    <form method="GET" action="{{ route('/listspace') }}">
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label>Departure City</label>
+                                <select id="fromCity" name="pickup" class="form-control">
+                                    <option value="">All Cities</option>
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}"
+                                            {{ request('pickup') == $city->id ? 'selected' : '' }}>
+                                            {{ $city->name }}
+                                        </option>
+                                    @endforeach
+                                    {{-- <option>All Cities</option>
+                                    <option>New York</option>
+                                    <option>Los Angeles</option> --}}
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label>Destination City</label>
+                                <select id="toCity" name="dropoff" class="form-control">
+                                    <option value="">All Cities</option>
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}"
+                                            {{ request('dropoff') == $city->id ? 'selected' : '' }}>
+                                            {{ $city->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label>Max Price / kg</label>
+                                <input type="range" name="max_price" class="custom-range" min="1" max="50"
+                                    value="20" id="priceRange" value="{{ request('max_price', 50) }}"
+                                    oninput="document.getElementById('priceValue').innerText='$'+this.value">
+                                <small id="priceValue">${{ request('max_price', 50) }}</small>
+                            </div>
+                            <div class="col-md-3 mb-3 d-flex align-items-end">
+                                <button class="btn btn-primary btn-block">Apply Filters</button>
+                            </div>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label>Destination City</label>
-                            <select class="form-control">
-                                <option>All Cities</option>
-                                <option>London</option>
-                                <option>Paris</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label>Max Price / kg</label>
-                            <input type="range" class="custom-range" min="5" max="20" value="20"
-                                id="priceRange">
-                            <small id="priceValue">$20</small>
-                        </div>
-                        <div class="col-md-3 mb-3 d-flex align-items-end">
-                            <button class="btn btn-primary btn-block">Apply Filters</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
 
@@ -315,22 +329,39 @@
 
             {{-- FLIGHTS --}}
             <div class="row">
-                @foreach ([['UA123 • United Airlines', '$8/kg', 'New York → London', '2/14/2025', '15kg', 'Sarah Johnson'], ['BA456 • British Airways', '$12/kg', 'Los Angeles → Paris', '2/17/2025', '20kg', 'Emma Wilson'], ['DL789 • Delta', '$10/kg', 'Miami → Barcelona', '2/21/2025', '12kg', 'Sarah Johnson'], ['LH321 • Lufthansa', '$9/kg', 'Chicago → Frankfurt', '2/24/2025', '18kg', 'Emma Wilson'], ['AF654 • Air France', '$11/kg', 'Boston → Amsterdam', '2/27/2025', '25kg', 'Sarah Johnson'], ['KL987 • KLM', '$15/kg', 'Seattle → Tokyo', '3/4/2025', '22kg', 'Emma Wilson']] as $flight)
+                {{-- @foreach ([['UA123 • United Airlines', '$8/kg', 'New York → London', '2/14/2025', '15kg', 'Sarah Johnson'], ['BA456 • British Airways', '$12/kg', 'Los Angeles → Paris', '2/17/2025', '20kg', 'Emma Wilson'], ['DL789 • Delta', '$10/kg', 'Miami → Barcelona', '2/21/2025', '12kg', 'Sarah Johnson'], ['LH321 • Lufthansa', '$9/kg', 'Chicago → Frankfurt', '2/24/2025', '18kg', 'Emma Wilson'], ['AF654 • Air France', '$11/kg', 'Boston → Amsterdam', '2/27/2025', '25kg', 'Sarah Johnson'], ['KL987 • KLM', '$15/kg', 'Seattle → Tokyo', '3/4/2025', '22kg', 'Emma Wilson']] as $flight) --}}
+                @forelse ($flights as $flight)
                     <div class="col-lg-6 mb-4">
                         <div class="flight-card-bs4">
                             <div class="card-body">
 
                                 <div class="flight-header">
-                                    <div class="airline-badge">UA123 • United Airlines</div>
-                                    <div class="price-tag">$8/kg</div>
+                                    <div class="airline-badge">
+                                       Flight PNR: {{ $flight->pnr_no ?? 'Flight' }}
+                                        {{-- UA123 • United Airlines --}}
+                                    </div>
+                                    <div class="price-tag">
+                                        {{-- $8/kg --}}
+                                        ${{ $flight->rate_per_unit }}/kg
+                                    </div>
                                 </div>
 
                                 <div class="flight-details">
-                                    <div class="flight-route">New York, NY → London, UK</div>
-                                    <div class="departure-date">
-                                        <strong>Departs:</strong> 2/14/2025
+                                    <div class="flight-route">
+                                        {{ $flight->cityOrigin->name }}
+                                        →
+                                        {{ $flight->cityDestination->name }}
+                                        {{-- New York, NY → London, UK --}}
                                     </div>
-                                    <div class="capacity-badge">15kg available</div>
+                                    <div class="departure-date">
+                                        <strong>Departs:</strong>
+                                        {{ optional($flight->flight_date)->format('d M Y') }}
+                                        {{-- 2/14/2025 --}}
+                                    </div>
+                                    <div class="capacity-badge">
+                                        {{ $flight->weight }}kg available
+                                        {{-- 15kg available --}}
+                                    </div>
                                 </div>
 
                                 <div class="flight-description">
@@ -347,7 +378,10 @@
                                 <div class="traveler-info">
                                     <div class="traveler-details">
                                         <div>
-                                            <div class="traveler-name">Sarah Johnson</div>
+                                            <div class="traveler-name">
+                                                {{ $flight->traveler->full_name }}
+                                                {{-- Sarah Johnson --}}
+                                            </div>
                                             <div class="rating">
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
@@ -358,43 +392,29 @@
                                             </div>
                                         </div>
 
-                                        <button class="contact-btn">Contact</button>
+                                        <a href="{{ route('flight.details', $flight->id) }}"
+                                            class="contact-btn text-white">View Details</a>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
                     </div>
-
-                    {{-- <div class="col-lg-6 mb-4">
-        <div class="flight-card p-3">
-            <div class="d-flex justify-content-between mb-2">
-                <div class="airline-badge">{{ $flight[0] }}</div>
-                <div class="price-tag">{{ $flight[1] }}</div>
-            </div>
-            <h5>{{ $flight[2] }}</h5>
-            <p class="text-muted"><strong>Departs:</strong> {{ $flight[3] }}</p>
-            <span class="capacity-badge">{{ $flight[4] }} available</span>
-
-            <div class="mt-3">
-                <span class="restriction-item">No liquids</span>
-                <span class="restriction-item">No batteries</span>
-            </div>
-
-            <hr>
-            <div class="d-flex justify-content-between align-items-center">
-                <strong>{{ $flight[5] }}</strong>
-                <button class="contact-btn">Contact</button>
-            </div>
-        </div>
-    </div> --}}
-                @endforeach
+                @empty
+                    <div class="col-12 text-center text-muted">
+                        No flights found.
+                    </div>
+                @endforelse
             </div>
 
 
         </div>
     </div>
 
+    {{-- Pagination --}}
+    <div class="mt-4">
+        {{ $flights->links() }}
+    </div>
     {{-- PAGE JS --}}
 
     <script>
