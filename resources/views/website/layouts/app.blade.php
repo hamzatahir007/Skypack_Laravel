@@ -37,7 +37,7 @@
          body {
              /* background: linear-gradient(135deg, #0d6efd 0%, #1158d6 100%); */
              color: #fff;
-                 /* background: #F4F5F7 */
+             /* background: #F4F5F7 */
          }
 
          .navbar {
@@ -57,7 +57,7 @@
 
          .search-box {
              background: #fff;
-             border-radius: 15px;
+             border-radius: 20px;
              padding: 20px;
              box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
          }
@@ -178,9 +178,13 @@
              color: #888;
          }
 
+         .client-dashboard-page {
+             margin-bottom: 200px
+         }
+
          .client-dashboard-page .dashboard-card {
              background: #ffffff;
-             border-radius: 10px;
+             border-radius: 20px;
              padding: 30px 15px;
              box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
              text-decoration: none;
@@ -205,9 +209,13 @@
              font-weight: 600;
          }
 
+         .traveler-dashboard-page {
+             margin-bottom: 200px !important;
+         }
+
          .traveler-dashboard-page .dashboard-card {
              background: #ffffff;
-             border-radius: 10px;
+             border-radius: 20px;
              padding: 30px 15px;
              box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
              color: #333;
@@ -236,6 +244,48 @@
              display: block;
              background-color: #f3f3f3;
              border-radius: 10px;
+         }
+
+         .flight-details-header h3 {
+             font-weight: 700;
+             letter-spacing: 0.3px;
+             color: #2c2f36;
+         }
+
+         .flight-details-header .header-underline {
+             display: block;
+             width: 60px;
+             height: 3px;
+             background: linear-gradient(90deg, #0d6efd, #6ea8fe);
+             border-radius: 2px;
+             margin-top: 6px;
+         }
+
+
+         .bank-card {
+             border-radius: 14px;
+             background: #ffffff;
+         }
+
+         .bg-primary-soft {
+             background-color: rgba(13, 110, 253, 0.1);
+         }
+
+         .bank-item label {
+             font-size: 13px;
+             color: #6c757d;
+             margin-bottom: 4px;
+             display: block;
+         }
+
+         .bank-item div {
+             font-size: 15px;
+             font-weight: 600;
+             color: #212529;
+         }
+
+         .empty-state {
+             border-radius: 14px;
          }
      </style>
 
@@ -317,6 +367,16 @@
              width: '100%'
          });
 
+         $('#selectOp').select2({
+             placeholder: "Select here",
+             allowClear: true,
+             width: '100%'
+         });
+
+         $('.selectOp').select2({
+             width: '100%',
+             allowClear: true
+         });
 
          // Datepicker
          flatpickr("#travelDate", {

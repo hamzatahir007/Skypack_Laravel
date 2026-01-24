@@ -5,19 +5,19 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 text-gray-800">Flights List</h1>
-        <a href="{{ route('traveler.flights.create') }}" class="btn btn-primary">
+        <a href="{{ route('traveler.flights.create') }}" class="btn btn-primary btn-radius">
             <i class="fas fa-plus-circle me-1"></i> Add Flight
         </a>
     </div>
 
-    <div class="card shadow-sm border-0 text-muted">
+    <div class="card shadow-sm border-0 text-muted traveler-dashboard-page">
         <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">All Flights</h6>
         </div>
 
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover table-bordered mb-0">
+                <table class="table table-hover mb-0">
                     <thead class="table-light">
                         <tr>
                             <th>#</th>

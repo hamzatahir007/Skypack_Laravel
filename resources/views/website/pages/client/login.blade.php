@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Login | Skypack</title>
+    <title>Luggagelink</title>
 
     <!-- Custom Styles -->
     <style>
@@ -88,7 +88,7 @@
                                 placeholder="Enter your password" required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">Login</button>
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3  btn-radius">Login</button>
 
                         <div class="text-center">
                             <a href="{{ route('client.register') }}" class="text-decoration-none small">Don't have as

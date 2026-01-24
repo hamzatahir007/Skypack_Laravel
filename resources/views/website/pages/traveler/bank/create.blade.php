@@ -1,5 +1,6 @@
 @extends('website.layouts.app')
 @section('content')
+<div class="traveler-dashboard-page">
     <h4>{{ isset($account) ? 'Edit' : 'Add' }} Bank Account</h4>
 
     <form method="POST"
@@ -23,4 +24,5 @@
             <button class="btn btn-success w-100">Save</button>
         </div>
     </form>
+</div>
 @endsection

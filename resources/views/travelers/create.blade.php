@@ -93,7 +93,7 @@
                 <!-- Gender -->
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Gender</label>
-                    <select name="gender" class="form-control">
+                    <select id="selectOp" name="gender" class="form-control">
                         <option value="">Select</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
@@ -102,7 +102,7 @@
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Status</label>
-                    <select name="active" class="form-control">
+                    <select id="selectOp" name="active" class="form-control">
                         <option value="">Select</option>
                         <option value='1'>Active</option>
                         <option value='0'>Not Active</option>

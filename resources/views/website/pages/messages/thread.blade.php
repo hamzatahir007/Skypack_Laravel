@@ -3,23 +3,23 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
-
         <h3>Messages</h3>
 
         @if (session()->has('client_id'))
-            <a href="{{ route('client.messages.create', [$inquiryId, $flightId]) }}" class="btn btn-primary mb-3">
+            <a href="{{ route('client.messages.create', [$inquiryId, $flightId]) }}" class="btn-radius btn btn-primary mb-3">
                 New Message
             </a>
         @endif
 
         @if (session()->has('traveler_id'))
-            <a href="{{ route('traveler.messages.create', [$inquiryId, $flightId]) }}" class="btn btn-primary mb-3">
+            <a href="{{ route('traveler.messages.create', [$inquiryId, $flightId]) }}" class="btn-radius btn btn-primary mb-3">
                 New Message
             </a>
         @endif
     </div>
-    <div class="card shadow-sm">
-        <div class="list-group list-group-flush" style="max-height: 400px; overflow-y: auto;">
+
+    <div class="card shadow-sm client-dashboard-page ">
+        <div class="list-group list-group-flush btn-radius" style="max-height: 400px; overflow-y: auto;">
             @forelse ($messages as $msg)
                 <a href="@if (session()->has('client_id')) {{ route('client.messages.show', $msg->id) }} @else {{ route('traveler.messages.show', $msg->id) }} @endif"
                     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">

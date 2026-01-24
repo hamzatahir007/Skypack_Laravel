@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Traveler Login | Skypack</title>
+    <title>Luggagelink</title>
       <!-- Custom Styles -->
     <style>
         body, html {
@@ -81,7 +81,7 @@
                         <input type="password" name="password" id="password" class="form-control form-control-lg" placeholder="Enter your password" required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">Login</button>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mb-3  btn-radius">Login</button>
 
                  <div class="text-center">
                         <a href="{{ route('traveler.register') }}" class="text-decoration-none small">Don't have as account? Register</a>

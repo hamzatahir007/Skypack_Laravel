@@ -145,7 +145,9 @@ class TravelerAuthController extends Controller
             'active' => 'nullable|boolean',
             'ticket_pic' => 'nullable|image|max:2048',
             'weight' => 'nullable|numeric',
-            'rate_per_unit' => 'nullable|numeric'
+            'rate_per_unit' => 'nullable|numeric',
+            'description' => 'nullable|string',
+            'restrictions' => 'nullable|array',
         ]);
 
         if ($request->hasFile('ticket_pic')) {
@@ -156,6 +158,11 @@ class TravelerAuthController extends Controller
         $validated['total'] = ($request->weight * $request->rate_per_unit);
 
         $validated['create_by'] = session('traveler_id');
+
+        // Remove empty tags
+        $data['restrictions'] = array_values(
+            array_filter($request->restrictions ?? [])
+        );
 
         TravelFlight::create($validated);
 
@@ -187,7 +194,9 @@ class TravelerAuthController extends Controller
             'active' => 'nullable|boolean',
             'ticket_pic' => 'nullable|image|max:2048',
             'weight' => 'nullable|numeric',
-            'rate_per_unit' => 'nullable|numeric'
+            'rate_per_unit' => 'nullable|numeric',
+             'description' => 'nullable|string',
+            'restrictions' => 'nullable|array',
         ]);
 
         if ($request->hasFile('ticket_pic')) {
@@ -197,6 +206,10 @@ class TravelerAuthController extends Controller
         $validated['total'] = ($request->weight * $request->rate_per_unit);
 
         $validated['update_by'] = session('traveler_id');
+         // Remove empty tags
+        $data['restrictions'] = array_values(
+            array_filter($request->restrictions ?? [])
+        );
 
         $travel_flight->update($validated);
 

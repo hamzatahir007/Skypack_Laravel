@@ -3,7 +3,12 @@
 @section('title', 'Flight Details - ' . ($flight->pnr_no ?? 'PNR'))
 
 @section('content')
-    <div class="container py-4 text-muted">
+    <div class="container py-4 text-muted traveler-dashboard-page">
+        <div class="flight-details-header mb-4">
+            <h3 class="mb-1">Flight Details</h3>
+            <span class="header-underline"></span>
+        </div>
+
         <div class="row g-3">
 
             {{-- Left / Main Column --}}
@@ -25,7 +30,8 @@
                             <div class="card-body">
                                 <h3 class="card-title mb-1">PNR: {{ $flight->pnr_no ?? '—' }}</h3>
                                 <p class="text-muted mb-2">Travel Date:
-                                    {{ optional($flight->flight_date)->format('d M, Y H:i') ?? '-' }}</p>
+                                    {{ optional($flight->flight_date)->format('d M, Y H:i') ?? '-' }}
+                                </p>
 
                                 <div class="text-muted  mb-3">
                                     <strong>Traveler:</strong>
@@ -167,7 +173,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-3">
+                        <div class="mt-3 ">
                             @if (session()->has('client_id'))
 
                                 @php
@@ -177,17 +183,17 @@
                                 @endphp
 
                                 @if ($alreadySent)
-                                    <div class="alert alert-success text-center">
+                                    <div class="alert alert-success text-center btn-radius">
                                         <strong>You already sent an inquiry for this flight.</strong>
                                     </div>
                                 @else
                                     <a href="{{ route('client.inquiries.create', ['flight_id' => $flight->id]) }}"
-                                        class="btn btn-primary w-100 mb-2">
+                                        class="btn btn-primary w-100 mb-2 btn-radius">
                                         Send Inquiry
                                     </a>
                                 @endif
                             @else
-                                <a href="{{ route('client.login') }}" class="btn btn-primary w-100 mb-2">
+                                <a href="{{ route('client.login') }}" class="btn btn-primary w-100 mb-2 btn-radius">
                                     Login to Send Inquiry
                                 </a>
                             @endif

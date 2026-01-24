@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Registration | Skypack</title>
+    <title>Luggagelink</title>
 
     <style>
         body,
@@ -157,7 +157,7 @@
 
                             <div class="col-md-6">
                                 <label class="form-label">Gender</label>
-                                <select name="gender" class="form-control">
+                                <select id="selectOp" name="gender" class="form-control">
                                     <option value="">Select</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -185,7 +185,7 @@
                         </div>
 
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-primary w-100 btn-lg">Register</button>
+                            <button type="submit" class="btn btn-primary w-100 btn-lg  btn-radius">Register</button>
                         </div>
 
                         <div class="text-center">

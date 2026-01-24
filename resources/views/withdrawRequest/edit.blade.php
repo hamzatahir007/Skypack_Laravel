@@ -82,7 +82,7 @@
 
                     <div class="col-md-3">
                         <label>Status</label>
-                        <select name="inquirystatus" class="form-control">
+                        <select id="selectOp" name="inquirystatus" class="form-control">
                             <option {{ $inquiry->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                             <option {{ $inquiry->status == 'Completed' ? 'selected' : '' }}>Completed</option>
                         </select>
@@ -183,7 +183,7 @@
         </div>
 
 
-          @if ($bankAccount)
+        @if ($bankAccount)
             <div class="card mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Bank Details</h6>
@@ -234,12 +234,13 @@
                 <div class="row g-2">
                     <div class="col-md-3">
                         <label>Amount</label>
-                        <input type="text" name="amount" disabled class="form-control" value="{{ $widthreq->amount }}">
+                        <input type="text" name="amount" disabled class="form-control"
+                            value="{{ $widthreq->amount }}">
                     </div>
 
                     <div class="col-md-3">
                         <label>Status</label>
-                        <select name="status" class="form-control">
+                        <select id="selectOp" name="status" class="form-control">
                             <option {{ $widthreq->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                             <option {{ $widthreq->status == 'Completed' ? 'selected' : '' }}>Completed</option>
                         </select>
@@ -271,14 +272,14 @@
             const html = `
         <tr>
             <td>
-                <select name="details[${rowIndex}][item_id]" class="form-control">
+                <select id="selectOp" name="details[${rowIndex}][item_id]" class="form-control">
                     <option value="">-- select --</option>
                     ${itemsOptions}
                 </select>
             </td>
             <td><input name="details[${rowIndex}][description]" class="form-control" value="${data.description ?? ''}"></td>
             <td><input type="number" name="details[${rowIndex}][qty]" class="form-control" value="${data.qty ?? 1}"></td>
-            <td><select name="details[${rowIndex}][unit]" class="form-control">${unitOptions}</select></td>
+            <td><select id="selectOp" name="details[${rowIndex}][unit]" class="form-control">${unitOptions}</select></td>
             <td><input type="number" step="0.01" name="details[${rowIndex}][rate]" class="form-control" value="${data.rate ?? 0}"></td>
             <td><input type="number" step="0.01" name="details[${rowIndex}][amount]" class="form-control" value="${data.amount ?? 0}"></td>
             <td><button type="button" class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()">X</button></td>

@@ -232,9 +232,10 @@ p {
 
 /*===== All Section Title Style =====*/
 .section_title .title {
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 700;
   padding-top: 3px;
+  color: #3167ff;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -2064,11 +2065,6 @@ p {
   border-radius: 10px;
 }
 
-.single_ads_card .ads_card_image {
-  position: relative;
-  overflow: hidden;
-}
-
 .single_ads_card .ads_card_image .sticker {
   font-size: 12px;
   color: #fff;
@@ -2090,17 +2086,21 @@ p {
   background-color: #FF4367;
 }
 
-.title{
-  color: black;
-}
 .single_ads_card .ads_card_image img {
-  -webkit-transition: all 0.3s ease-out 0s;
+  /* -webkit-transition: all 0.3s ease-out 0s;
   -moz-transition: all 0.3s ease-out 0s;
   -ms-transition: all 0.3s ease-out 0s;
   -o-transition: all 0.3s ease-out 0s;
-  transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s; */
   width: 100%;
+  height: 100%;
   object-fit: cover;
+    display: block;
+}
+.single_ads_card .ads_card_image {
+  position: relative;
+  overflow: hidden;
+  height: 200px; /* adjust if needed */
 }
 
 .single_ads_card .ads_card_content {
@@ -2400,7 +2400,7 @@ p {
 }
 
 .single_locations .locations_content .title a {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
   color: #3167ff;
 }
@@ -2561,12 +2561,21 @@ p {
   .single_counter p {
     font-size: 20px;
   }
+
+
+  .single_locations .locations_content .title a {
+    font-size: 11px;
+    font-weight: 700;
+    color: #3167ff;
+  }
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
   .single_counter p {
     font-size: 16px;
   }
+
+
 }
 
 /*===========================
@@ -3104,6 +3113,11 @@ p {
 /*===========================
     13.FOOTER css 
 ===========================*/
+
+.footer_area {
+  margin-top: -150px;
+}
+
 .footer_link .link {
   padding-top: 10px;
 }
@@ -3943,6 +3957,20 @@ i.iconbox {
 
 .sidebar_categories .sidebar_categories_content {
   padding: 15px 0;
+}
+
+.img-fluid {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.card {
+  border-radius: 20px !important;
+}
+
+.btn-radius {
+  border-radius: 20px !important;
+
 }
 
 .sidebar_categories .accordion .card {
@@ -6982,6 +7010,8 @@ i.iconbox {
   background-color: #fff;
   border-radius: 10px;
 }
+
+
 
 .faq_accordion .accordion .card {
   padding: 0;

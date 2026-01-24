@@ -2,7 +2,7 @@
     
 
     <!--====== Title ======-->
-    <title>Home | ClassiFied</title>
+    <title>Luggagelink</title>
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -82,7 +82,7 @@
 
         <div class="col-md-6">
             <label>Status</label>
-            <select class="form-control" name="status">
+            <select id="selectOp" class="form-control" name="status">
                 <option value="Pending">Pending</option>
                 <option value="In-Transit">In Transit</option>
                 <option value="Completed">Completed</option>
@@ -91,7 +91,7 @@
 
         <div class="col-md-6">
             <label>Active</label>
-            <select class="form-control" name="active">
+            <select id="selectOp" class="form-control" name="active">
                 <option value="Yes">Active</option>
                 <option value="No">Inactive</option>
             </select>

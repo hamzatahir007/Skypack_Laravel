@@ -94,7 +94,7 @@
                 <!-- Gender -->
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Gender</label>
-                    <select name="gender" class="form-control">
+                    <select id="selectOp" name="gender" class="form-control">
                         <option value="">Select</option>
                         <option value="male" {{ old('gender', $traveler->gender) == 'male' ? 'selected' : '' }}>Male</option>
                         <option value="female" {{ old('gender', $traveler->gender) == 'female' ? 'selected' : '' }}>Female</option>
@@ -104,7 +104,7 @@
 
                  <div class="col-md-6 mb-3">
                     <label class="form-label">Status</label>
-                    <select name="active" class="form-control">
+                    <select id="selectOp" name="active" class="form-control">
                         <option value="">Select</option>
                         <option value='1' {{ old('gender', $traveler->active) == '1' ? 'selected' : '' }}>Active</option>
                         <option value='0' {{ old('gender', $traveler->active) == '0' ? 'selected' : '' }}>Not Active</option>

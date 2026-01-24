@@ -20,7 +20,7 @@
                 <div class="row g-2">
                     <div class="col-md-3">
                         <label>Client</label>
-                        <select name="client_id" class="form-control">
+                        <select id="selectOp" name="client_id" class="form-control">
                             <option value="">-- Select Client --</option>
                             @foreach($clients as $c)
                                 <option value="{{ $c->id }}">{{ $c->full_name ?? $c->name ?? $c->id }}</option>
@@ -30,7 +30,7 @@
 
                     <div class="col-md-3">
                         <label>Traveler</label>
-                        <select name="traveler_id" class="form-control">
+                        <select id="selectOp" name="traveler_id" class="form-control">
                             <option value="">-- Select Traveler --</option>
                             @foreach($travelers as $t)
                                 <option value="{{ $t->id }}">{{ $t->full_name ?? $t->name ?? $t->id }}</option>
@@ -40,7 +40,7 @@
 
                     <div class="col-md-3">
                         <label>Travel Flight</label>
-                        <select name="travel_flight_id" class="form-control">
+                        <select id="selectOp" name="travel_flight_id" class="form-control">
                             <option value="">-- Select Flight --</option>
                             @foreach($flights as $f)
                                 <option value="{{ $f->id }}">{{ $f->pnr_no ?? 'Flight #'.$f->id }}</option>
@@ -55,7 +55,7 @@
 
                     <div class="col-md-3">
                         <label>Status</label>
-                        <select name="status" class="form-control">
+                        <select id="selectOp" name="status" class="form-control">
                             <option>Pending</option>
                             <option>Completed</option>
                         </select>
@@ -121,7 +121,7 @@ function addRow(data = {}) {
     const html = `
         <tr>
             <td>
-                <select name="details[${rowIndex}][item_id]" class="form-control">
+                <select id="selectOp" name="details[${rowIndex}][item_id]" class="form-control">
                     <option value="">-- select --</option>
                     ${itemsOptions}
                 </select>
@@ -132,7 +132,7 @@ function addRow(data = {}) {
             <td><input type="number" name="details[${rowIndex}][qty]" class="form-control" value="${data.qty ?? 1}"></td>
 
             <td>
-                <select name="details[${rowIndex}][unit]" class="form-control">
+                <select id="selectOp" name="details[${rowIndex}][unit]" class="form-control">
                     ${unitOptions}
                 </select>
             </td>

@@ -9,8 +9,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Lauggagelink - Admin</title>
+    <title>Luggagelink</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.5.2/dist/select2-bootstrap4.min.css"
+        rel="stylesheet" />
+
 
     <!-- Fonts and CSS -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -124,12 +129,23 @@
             document.getElementById("collapseClients").classList.add("show");
             document.getElementById("menuListClients").classList.add("active");
         }
+
+
+
+        $('#selectOp').select2({
+            placeholder: "Select here",
+            allowClear: true,
+            width: '100%'
+        });
     </script>
 
     @stack('scripts')
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     @if (session('success'))
         <script>
             Swal.fire({

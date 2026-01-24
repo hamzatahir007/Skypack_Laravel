@@ -27,6 +27,8 @@ class TravelFlight extends Model
         'ticket_pic',
         'weight',
         'rate_per_unit',
+        'description',
+        'restrictions',
         'total',
         'keyfield',
         'Qrcode',
@@ -35,11 +37,12 @@ class TravelFlight extends Model
         'delete_by',
         'deleted_at'
     ];
-    
+
     protected $casts = [
         'flight_date' => 'datetime',
         'origin_date_time' => 'datetime',
         'destination_date_time' => 'datetime',
+        'restrictions' => 'array',
         'deleted_at' => 'datetime',
     ];
 

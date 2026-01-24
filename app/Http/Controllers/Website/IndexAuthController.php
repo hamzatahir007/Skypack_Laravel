@@ -106,6 +106,10 @@ class IndexAuthController extends Controller
             $query->where('rate_per_unit', '<=', $request->max_price);
         }
 
+        // FILTER: date
+        if ($request->filled('flight_date')) {
+            $query->whereDate('flight_date', $request->flight_date);
+        }
         // 🔥 AUTO FILTER FROM URL (country)
         // /listspace?country=3
         if ($request->filled('country')) {

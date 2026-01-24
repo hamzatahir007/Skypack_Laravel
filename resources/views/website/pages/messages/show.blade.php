@@ -32,7 +32,7 @@
 @section('title','Message')
 
 @section('content')
-<div class="card shadow-sm">
+<div class="card shadow-sm client-dashboard-page">
     <div class="card-header d-flex justify-content-between align-items-center">
         <div>
             <h5 class="mb-0">{{ $message->title }}</h5>

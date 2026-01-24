@@ -31,7 +31,7 @@
 
                 <div class="col-md-4 mb-3">
                     <label class="form-label">Is Group?</label>
-                    <select name="isgroup" class="form-control">
+                    <select id="selectOp" name="isgroup" class="form-control">
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </select>
@@ -49,7 +49,7 @@
 
                 <div class="col-md-3 mb-3">
                     <label class="form-label">Unit</label>
-                    <select name="unit" class="form-control">
+                    <select id="selectOp" name="unit" class="form-control">
                         <option value="kg">KG</option>
                         <option value="grams">Grams</option>
                         {{-- <option value="pcs">Pieces</option> --}}
@@ -78,7 +78,7 @@
 
                 <div class="col-md-3 mb-3">
                     <label class="form-label">Active?</label>
-                    <select name="active" class="form-control">
+                    <select id="selectOp" name="active" class="form-control">
                         <option value="1">Active</option>
                         <option value="0">Inactive</option>
                     </select>

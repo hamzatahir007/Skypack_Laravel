@@ -75,7 +75,7 @@
                 <!-- SEARCH BOX -->
                 <div class="search-box mx-auto col-lg-8 col-md-10 p-4">
 
-                    <form id="flight-search-form" action="{{ route('/') }}" method="GET">
+                    <form id="flight-search-form" action="{{ route('/listspace') }}" method="GET">
 
                         @php
                             $grouped = $cities->groupBy(fn($c) => $c->country->name ?? 'Other');
@@ -85,12 +85,14 @@
                             <!-- FROM CITY -->
                             <div class="col-md-3">
                                 <label class="text-dark fw-semibold">From City</label>
-                                <select name="pickup" id="fromCity" class="form-control">
+                                <select  name="pickup" id="fromCity" class="form-control">
                                     <option value="">Select City</option>
                                     @foreach ($grouped as $country => $groupCities)
                                         <optgroup label="{{ $country }}">
                                             @foreach ($groupCities as $city)
-                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                <option value="{{ $city->id }}"
+                                                    {{ request('pickup') == $city->id ? 'selected' : '' }}>
+                                                    {{ $city->name }}</option>
                                             @endforeach
                                         </optgroup>
                                     @endforeach
@@ -100,12 +102,14 @@
                             <!-- TO CITY -->
                             <div class="col-md-3">
                                 <label class="text-dark fw-semibold">To City</label>
-                                <select name="dropoff" id="toCity" class="form-control">
+                                <select id="toCity" name="dropoff" id="selectOp" class="form-control">
                                     <option value="">Select City</option>
                                     @foreach ($grouped as $country => $groupCities)
                                         <optgroup label="{{ $country }}">
                                             @foreach ($groupCities as $city)
-                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                <option value="{{ $city->id }}"
+                                                    {{ request('dropoff') == $city->id ? 'selected' : '' }}>
+                                                    {{ $city->name }}</option>
                                             @endforeach
                                         </optgroup>
                                     @endforeach
@@ -115,14 +119,15 @@
                             <!-- DATEPICKER -->
                             <div class="col-md-3">
                                 <label class="text-dark fw-semibold">Travel Date</label>
-                                <input type="text" name="flight_date" id="travelDate" class="form-control"
-                                    placeholder="Select Date">
+                                <input type="text" name="flight_date" value="{{ request('flight_date') }}"
+                                    id="travelDate" class="form-control" placeholder="Select Date">
                             </div>
 
                             <!-- MIN CAPACITY -->
                             <div class="col-md-3">
                                 <label class="text-dark fw-semibold">Min Capacity (kg)</label>
-                                <input type="number" name="min_capacity" class="form-control" placeholder="5">
+                                <input type="number" name="min_capacity" class="form-control" placeholder="5"
+                                    value="{{ request('min_capacity') }}">
                             </div>
 
                             <!-- SEARCH BUTTON -->
@@ -174,7 +179,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="section_title pb-15">
-                            <h3 class="title" style="color: black;">Explore The Locations</h3>
+                            <h3 class="title">Explore The Locations</h3>
                         </div>
                     </div>
                 </div>
@@ -186,7 +191,7 @@
                             <div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
                                 <a href="{{ route('/listspace', ['country' => $country->id]) }}"
                                     class="text-decoration-none d-block">
-                                    <div class="single_locations mt-30">
+                                    <div class="single_locations mt-30 btn-radius">
                                         <div class="locations_image">
                                             {{-- IMAGE — If you stored country flags/photos in DB --}}
                                             @if ($country->image)
@@ -220,8 +225,8 @@
 
                     </div>
 
-                    <div class="locations_btn text-center">
-                        <a class="main-btn" href="#">View all Locations</a>
+                    <div class="locations_btn text-center ">
+                        <a class="main-btn btn-radius" href="#">View all Locations</a>
                     </div>
                 </div>
             </div>
@@ -237,13 +242,15 @@
                                 <h3 class="title">Popular and Featured Flights</h3>
                             </div>
 
-                            <div class="tabs_menu mt-50">
-                                <ul class="nav" id="myTab" role="tablist">
-                                    <li><a class="active" id="popular-tab" data-bs-toggle="tab" href="#popular"
-                                            role="tab" aria-controls="popular" aria-selected="true">Popular
+                            <div class="tabs_menu mt-50 ">
+                                <ul class="nav btn-radius" id="myTab" role="tablist">
+                                    <li><a class="active btn-radius" id="popular-tab" data-bs-toggle="tab"
+                                            href="#popular" role="tab" aria-controls="popular"
+                                            aria-selected="true">Popular
                                             Flights</a></li>
-                                    <li><a id="featured-tab" data-bs-toggle="tab" href="#featured" role="tab"
-                                            aria-controls="featured" aria-selected="false">Featured Flights</a></li>
+                                    <li><a class="btn-radius" id="featured-tab" data-bs-toggle="tab" href="#featured"
+                                            role="tab" aria-controls="featured" aria-selected="false">Featured
+                                            Flights</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -260,7 +267,7 @@
                                     <div class="col-lg-3 col-sm-6">
                                         <a href="{{ route('flight.details', $flight->id) }}"
                                             class="text-decoration-none text-dark">
-                                            <div class="single_ads_card mt-30">
+                                            <div class="single_ads_card mt-30 btn-radius">
                                                 <div class="ads_card_image">
                                                     @if ($flight->ticket_pic)
                                                         <img src="{{ asset('storage/' . $flight->ticket_pic) }}"
@@ -638,7 +645,7 @@
 
 
 
-        <section class="call_to_action_area pt-20 pb-70" >
+        <section class="call_to_action_area pt-20 pb-70">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-5">
@@ -647,11 +654,11 @@
                         </div>
                     </div>
                     <div class="col-lg-7">
-                        <div class="call_to_action_form mt-50">
+                        <div class="call_to_action_form mt-50 ">
                             <form action="#">
                                 <i class="fal fa-envelope"></i>
-                                <input type="text" placeholder="Enter your mail address . . .">
-                                <button class="main-btn">Subscribe</button>
+                                <input class="btn-radius" type="text" placeholder="Enter your mail address . . .">
+                                <button class="main-btn btn-radius">Subscribe</button>
                             </form>
                         </div>
                     </div>
@@ -660,7 +667,7 @@
         </section>
 
 
-        <a href="#" class="back-to-top" style="display: none;"><i class="fa fa-angle-up"></i></a>
+        {{-- <a href="#" class="back-to-top" ><i class="fa fa-angle-up"></i></a> --}}
 
 
         <script>
@@ -716,9 +723,8 @@
                     });
                 });
             });
-        </script>
 
-        <script>
+
             document.addEventListener('DOMContentLoaded', function() {
 
                 const preloader = document.getElementById('ll-preloader');
@@ -743,6 +749,7 @@
                 }, 3000); // ⏱️ 3 seconds guaranteed
             });
         </script>
+
 
 
     </div>

@@ -147,8 +147,8 @@
                         @csrf
                     </form>
                 @else
-                    <div class="dropdown">
-                        <a class="btn btn-outline-primary dropdown-toggle" href="#" data-toggle="dropdown">
+                    <div class="dropdown ">
+                        <a class="btn-radius btn btn-outline-primary dropdown-toggle" href="#" data-toggle="dropdown">
                             Sign In
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow">

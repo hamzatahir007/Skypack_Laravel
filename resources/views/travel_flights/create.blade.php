@@ -27,7 +27,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Traveler</label>
-                        <select name="traveler_id" class="form-control" required>
+                        <select id="selectOp" name="traveler_id" class="form-control" required>
                             <option value="">Select Traveler</option>
                             @foreach ($travelers as $c)
                                 <option value="{{ $c->id }}">{{ $c->full_name }}</option>
@@ -47,7 +47,7 @@
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Origin</label>
-                        <select  name="origin" id="origin" class="form-control" required>
+                        <select id="selectOp" name="origin" id="origin" class="form-control" required>
                             <option value="">Select City</option>
                             @foreach ($cities as $co)
                                 <option value="{{ $co->id }}">{{ $co->name }}</option>
@@ -72,7 +72,7 @@
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Destination</label>
-                        <select  name="destination" id="destination" class="form-control" required>
+                        <select id="selectOp" name="destination" id="destination" class="form-control" required>
                             <option value="">Select City</option>
                             @foreach ($cities as $co)
                                 <option value="{{ $co->id }}">{{ $co->name }}</option>
@@ -98,7 +98,7 @@
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Status</label>
-                        <select name="status" class="form-control">
+                        <select id="selectOp" name="status" class="form-control">
                             <option value="Pending">Pending</option>
                             <option value="Completed">Completed</option>
                             <option value="Cancelled">Cancelled</option>

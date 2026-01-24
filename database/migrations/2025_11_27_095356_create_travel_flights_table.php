@@ -29,6 +29,8 @@ return new class extends Migration
 
         $table->decimal('weight', 10, 2)->nullable();
         $table->decimal('rate_per_unit', 10, 2)->nullable();
+        $table->string('description')->nullable();
+        $table->json('restrictions')->nullable();
         $table->decimal('total', 10, 2)->nullable();
 
         $table->string('keyfield')->nullable();

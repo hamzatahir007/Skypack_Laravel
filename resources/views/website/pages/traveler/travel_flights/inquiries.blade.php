@@ -6,12 +6,12 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="mb-0">Inquiries for PNR: <span class="text-primary">{{ $flight->pnr_no }}</span></h3>
-        <a href="{{ route('traveler.flights') }}" class="btn btn-secondary">
+        <a href="{{ route('traveler.flights') }}" class="btn btn-secondary btn-radius">
             <i class="fas fa-arrow-left me-1"></i> Back to Flights
         </a>
     </div>
 
-    <div class="card shadow-sm border-0 text-muted">
+    <div class="card shadow-sm border-0 text-muted traveler-dashboard-page">
         <div class="card-body p-0">
 
             {{-- Flash Messages --}}
@@ -30,7 +30,7 @@
             @endif
 
             <div class="table-responsive">
-                <table class="table table-hover table-bordered mb-0">
+                <table class="table table-hover  mb-0">
                     <thead class="table-light">
                         <tr>
                             <th>#</th>

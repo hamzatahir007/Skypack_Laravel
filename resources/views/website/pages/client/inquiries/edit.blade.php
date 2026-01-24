@@ -3,11 +3,11 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 text-gray-800">Edit Inquiry #{{ $inquiry->id }}</h1>
-        <a href="{{ route('client.inquiries') }}" class="btn btn-secondary">Back to Inquiry List</a>
+        <a href="{{ route('client.inquiries') }}" class="btn btn-secondary btn-radius">Back to Inquiry List</a>
     </div>
 
 
-    <form method="POST" action="{{ route('client.inquiries.update', $inquiry->id) }}" class="text-muted">
+    <form method="POST" action="{{ route('client.inquiries.update', $inquiry->id) }}" class="text-muted client-dashboard-page">
         @csrf
         @method('PUT')
 
@@ -34,7 +34,7 @@
 
                     <div class="col-md-3">
                         <label>Traveler</label>
-                        <select name="traveler_id" class="form-control">
+                        <select id="selectOp" name="traveler_id" class="form-control">
                             <option value="">-- Select Traveler --</option>
                             @foreach ($travelers as $t)
                                 <option value="{{ $t->id }}" {{ $inquiry->traveler_id == $t->id ? 'selected' : '' }}>
@@ -46,7 +46,7 @@
 
                     <div class="col-md-3">
                         <label>Travel Flight</label>
-                        <select name="travel_flight_id" class="form-control">
+                        <select id="selectOp" name="travel_flight_id" class="form-control">
                             <option value="">-- Select Flight --</option>
                             @foreach ($flights as $f)
                                 <option value="{{ $f->id }}"
@@ -116,7 +116,7 @@
                         @foreach ($inquiry->details as $i => $d)
                             <tr>
                                 <td>
-                                    <select name="details[{{ $i }}][item_id]" class="form-control">
+                                    <select id="selectOp" name="details[{{ $i }}][item_id]" class="form-control">
                                         <option value="">-- select --</option>
                                         @foreach ($items as $it)
                                             <option value="{{ $it->id }}"
@@ -131,7 +131,7 @@
                                 <td><input type="number" name="details[{{ $i }}][qty]" class="form-control"
                                         value="{{ $d->qty }}"></td>
                                 <td>
-                                    <select name="details[{{ $i }}][unit]" class="form-control">
+                                    <select id="selectOp" name="details[{{ $i }}][unit]" class="form-control">
                                         <option value="kg" {{ $d->unit == 'kg' ? 'selected' : '' }}>kg</option>
                                         <option value="grams" {{ $d->unit == 'grams' ? 'selected' : '' }}>grams</option>
                                     </select>
@@ -164,14 +164,14 @@
             const html = `
         <tr>
             <td>
-                <select name="details[${rowIndex}][item_id]" class="form-control">
+                <select id="selectOp" name="details[${rowIndex}][item_id]" class="form-control">
                     <option value="">-- select --</option>
                     ${itemsOptions}
                 </select>
             </td>
             <td><input name="details[${rowIndex}][description]" class="form-control" value="${data.description ?? ''}"></td>
                 <td><input type="number" name="details[${rowIndex}][qty]" class="form-control" value="${data.qty ?? 1}"></td>
-            <td><select name="details[${rowIndex}][unit]" class="form-control">${unitOptions}</select></td>
+            <td><select id="selectOp" name="details[${rowIndex}][unit]" class="form-control">${unitOptions}</select></td>
             <td><input type="number" step="0.01" name="details[${rowIndex}][rate]" class="form-control" value="${data.rate ?? 0}"></td>
             <td><input type="number" step="0.01" name="details[${rowIndex}][amount]" class="form-control" value="${data.amount ?? 0}"></td>
             <td><button type="button" class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()">X</button></td>

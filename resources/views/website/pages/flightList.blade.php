@@ -12,14 +12,14 @@
             --secondary-color: #6c757d;
             --accent-color: #198754;
             /* background: #f8f9fa; */
-            padding-bottom: 40px;
+            padding-bottom: 150px;
         }
 
         .flightlist-page .header-section {
             background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
             color: #fff;
             padding: 2rem 0;
-            border-radius: .5rem;
+            border-radius: 20px;
             margin-bottom: 2rem;
             box-shadow: 0 14px 42px rgba(0, 0, 0, .08);
         }
@@ -95,7 +95,7 @@
 
         .flightlist-page .stats-box {
             background: #fff;
-            border-radius: .75rem;
+            border-radius: 20px;
             padding: 1.5rem;
             text-align: center;
             box-shadow: 0 14px 42px rgba(0, 0, 0, .08);
@@ -120,7 +120,7 @@
         /* BOOTSTRAP 4 FLIGHT CARD ONLY */
         .flight-card-bs4 {
             background: #ffffff;
-            border-radius: 12px;
+            border-radius: 20px;
             border: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
@@ -281,16 +281,23 @@
                 <div class="card-body">
                     <h4 class="text-primary mb-3">Filter Options</h4>
                     <form method="GET" action="{{ route('/listspace') }}">
+                        @php
+                            $grouped = $cities->groupBy(fn($c) => $c->country->name ?? 'Other');
+                        @endphp
+
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label>Departure City</label>
                                 <select id="fromCity" name="pickup" class="form-control">
                                     <option value="">All Cities</option>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}"
-                                            {{ request('pickup') == $city->id ? 'selected' : '' }}>
-                                            {{ $city->name }}
-                                        </option>
+                                    @foreach ($grouped as $country => $groupCities)
+                                        <optgroup label="{{ $country }}">
+                                            @foreach ($groupCities as $city)
+                                                <option value="{{ $city->id }}"
+                                                    {{ request('pickup') == $city->id ? 'selected' : '' }}>
+                                                    {{ $city->name }}</option>
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
                                     {{-- <option>All Cities</option>
                                     <option>New York</option>
@@ -301,11 +308,14 @@
                                 <label>Destination City</label>
                                 <select id="toCity" name="dropoff" class="form-control">
                                     <option value="">All Cities</option>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}"
-                                            {{ request('dropoff') == $city->id ? 'selected' : '' }}>
-                                            {{ $city->name }}
-                                        </option>
+                                    @foreach ($grouped as $country => $groupCities)
+                                        <optgroup label="{{ $country }}">
+                                            @foreach ($groupCities as $city)
+                                                <option value="{{ $city->id }}"
+                                                    {{ request('dropoff') == $city->id ? 'selected' : '' }}>
+                                                    {{ $city->name }}</option>
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
                                 </select>
                             </div>
@@ -317,7 +327,7 @@
                                 <small id="priceValue">${{ request('max_price', 50) }}</small>
                             </div>
                             <div class="col-md-3 mb-3 d-flex align-items-end">
-                                <button class="btn btn-primary btn-block">Apply Filters</button>
+                                <button class="btn btn-primary btn-block btn-radius">Apply Filters</button>
                             </div>
                         </div>
                     </form>
@@ -337,7 +347,7 @@
 
                                 <div class="flight-header">
                                     <div class="airline-badge">
-                                       Flight PNR: {{ $flight->pnr_no ?? 'Flight' }}
+                                        Flight PNR: {{ $flight->pnr_no ?? 'Flight' }}
                                         {{-- UA123 • United Airlines --}}
                                     </div>
                                     <div class="price-tag">
@@ -364,16 +374,40 @@
                                     </div>
                                 </div>
 
-                                <div class="flight-description">
-                                    Traveling light with extra baggage allowance. Happy to help with small packages!
-                                </div>
+                                @if ($flight->description)
+                                    <div class="flight-description">
+                                        {{ $flight->description }}
+                                    </div>
+                                @endif
 
-                                <div class="restrictions-section">
+
+                                {{-- <div class="flight-description">
+                                    Traveling light with extra baggage allowance. Happy to help with small packages!
+                                </div> --}}
+
+                                {{-- <div class="restrictions-section">
                                     <div class="restrictions-label">Restrictions:</div>
                                     <span class="restriction-item">No liquids</span>
                                     <span class="restriction-item">No electronics</span>
                                     <span class="restriction-item">+1 more</span>
-                                </div>
+                                </div> --}}
+
+                                @if (!empty($flight->restrictions))
+                                    <div class="restrictions-section">
+                                        <div class="restrictions-label">Restrictions:</div>
+
+                                        @foreach (array_slice($flight->restrictions, 0, 2) as $tag)
+                                            <span class="restriction-item">{{ $tag }}</span>
+                                        @endforeach
+
+                                        @if (count($flight->restrictions) > 2)
+                                            <span class="restriction-item">
+                                                +{{ count($flight->restrictions) - 2 }} more
+                                            </span>
+                                        @endif
+                                    </div>
+                                @endif
+
 
                                 <div class="traveler-info">
                                     <div class="traveler-details">
@@ -393,7 +427,7 @@
                                         </div>
 
                                         <a href="{{ route('flight.details', $flight->id) }}"
-                                            class="contact-btn text-white">View Details</a>
+                                            class="contact-btn text-white btn-radius">View Details</a>
                                     </div>
                                 </div>
 

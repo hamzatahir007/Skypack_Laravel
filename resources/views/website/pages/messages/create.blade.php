@@ -41,7 +41,7 @@
 
 @section('content')
 
-<div class="card shadow-sm mx-auto" style="max-width: 720px;">
+<div class="card shadow-sm mx-auto client-dashboard-page text-muted" style="max-width: 720px;">
     <div class="card-header fw-semibold">
         New Message
     </div>

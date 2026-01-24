@@ -27,7 +27,7 @@
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Traveler</label>
-                        <select name="traveler_id" class="form-control" required>
+                        <select id="selectOp" name="traveler_id" class="form-control" required>
                             @foreach ($travelers as $c)
                                 <option value="{{ $c->id }}"
                                     {{ $travel_flight->traveler_id == $c->id ? 'selected' : '' }}>
@@ -50,7 +50,7 @@
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Origin</label>
-                        <select name="origin" id="origin" class="form-control" required>
+                        <select id="selectOp" name="origin" id="origin" class="form-control" required>
                             <option value="">Select City</option>
                             @foreach ($cities as $co)
                                 <option value="{{ $co->id }}"
@@ -75,7 +75,7 @@
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Destination</label>
-                        <select name="destination" id="destination" class="form-control" required>
+                        <select id="selectOp" name="destination" id="destination" class="form-control" required>
                             <option value="">Select City</option>
                             @foreach ($cities as $co)
                                 <option value="{{ $co->id }}"
@@ -111,7 +111,7 @@
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Status</label>
-                        <select name="status" class="form-control">
+                        <select  id="selectOp" name="status" class="form-control">
                             <option {{ $travel_flight->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                             <option {{ $travel_flight->status == 'Completed' ? 'selected' : '' }}>Completed</option>
                             <option {{ $travel_flight->status == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>

@@ -5,11 +5,11 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 text-gray-800">Add Inquiry</h1>
-        <a href="{{ route('client.inquiries') }}" class="btn btn-secondary">Back to Inquiry List</a>
+        <a href="{{ route('client.inquiries') }}" class="btn btn-secondary btn-radius">Back to Inquiry List</a>
     </div>
 
 
-    <form method="POST" action="{{ route('client.inquiries.store') }}" class="text-muted">
+    <form method="POST" action="{{ route('client.inquiries.store') }}" class="text-muted client-dashboard-page">
         @csrf
 
         {{-- MASTER SECTION --}}
@@ -35,7 +35,7 @@
 
                     <div class="col-md-3">
                         <label>Traveler</label>
-                        <select name="traveler_id" class="form-control">
+                        <select id="toCity" name="traveler_id" class="form-control">
                             <option value="">-- Select Traveler --</option>
                             @foreach ($travelers as $t)
                                 <option value="{{ $t->id }}" {{ $selectedTravelerId == $t->id ? 'selected' : '' }}>
@@ -46,7 +46,7 @@
 
                     <div class="col-md-3">
                         <label>Travel Flight</label>
-                        <select name="travel_flight_id" class="form-control">
+                        <select id="toCity" name="travel_flight_id" class="form-control">
                             <option value="">-- Select Flight --</option>
                             @foreach ($flights as $f)
                                 <option value="{{ $f->id }}" {{ $selectedFlightId == $f->id ? 'selected' : '' }}>

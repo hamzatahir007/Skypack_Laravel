@@ -23,7 +23,7 @@
 
 @section('content')
 
-    <div class="container text-muted" style="max-width: 800px">
+    <div class="container text-muted client-dashboard-page" style="max-width: 800px">
 
         <div class="mb-4">
             <h4 class="fw-bold text-primary">Review Your Inquiry</h4>

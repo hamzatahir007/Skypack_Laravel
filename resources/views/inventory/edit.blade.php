@@ -35,7 +35,7 @@
                 <!-- isGroup -->
                 <div class="col-md-4 mb-3">
                     <label class="form-label fw-bold">Is Group</label>
-                    <select name="isgroup" class="form-control">
+                    <select id="selectOp" name="isgroup" class="form-control">
                         <option value="0" {{ $inventory->isgroup == 0 ? 'selected' : '' }}>No</option>
                         <option value="1" {{ $inventory->isgroup == 1 ? 'selected' : '' }}>Yes</option>
                     </select>
@@ -50,9 +50,9 @@
                 <!-- Active -->
                 <div class="col-md-4 mb-3">
                     <label class="form-label fw-bold">Active</label>
-                    <select name="active" class="form-control">
-                        <option value="1" {{ $inventory->active == 1 ? 'selected' : '' }}>Active</option>
-                        <option value="0" {{ $inventory->active == 0 ? 'selected' : '' }}>Inactive</option>
+                    <select id="selectOp" name="active" class="form-control">
+                        <option id="selectOp" value="1" {{ $inventory->active == 1 ? 'selected' : '' }}>Active</option>
+                        <option id="selectOp" value="0" {{ $inventory->active == 0 ? 'selected' : '' }}>Inactive</option>
                     </select>
                 </div>
 
@@ -65,7 +65,7 @@
                 <!-- Unit -->
                 <div class="col-md-4 mb-3">
                     <label class="form-label fw-bold">Unit</label>
-                    <select name="unit" class="form-control">
+                    <select id="selectOp" name="unit" class="form-control">
                         <option value="kg" {{ $inventory->unit == 'kg' ? 'selected' : '' }}>KG</option>
                         <option value="grams" {{ $inventory->unit == 'grams' ? 'selected' : '' }}>Grams</option>
                     </select>
