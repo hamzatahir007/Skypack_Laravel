@@ -96,6 +96,8 @@
                     </div>
 
 
+
+
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Status</label>
                         <select id="selectOp" name="status" class="form-control">
@@ -106,10 +108,38 @@
                     </div>
 
 
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-6 mb-3">
                         <label class="form-label">Ticket Image</label>
                         <input type="file" name="ticket_pic" class="form-control">
                     </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Flight Description</label>
+                        <textarea name="description" rows="3" class="form-control"
+                            placeholder="e.g. Traveling light with extra baggage allowance">
+                           {{ old('description') }}
+                          </textarea>
+                    </div>
+                    
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Restrictions</label>
+
+                        <div id="restrictions-wrapper">
+                            <div class="input-group mb-2">
+                                <input type="text" name="restrictions[]" class="form-control"
+                                    placeholder="e.g. No liquids">
+                                <button type="button" class="btn btn-outline-secondary add-restriction">
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+                        <small class="text-muted">
+                            Add all restrictions that apply to this flight
+                        </small>
+                    </div>
+
+
 
 
 
@@ -123,3 +153,39 @@
     </div>
 
 @endsection
+
+
+
+
+@push('scripts')
+    <script>
+        document.addEventListener('click', function(e) {
+
+            // Add new restriction
+            if (e.target.classList.contains('add-restriction')) {
+                const wrapper = document.getElementById('restrictions-wrapper');
+
+                const row = document.createElement('div');
+                row.className = 'input-group mb-2';
+
+                row.innerHTML = `
+            <input type="text"
+                   name="restrictions[]"
+                   class="form-control"
+                   placeholder="e.g. No electronics">
+            <button type="button"
+                    class="btn btn-outline-danger remove-restriction">
+                ×
+            </button>
+        `;
+
+                wrapper.appendChild(row);
+            }
+
+            // Remove restriction
+            if (e.target.classList.contains('remove-restriction')) {
+                e.target.closest('.input-group').remove();
+            }
+        });
+    </script>
+@endpush

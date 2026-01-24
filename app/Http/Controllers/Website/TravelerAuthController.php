@@ -160,7 +160,7 @@ class TravelerAuthController extends Controller
         $validated['create_by'] = session('traveler_id');
 
         // Remove empty tags
-        $data['restrictions'] = array_values(
+        $validated['restrictions'] = array_values(
             array_filter($request->restrictions ?? [])
         );
 
@@ -195,7 +195,7 @@ class TravelerAuthController extends Controller
             'ticket_pic' => 'nullable|image|max:2048',
             'weight' => 'nullable|numeric',
             'rate_per_unit' => 'nullable|numeric',
-             'description' => 'nullable|string',
+            'description' => 'nullable|string',
             'restrictions' => 'nullable|array',
         ]);
 
@@ -206,10 +206,13 @@ class TravelerAuthController extends Controller
         $validated['total'] = ($request->weight * $request->rate_per_unit);
 
         $validated['update_by'] = session('traveler_id');
-         // Remove empty tags
-        $data['restrictions'] = array_values(
+        // Clean restrictions (remove empty values)
+        $validated['restrictions'] = array_values(
             array_filter($request->restrictions ?? [])
         );
+        // $data['restrictions'] = array_values(
+        //     array_filter($request->restrictions ?? [])
+        // );
 
         $travel_flight->update($validated);
 

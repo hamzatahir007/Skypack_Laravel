@@ -44,8 +44,8 @@
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Flight Date</label>
-                        <input type="date" name="flight_date" value="{{ $travel_flight->flight_date }}"
-                            class="form-control">
+                        <input type="date" name="flight_date"
+                            value="{{ optional($travel_flight->flight_date)->format('Y-m-d') }}" class="form-control">
                     </div>
 
                     <div class="col-md-6 mb-3">
@@ -60,7 +60,7 @@
                             @endforeach
                         </select>
                     </div>
-                    
+
                     {{-- 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Origin</label>
@@ -111,14 +111,14 @@
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Status</label>
-                        <select  id="selectOp" name="status" class="form-control">
+                        <select id="selectOp" name="status" class="form-control">
                             <option {{ $travel_flight->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                             <option {{ $travel_flight->status == 'Completed' ? 'selected' : '' }}>Completed</option>
                             <option {{ $travel_flight->status == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
                         </select>
                     </div>
 
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-6 mb-3">
                         <label class="form-label">Ticket Image</label>
                         <input type="file" name="ticket_pic" class="form-control">
 
@@ -127,6 +127,50 @@
                                 class="mt-2 rounded border">
                         @endif
                     </div>
+
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Flight Description</label>
+                        <textarea name="description" rows="3" class="form-control"
+                            placeholder="e.g. Traveling light with extra baggage allowance">
+                           {{ old('description', $travel_flight->description) }}
+                          </textarea>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Restrictions</label>
+
+                        <div id="restrictions-wrapper">
+
+                            @forelse(old('restrictions', $travel_flight->restrictions ?? []) as $index => $restriction)
+                                <div class="input-group mb-2">
+                                    <input type="text" name="restrictions[]" class="form-control"
+                                        value="{{ $restriction }}" placeholder="e.g. No liquids">
+
+                                    @if ($index === 0)
+                                        <button type="button"
+                                            class="btn btn-outline-secondary add-restriction">+</button>
+                                    @else
+                                        <button type="button"
+                                            class="btn btn-outline-danger remove-restriction">×</button>
+                                    @endif
+                                </div>
+                            @empty
+                                {{-- If no restrictions exist --}}
+                                <div class="input-group mb-2">
+                                    <input type="text" name="restrictions[]" class="form-control"
+                                        placeholder="e.g. No liquids">
+                                    <button type="button" class="btn btn-outline-secondary add-restriction">+</button>
+                                </div>
+                            @endforelse
+
+                        </div>
+
+                        <small class="text-muted">
+                            Add all restrictions that apply to this flight
+                        </small>
+                    </div>
+
 
                 </div>
 
@@ -137,3 +181,38 @@
         </div>
     </div>
 @endsection
+
+
+@push('scripts')
+    <script>
+        document.addEventListener('click', function(e) {
+
+            // Add new restriction
+            if (e.target.classList.contains('add-restriction')) {
+                const wrapper = document.getElementById('restrictions-wrapper');
+
+                const row = document.createElement('div');
+                row.className = 'input-group mb-2';
+
+                row.innerHTML = `
+            <input type="text"
+                   name="restrictions[]"
+                   class="form-control"
+                   placeholder="e.g. No electronics">
+            <button type="button"
+                    class="btn btn-outline-danger remove-restriction">
+                ×
+            </button>
+        `;
+
+                wrapper.appendChild(row);
+            }
+
+            // Remove restriction
+            if (e.target.classList.contains('remove-restriction')) {
+                e.target.closest('.input-group').remove();
+            }
+        });
+    </script>
+@endpush
+

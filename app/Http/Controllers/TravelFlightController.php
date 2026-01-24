@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\TravelFlight;
 use App\Models\City;
 use App\Models\Country;
@@ -16,7 +17,7 @@ class TravelFlightController extends Controller
      */
     public function index()
     {
-         return view('travel_flights.index', [
+        return view('travel_flights.index', [
             'flights' => TravelFlight::latest()->paginate(10),
         ]);
     }
@@ -26,10 +27,10 @@ class TravelFlightController extends Controller
      */
     public function create()
     {
-       return view('travel_flights.create', [
+        return view('travel_flights.create', [
             'travelers' => Traveler::all(),
             'countries' => Country::all(),
-    'cities' => City::all()
+            'cities' => City::all()
         ]);
     }
 
@@ -50,7 +51,9 @@ class TravelFlightController extends Controller
             'active' => 'nullable|boolean',
             'ticket_pic' => 'nullable|image|max:2048',
             'weight' => 'nullable|numeric',
-            'rate_per_unit' => 'nullable|numeric'
+            'rate_per_unit' => 'nullable|numeric',
+            'description' => 'nullable|string',
+            'restrictions' => 'nullable|array',
         ]);
 
         if ($request->hasFile('ticket_pic')) {
@@ -61,6 +64,11 @@ class TravelFlightController extends Controller
         $validated['total'] = ($request->weight * $request->rate_per_unit);
 
         $validated['create_by'] = auth()->id();
+        // Remove empty tags
+        $validated['restrictions'] = array_values(
+            array_filter($request->restrictions ?? [])
+        );
+
 
         TravelFlight::create($validated);
 
@@ -81,10 +89,10 @@ class TravelFlightController extends Controller
      */
     public function edit(TravelFlight $travel_flight)
     {
-          return view('travel_flights.edit', [
+        return view('travel_flights.edit', [
             'travel_flight' => $travel_flight,
             'travelers' => Traveler::all(),
-    'cities' => City::all()
+            'cities' => City::all()
         ]);
     }
 
@@ -105,7 +113,9 @@ class TravelFlightController extends Controller
             'active' => 'nullable|boolean',
             'ticket_pic' => 'nullable|image|max:2048',
             'weight' => 'nullable|numeric',
-            'rate_per_unit' => 'nullable|numeric'
+            'rate_per_unit' => 'nullable|numeric',
+            'description' => 'nullable|string',
+            'restrictions' => 'nullable|array',
         ]);
 
         if ($request->hasFile('ticket_pic')) {
@@ -115,20 +125,23 @@ class TravelFlightController extends Controller
         $validated['total'] = ($request->weight * $request->rate_per_unit);
 
         $validated['update_by'] = auth()->id();
-
+        // Clean restrictions (remove empty values)
+        $validated['restrictions'] = array_values(
+            array_filter($request->restrictions ?? [])
+        );
         $travel_flight->update($validated);
 
         return redirect()->route('travel_flights.index')
             ->with('success', 'Flight updated successfully.');
     }
 
-    
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(TravelFlight $travel_flight)
     {
-       $travel_flight->delete_by = auth()->id();
+        $travel_flight->delete_by = auth()->id();
         $travel_flight->deleted_at = now();
         $travel_flight->save();
 

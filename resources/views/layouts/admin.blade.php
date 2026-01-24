@@ -22,7 +22,6 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
 </head>
-@stack('scripts')
 
 <body id="page-top">
 
@@ -102,7 +101,6 @@
     <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
-    @stack('scripts')
 
 
     <script>
@@ -139,7 +137,6 @@
         });
     </script>
 
-    @stack('scripts')
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -173,6 +170,10 @@
             });
         </script>
     @endif
+
+
+    @stack('scripts') {{-- ONLY HERE --}}
+
 </body>
 
 </html>
