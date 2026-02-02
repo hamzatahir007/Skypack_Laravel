@@ -33,7 +33,7 @@
      <li class="nav-item" id="menuClients">
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClients"
              aria-expanded="true" aria-controls="collapseClients">
-             <i class="fas fa-fw fa-cog"></i>
+             <i class="fas fa-fw fa-users"></i>
              <span>Clients</span>
          </a>
 
@@ -51,7 +51,7 @@
      <li class="nav-item" id="menuTravelers">
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTravelers"
              aria-expanded="true" aria-controls="collapseTravelers">
-             <i class="fas fa-fw fa-cog"></i>
+             <i class="fas fa-fw fa-user-tie"></i>
              <span>Traveler</span>
          </a>
 
@@ -70,7 +70,7 @@
      <li class="nav-item" id="menuFlights">
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFlights"
              aria-expanded="true" aria-controls="collapseFlights">
-             <i class="fas fa-fw fa-cog"></i>
+             <i class="fas fa-fw fa-plane-departure"></i>
              <span>Flights</span>
          </a>
 
@@ -89,7 +89,7 @@
      <li class="nav-item" id="menuInquiries">
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInquiries"
              aria-expanded="true" aria-controls="collapseInquiries">
-             <i class="fas fa-fw fa-cog"></i>
+             <i class="fas fa-fw fa-envelope-open-text"></i>
              <span>Inquiries</span>
          </a>
 
@@ -110,7 +110,7 @@
      <li class="nav-item" id="menuInventory">
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInventory"
              aria-expanded="true" aria-controls="collapseInventory">
-             <i class="fas fa-fw fa-cog"></i>
+             <i class="fas fa-fw fa-boxes"></i>
              <span>Inventory</span>
          </a>
 
@@ -131,7 +131,7 @@
      <li class="nav-item" id="menuRequest">
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRequest"
              aria-expanded="true" aria-controls="collapseRequest">
-             <i class="fas fa-fw fa-cog"></i>
+             <i class="fas fa-fw fa-hand-holding-usd"></i>
              <span>Withdraw Requests</span>
          </a>
          <div id="collapseRequest" class="collapse" aria-labelledby="headingRequest"
