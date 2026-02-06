@@ -1,7 +1,8 @@
 url = https://hgws2.win.hostgator.com:8443/smb/file-manager/list
 
 USER ID  : dimaldxb
-paSS : Dima@98!2
+paSS : Dima@98!2 
+0
 
 liveurl = http://laravel.dimalaundrydxb.com/
 
