@@ -16,6 +16,11 @@ Cpanel
 | UserName: luggagelink
 | PassWord: pta*fo,v$P4d
 
+Cpanel2
+| Domain: http://luggagelink.org/cpanel
+| UserName: luggenuw
+| PassWord: Oznk0mC8qSOc
+
 DB
 | UserName: luggagel_luggagelink
 | PassWord: pta*fo,v$P4d
