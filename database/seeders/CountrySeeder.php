@@ -12,6 +12,7 @@ class CountrySeeder extends Seeder
         $countries = [
             ['name' => 'Saudi Arabia', 'image' => 'country/saudi.png'],
             ['name' => 'United Arab Emirates', 'image' => 'country/uae.png'],
+            ['name' => 'Qatar', 'image' => 'country/qatar.png'],
             ['name' => 'Pakistan', 'image' => 'country/pakistan.png'],
             ['name' => 'India', 'image' => 'country/india.png'],
             ['name' => 'United States', 'image' => 'country/usa.png'],

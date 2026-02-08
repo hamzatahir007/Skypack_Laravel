@@ -1,75 +1,71 @@
-<!--====== FOOTER PART START ======-->
+<footer class="footer_area">
+    <div class="footer_top">
+        <div class="container">
+            <div class="row">
 
-    <footer class="footer_area">
-        <div style="background: #F4F5F7" class="footer_widget pt-70 pb-120">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="footer_link mt-45">
-                            <h5 class="footer_title">Company</h5>
-                            <ul class="link">
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Our Factories</a></li>
-                                <li><a href="#">Mission and Strategy</a></li>
-                                <li><a href="#">Profitable Actions</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="footer_link mt-45">
-                            <h5 class="footer_title">Deliver Fast</h5>
-                            <ul class="link">
-                                <li><a href="#">Packing TIps</a></li>
-                                <li><a href="#">Send and Receive Quickly</a></li>
-                                <li><a href="#">Membership</a></li>
-                                <li><a href="#">Banner Advertising</a></li>
-                                <li><a href="#">Promote Your Ad</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="footer_link mt-45">
-                            <h5 class="footer_title">Information</h5>
-                            <ul class="link">
-                                <li><a href="#">Company &amp; Contact Info</a></li>
-                                <li><a href="#">Blog &amp; Articles</a></li>
-                                <li><a href="#">Sitemap</a></li>
-                                <li><a href="#">Terms of Service</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="footer_link mt-45">
-                            <h5 class="footer_title">Help &amp; Support</h5>
-                            <ul class="link">
-                                <li><a href="#">Live Chat</a></li>
-                                <li><a href="#">FAQ</a></li>
-                                <li><a href="#">How to Stay Safe</a></li>
-                                <li><a href="#">Terms &amp; Conditions</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                            </ul>
-                        </div>
+                <!-- Company Info -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="footer_company">
+                        <img src="{{ asset('img/bagspacelogo.png') }}" alt="Logo" class="footer_logo">
+                        <p>Plot # 135, Ground floor AL Dawood Building, CHS block 7&8, Berar Society, Karachi</p>
+                        <p>+92 332 555 8664</p>
+                        <p>officiallamhey@gmail.com</p>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="footer_copyright pt-15 pb-30">
-            <div class="container">
-                <div class="footer_copyright_wrapper text-center d-sm-flex justify-content-between align-items-center">
-                    <div class="copyright mt-15">
-                        <p>© 2025 Lauggagelink Ltd. All rights reserved</p>
-                    </div>
-                    <div class="payment mt-15">
-                        <ul>
-                            <li><a href="#"><img  src="{{ asset('img/payment-method1.jpg') }}" alt="payment"></a></li>
-                            <li><a href="#"><img  src="{{ asset('img/payment-method1.jpg') }}" alt="payment"></a></li>
-                            <li><a href="#"><img  src="{{ asset('img/payment-method1.jpg') }}" alt="payment"></a></li>
-                            <li><a href="#"><img  src="{{ asset('img/payment-method1.jpg') }}" alt="payment"></a></li>
-                        </ul>
+
+                <!-- Customer Service -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer_title">Customer Service</h5>
+                    <ul class="footer_links">
+                        <li><a href="#">FAQ'S</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Information -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer_title">Information</h5>
+                    <ul class="footer_links">
+                        <li><a href="#">Disclaimer</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cancellation Policy</a></li>
+                        <li><a href="#">Terms & Condition</a></li>
+                        <li><a href="#">Returns & Exchange Policy</a></li>
+                        <li><a href="#">Complaints Handling Mechanism</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter + Socials -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer_title">Newsletter</h5>
+                    <p>Get offers and news directly to your inbox.</p>
+                    <form class="footer_newsletter mb-3">
+                        <input type="email" placeholder="E-mail" class="form-control mb-2">
+                        <button type="submit" class="btn btn-primary btn-block btn-radius">Register</button>
+                    </form>
+                    <div class="footer_socials">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
+
             </div>
         </div>
-    </footer>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer_bottom">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
+            <p class="mb-0 footer-tag">© 2025 Lauggagelink Ltd. All rights reserved</p>
+            <div class="payment-icons">
+                <img src="{{ asset('img/payment-method1.jpg') }}" alt="payment">
+                <img src="{{ asset('img/payment-method2.jpg') }}" alt="payment">
+                <img src="{{ asset('img/payment-method3.jpg') }}" alt="payment">
+                <img src="{{ asset('img/payment-method4.jpg') }}" alt="payment">
+            </div>
+        </div>
+    </div>
+</footer>

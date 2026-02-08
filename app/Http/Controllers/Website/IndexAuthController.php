@@ -65,7 +65,7 @@ class IndexAuthController extends Controller
         // Popular (top results) — you can customize logic (e.g., by views or is_featured)
         $popularFlights = (clone $query)
             ->orderByDesc('flight_date')
-            ->limit(8)
+            ->limit(4)
             ->get();
 
         // Flag to tell blade to scroll to popular section after search

@@ -74,7 +74,7 @@
                     </div> --}}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Destination</label>
-                        <select id="selectOp" name="destination" id="destination" class="form-control" required>
+                        <select id="selectDestination" name="destination" id="destination" class="form-control" required>
                             <option value="">Select City</option>
                             @foreach ($cities as $co)
                                 <option value="{{ $co->id }}">{{ $co->name }}</option>

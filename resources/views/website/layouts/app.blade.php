@@ -88,6 +88,10 @@
              color: #888 !important;
 
          }
+         .select2-results__option--selectable{
+            color: #888 !important;
+         }
+
 
          .form-control {
              background: #f3f3f3;
@@ -368,6 +372,11 @@
          });
 
          $('#selectOp').select2({
+             placeholder: "Select here",
+             allowClear: true,
+             width: '100%'
+         });
+         $('#selectDestination').select2({
              placeholder: "Select here",
              allowClear: true,
              width: '100%'

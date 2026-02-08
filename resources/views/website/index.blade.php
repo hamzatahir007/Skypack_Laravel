@@ -85,7 +85,7 @@
                             <!-- FROM CITY -->
                             <div class="col-md-3">
                                 <label class="text-dark fw-semibold">From City</label>
-                                <select  name="pickup" id="fromCity" class="form-control">
+                                <select name="pickup" id="fromCity" class="form-control">
                                     <option value="">Select City</option>
                                     @foreach ($grouped as $country => $groupCities)
                                         <optgroup label="{{ $country }}">
@@ -173,284 +173,6 @@
             </div>
         </div>
 
-
-        <section class="locations_area pt-25 pb-90">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="section_title pb-15">
-                            <h3 class="title">Explore The Locations</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="locations_wrapper">
-                    <div class="row justify-content-center">
-
-                        @foreach ($countries as $country)
-                            <div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
-                                <a href="{{ route('/listspace', ['country' => $country->id]) }}"
-                                    class="text-decoration-none d-block">
-                                    <div class="single_locations mt-30 btn-radius">
-                                        <div class="locations_image">
-                                            {{-- IMAGE — If you stored country flags/photos in DB --}}
-                                            @if ($country->image)
-                                                <img src="{{ asset('storage/' . $country->image) }}"
-                                                    class="rounded-country" alt="{{ $country->name }}">
-                                            @else
-                                                <img src="{{ asset('img/default-country.jpg') }}">
-                                            @endif
-                                        </div>
-
-                                        <div class="locations_content">
-                                            <h5 class="title">
-                                                <a href="#">
-                                                    <i class="fa fa-map-marker-alt"></i>
-                                                    {{ $country->name }}
-                                                </a>
-                                            </h5>
-
-                                            <p>
-                                                {{ $country->cities_count }} Cities in this country
-                                            </p>
-
-                                            <a class="view" href="#">
-                                                View All Ads Here <i class="fa fa-angle-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        @endforeach
-
-                    </div>
-
-                    <div class="locations_btn text-center ">
-                        <a class="main-btn btn-radius" href="#">View all Locations</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <section class="ads_area pt-10 pb-120">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ads_tabs d-sm-flex align-items-end justify-content-between pb-30">
-                            <div class="section_title mt-45">
-                                <h3 class="title">Popular and Featured Flights</h3>
-                            </div>
-
-                            <div class="tabs_menu mt-50 ">
-                                <ul class="nav btn-radius" id="myTab" role="tablist">
-                                    <li><a class="active btn-radius" id="popular-tab" data-bs-toggle="tab"
-                                            href="#popular" role="tab" aria-controls="popular"
-                                            aria-selected="true">Popular
-                                            Flights</a></li>
-                                    <li><a class="btn-radius" id="featured-tab" data-bs-toggle="tab" href="#featured"
-                                            role="tab" aria-controls="featured" aria-selected="false">Featured
-                                            Flights</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="ads_tabs">
-                    <div class="tab-content" id="myTabContent">
-                        {{-- Popular --}}
-                        <div class="tab-pane fade show active" id="popular" role="tabpanel"
-                            aria-labelledby="popular-tab">
-                            <div class="row">
-                                @forelse($popularFlights as $flight)
-                                    <div class="col-lg-3 col-sm-6">
-                                        <a href="{{ route('flight.details', $flight->id) }}"
-                                            class="text-decoration-none text-dark">
-                                            <div class="single_ads_card mt-30 btn-radius">
-                                                <div class="ads_card_image">
-                                                    @if ($flight->ticket_pic)
-                                                        <img src="{{ asset('storage/' . $flight->ticket_pic) }}"
-                                                            alt="ticket" class="ads-img">
-                                                    @else
-                                                        <img src="{{ asset('img/itlay.jpeg') }}" alt="ticket"
-                                                            class="ads-img">
-                                                    @endif
-                                                    {{-- <img src="{{ asset('img/itlay.jpg') }}" /> --}}
-
-                                                    @if ($flight->is_featured ?? false)
-                                                        <p class="sticker">Featured</p>
-                                                    @endif
-                                                </div>
-
-                                                <div class="ads_card_content">
-                                                    <div class="meta d-flex justify-content-between">
-                                                        <p>{{ $flight->traveler->full_name ?? 'Traveler' }}</p>
-                                                        <a class="like" href="#"><i class="fal fa-heart"></i></a>
-                                                    </div>
-
-                                                    <h4 class="title">
-                                                        <a>
-                                                            PNR: {{ $flight->pnr_no ?? '—' }}
-                                                        </a>
-                                                    </h4>
-
-                                                    <p><i class="fa fa-map-marker-alt"></i>
-                                                        {{ $flight->cityOrigin->name ?? '-' }} →
-                                                        {{ $flight->cityDestination->name ?? '-' }}
-                                                    </p>
-
-                                                    <div class="ads_price_date d-flex justify-content-between">
-                                                        <span class="price">{{ number_format($flight->total, 2) }}
-                                                            USD</span>
-                                                        <span
-                                                            class="date">{{ optional($flight->flight_date)->format('d M, Y') ?? '-' }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                @empty
-                                    <div class="col-12">
-                                        <p class="text-center">No popular flights found.</p>
-                                    </div>
-                                @endforelse
-                            </div>
-                        </div>
-
-                        {{-- Featured / All results (paged) --}}
-                        <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab">
-                            <div class="row">
-                                @forelse($flights as $flight)
-                                    <div class="col-lg-3 col-sm-6">
-                                        <div class="single_ads_card mt-30">
-                                            <div class="ads_card_image">
-                                                @if ($flight->ticket_pic)
-                                                    <img src="{{ asset('storage/' . $flight->ticket_pic) }}"
-                                                        alt="ticket">
-                                                @else
-                                                    <img src="{{ asset('img/bags.jpeg') }}" alt="ticket">
-                                                @endif
-
-                                                @if ($flight->is_featured ?? false)
-                                                    <p class="sticker">Featured</p>
-                                                @endif
-                                            </div>
-
-                                            <div class="ads_card_content">
-                                                <div class="meta d-flex justify-content-between">
-                                                    <p>{{ $flight->traveler->full_name ?? 'Traveler' }}</p>
-                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
-                                                </div>
-
-                                                <h4 class="title"><a
-                                                        href="{{ route('travel_flights.edit', $flight->id) }}">{{ $flight->pnr_no ?? '—' }}</a>
-                                                </h4>
-
-                                                <p><i class="fa fa-map-marker-alt"></i>
-                                                    {{ $flight->originCity->name ?? '-' }} →
-                                                    {{ $flight->destinationCity->name ?? '-' }}
-                                                </p>
-
-                                                <div class="ads_price_date d-flex justify-content-between">
-                                                    <span class="price">{{ number_format($flight->total, 2) }} USD</span>
-                                                    <span
-                                                        class="date">{{ optional($flight->flight_date)->format('d M, Y') ?? '-' }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @empty
-                                    <div class="col-12">
-                                        <p class="text-center">No flights found.</p>
-                                    </div>
-                                @endforelse
-                            </div>
-
-                            {{-- pagination --}}
-                            <div class="row mt-4">
-                                <div class="col-12 d-flex justify-content-center">
-                                    {{ $flights->links() }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        {{-- <section class="choose_area">
-            <div class="container">
-
-                <div class="row" style="text-align: center;">
-
-                    <div class="col-lg-12">
-                        <div class="choose_content pt-35">
-                            <div class="section_title pb-20">
-                                <h3 class="title">Why Choose LuggageLink</h3>
-                            </div>
-                            <p>
-                                The smart way to ship internationally
-                            </p>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="single_services d-flex mt-30">
-                            <div class="services_icon">
-                                <i class="fa fa-check"></i>
-                            </div>
-                            <div class="services_content media-body">
-                                <h4 class="title"><a href="#">Cost-Effective Shipping</a></h4>
-                                <p>Save up to 70% on international shipping costs</p>
-                                <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="single_services d-flex mt-30">
-                            <div class="services_icon">
-                                <i class="fas fa-money-bill"></i>
-                            </div>
-                            <div class="services_content media-body">
-                                <h4 class="title"><a href="#">Verified Travelers</a></h4>
-                                <p>All travelers are verified and rated</p>
-                                <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single_services d-flex mt-30">
-                            <div class="services_icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="services_content media-body">
-                                <h4 class="title"><a href="#">Real-time Tracking</a></h4>
-                                <p>Track your items from pickup to delivery</p>
-                                <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single_services d-flex mt-30">
-                            <div class="services_icon">
-                                <i class="fal fa-shopping-bag"></i>
-                            </div>
-                            <div class="services_content media-body">
-                                <h4 class="title"><a href="#">Secure Payments</a></h4>
-                                <p>Protected payments until delivery</p>
-                                <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
 
         <section class="choose_area py-5">
             <div class="container">
@@ -642,6 +364,296 @@
                 </div>
             </div>
         </section>
+
+
+
+        <section class="ads_area pt-10 pb-120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ads_tabs d-sm-flex align-items-end justify-content-between pb-30">
+                            <div class="section_title mt-45">
+                                <h3 class="title">Popular and Featured Flights</h3>
+                            </div>
+
+                            <div class="tabs_menu mt-50">
+                                <ul class="nav btn-radius" id="myTab" role="tablist">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link active btn-radius" id="popular-tab" data-toggle="tab"
+                                            href="#popular" role="tab" aria-controls="popular" aria-selected="true">
+                                            Popular Flights
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link btn-radius" id="featured-tab" data-toggle="tab"
+                                            href="#featured" role="tab" aria-controls="featured"
+                                            aria-selected="false">
+                                            Featured Flights
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ads_tabs">
+                    <div class="tab-content" id="myTabContent">
+                        {{-- Popular --}}
+                        <div class="tab-pane fade show active" id="popular" role="tabpanel"
+                            aria-labelledby="popular-tab">
+                            <div class="row">
+                                @forelse($popularFlights as $flight)
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="single_ads_card mt-30">
+                                            <div class="ads_card_image">
+                                                @if ($flight->ticket_pic)
+                                                    <img onclick="{{ route('flight.details', $flight->id) }}"
+                                                        src="{{ asset('storage/' . $flight->ticket_pic) }}"
+                                                        alt="ticket">
+                                                @else
+                                                    <img src="{{ asset('img/bags.jpeg') }}" alt="ticket">
+                                                @endif
+                                                @if ($flight->is_featured ?? false)
+                                                    <p class="sticker">Featured</p>
+                                                @endif
+                                            </div>
+
+                                            <div class="ads_card_content">
+                                                <div class="meta d-flex justify-content-between">
+                                                    <p>{{ $flight->traveler->full_name ?? 'Traveler' }}</p>
+                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
+                                                </div>
+
+                                                <h4 class="title">
+                                                    <a>
+                                                        PNR: {{ $flight->pnr_no ?? '—' }}
+                                                    </a>
+                                                </h4>
+
+                                                <p><i class="fa fa-map-marker-alt"></i>
+                                                    {{ $flight->cityOrigin->name ?? '-' }} →
+                                                    {{ $flight->cityDestination->name ?? '-' }}
+                                                </p>
+
+                                                <div class="ads_price_date d-flex justify-content-between">
+                                                    <span class="price">
+                                                        {{ $flight->weight }}
+                                                        KG
+                                                    </span>
+                                                    <span
+                                                        class="date">{{ optional($flight->flight_date)->format('d M, Y') ?? '-' }}</span>
+                                                </div>
+                                            </div>
+
+                                                <a href="{{ route('flight.details', $flight->id) }}" class="card-overlay"></a>
+
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="col-12">
+                                        <p class="text-center">No popular flights found.</p>
+                                    </div>
+                                @endforelse
+                            </div>
+                        </div>
+
+                        {{-- Featured / All results (paged) --}}
+                        <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab">
+                            <div class="row">
+                                @forelse($flights as $flight)
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="single_ads_card mt-30">
+                                            <div class="ads_card_image">
+                                                @if ($flight->ticket_pic)
+                                                    <img src="{{ asset('storage/' . $flight->ticket_pic) }}"
+                                                        alt="ticket">
+                                                @else
+                                                    <img src="{{ asset('img/bags.jpeg') }}" alt="ticket">
+                                                @endif
+
+                                                @if ($flight->is_featured ?? false)
+                                                    <p class="sticker">Featured</p>
+                                                @endif
+                                            </div>
+
+                                            <div class="ads_card_content">
+                                                <div class="meta d-flex justify-content-between">
+                                                    <p>{{ $flight->traveler->full_name ?? 'Traveler' }}</p>
+                                                    <a class="like" href="#"><i class="fal fa-heart"></i></a>
+                                                </div>
+
+                                                <h4 class="title"><a
+                                                        href="{{ route('travel_flights.edit', $flight->id) }}">{{ $flight->pnr_no ?? '—' }}</a>
+                                                </h4>
+
+                                                <p><i class="fa fa-map-marker-alt"></i>
+                                                    {{ $flight->originCity->name ?? '-' }} →
+                                                    {{ $flight->destinationCity->name ?? '-' }}
+                                                </p>
+
+                                                <div class="ads_price_date d-flex justify-content-between">
+                                                    <span class="price">{{ number_format($flight->total, 2) }} USD</span>
+                                                    <span
+                                                        class="date">{{ optional($flight->flight_date)->format('d M, Y') ?? '-' }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="col-12">
+                                        <p class="text-center">No flights found.</p>
+                                    </div>
+                                @endforelse
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12 d-flex justify-content-center">
+                                    {{ $flights->links() }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section class="locations_area pt-25 pb-90">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="section_title pb-15">
+                            <h3 class="title">Explore The Locations</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="locations_wrapper">
+                    <div class="row justify-content-center">
+
+                        @foreach ($countries as $country)
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
+                                <a href="{{ route('/listspace', ['country' => $country->id]) }}"
+                                    class="text-decoration-none d-block">
+                                    <div class="single_locations mt-30 btn-radius">
+                                        <div class="locations_image">
+                                            {{-- IMAGE — If you stored country flags/photos in DB --}}
+                                            @if ($country->image)
+                                                <img src="{{ asset('storage/' . $country->image) }}"
+                                                    class="rounded-country" alt="{{ $country->name }}">
+                                            @else
+                                                <img src="{{ asset('img/default-country.jpg') }}">
+                                            @endif
+                                        </div>
+
+                                        <div class="locations_content">
+                                            <h5 class="title">
+                                                <a href="#">
+                                                    <i class="fa fa-map-marker-alt"></i>
+                                                    {{ $country->name }}
+                                                </a>
+                                            </h5>
+
+                                            <p>
+                                                {{ $country->cities_count }} Cities in this country
+                                            </p>
+
+                                            <a class="view" href="#">
+                                                View All Ads Here <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+
+                    </div>
+
+                    <div class="locations_btn text-center ">
+                        <a class="main-btn btn-radius" href="#">View all Locations</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        {{-- <section class="choose_area">
+            <div class="container">
+
+                <div class="row" style="text-align: center;">
+
+                    <div class="col-lg-12">
+                        <div class="choose_content pt-35">
+                            <div class="section_title pb-20">
+                                <h3 class="title">Why Choose LuggageLink</h3>
+                            </div>
+                            <p>
+                                The smart way to ship internationally
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="single_services d-flex mt-30">
+                            <div class="services_icon">
+                                <i class="fa fa-check"></i>
+                            </div>
+                            <div class="services_content media-body">
+                                <h4 class="title"><a href="#">Cost-Effective Shipping</a></h4>
+                                <p>Save up to 70% on international shipping costs</p>
+                                <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="single_services d-flex mt-30">
+                            <div class="services_icon">
+                                <i class="fas fa-money-bill"></i>
+                            </div>
+                            <div class="services_content media-body">
+                                <h4 class="title"><a href="#">Verified Travelers</a></h4>
+                                <p>All travelers are verified and rated</p>
+                                <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single_services d-flex mt-30">
+                            <div class="services_icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="services_content media-body">
+                                <h4 class="title"><a href="#">Real-time Tracking</a></h4>
+                                <p>Track your items from pickup to delivery</p>
+                                <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single_services d-flex mt-30">
+                            <div class="services_icon">
+                                <i class="fal fa-shopping-bag"></i>
+                            </div>
+                            <div class="services_content media-body">
+                                <h4 class="title"><a href="#">Secure Payments</a></h4>
+                                <p>Protected payments until delivery</p>
+                                <a class="more" href="#">Read More <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> --}}
 
 
 

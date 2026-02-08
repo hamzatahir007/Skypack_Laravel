@@ -1,20 +1,20 @@
 <div class="header_navbar shadow-sm" style="background-color:white;">
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light p-0" style="height:80px">
+        <nav class="navbar navbar-expand-lg navbar-light p-0">
 
             {{-- LOGO --}}
             <a class="navbar-brand font-weight-bold d-flex align-items-center" href="{{ url('/') }}">
-                <img src="{{ asset('img/bagspacelogo.png') }}" width="400" class="mr-2" alt="logo">
+                <img src="{{ asset('img/bagspacelogo.png') }}" class="navbar-logo" alt="logo">
             </a>
 
             {{-- MOBILE TOGGLE --}}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu"
                 aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <span class="toggler-icon"></span>
             </button>
 
             {{-- MENU --}}
-            <div class="collapse navbar-collapse justify-content-center" id="mainMenu">
+            <div class="collapse navbar-collapse navbar-center" id="mainMenu">
                 <ul class="navbar-nav text-center">
 
                     <li class="nav-item mx-lg-3">
@@ -148,7 +148,8 @@
                     </form>
                 @else
                     <div class="dropdown ">
-                        <a class="btn-radius btn btn-outline-primary dropdown-toggle" href="#" data-toggle="dropdown">
+                        <a class="btn-radius btn btn-outline-primary dropdown-toggle" href="#"
+                            data-toggle="dropdown">
                             Sign In
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow">
