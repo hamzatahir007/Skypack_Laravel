@@ -450,7 +450,8 @@
                                                 </div>
                                             </div>
 
-                                                <a href="{{ route('flight.details', $flight->id) }}" class="card-overlay"></a>
+                                            <a href="{{ route('flight.details', $flight->id) }}"
+                                                class="card-overlay"></a>
 
                                         </div>
                                     </div>
@@ -542,7 +543,7 @@
                                 <a href="{{ route('/listspace', ['country' => $country->id]) }}"
                                     class="text-decoration-none d-block">
                                     <div class="single_locations mt-30 btn-radius">
-                                        <div class="locations_image">
+                                        <div class="locations_image mb-3 mt-2">
                                             {{-- IMAGE — If you stored country flags/photos in DB --}}
                                             @if ($country->image)
                                                 <img src="{{ asset('storage/' . $country->image) }}"
@@ -564,7 +565,7 @@
                                                 {{ $country->cities_count }} Cities in this country
                                             </p>
 
-                                            <a class="view" href="#">
+                                            <a class="view">
                                                 View All Ads Here <i class="fa fa-angle-right"></i>
                                             </a>
                                         </div>

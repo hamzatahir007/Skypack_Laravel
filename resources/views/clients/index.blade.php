@@ -37,8 +37,8 @@
                         <td>{{ $client->mobile_number }}</td>
                         <td>{{ $client->email }}</td>
                         <td>{{ $client->profession }}</td>
-                        <td>{{ $client->active== 1 ? 'Active' : 'Not Active'  }}</td>
                         <td>{{ $client->gender }}</td>
+                        <td>{{ $client->active== 1 ? 'Active' : 'Not Active'  }}</td>
                         <td>
                             <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-primary">Edit</a>
                             <form action="{{ route('clients.destroy', $client->id) }}" method="POST" class="d-inline-block">

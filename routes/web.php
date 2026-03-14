@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -16,13 +17,19 @@ use App\Http\Controllers\Website\TravelerAuthController;
 use App\Http\Controllers\Website\TravelerBankAccountController;
 use App\Http\Controllers\WithdrawReqController;
 
-Route::get('/admin', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/admin', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/admin/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/admin/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/admin', [AdminDashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+    ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -85,6 +92,10 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::get('register', [ClientAuthController::class, 'showRegister'])->name('register');
     Route::post('register', [ClientAuthController::class, 'register'])->name('register.post');
 
+    Route::get('otp',        [ClientAuthController::class, 'showOtp'])->name('otp.show');
+    Route::post('otp/verify', [ClientAuthController::class, 'verifyOtp'])->name('otp.verify');
+    Route::post('otp/resend', [ClientAuthController::class, 'resendOtp'])->name('otp.resend');
+
     Route::middleware('clientAuth')->group(function () {
         Route::get('dashboard', [ClientAuthController::class, 'dashboard'])->name('dashboard');
 
@@ -128,6 +139,10 @@ Route::prefix('traveler')->name('traveler.')->group(function () {
 
     Route::get('register', [TravelerAuthController::class, 'showRegister'])->name('register');
     Route::post('register', [TravelerAuthController::class, 'register'])->name('register.post');
+
+    Route::get('otp',        [TravelerAuthController::class, 'showOtp'])->name('otp.show');
+    Route::post('otp/verify', [TravelerAuthController::class, 'verifyOtp'])->name('otp.verify');
+    Route::post('otp/resend', [TravelerAuthController::class, 'resendOtp'])->name('otp.resend');
 
     Route::middleware('travelerAuth')->group(function () {
         Route::get('dashboard', [TravelerAuthController::class, 'dashboard'])->name('dashboard');

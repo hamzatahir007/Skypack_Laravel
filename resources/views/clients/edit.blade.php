@@ -21,25 +21,25 @@
             <div class="row">
                 <!-- Full Name -->
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Full Name</label>
+                    <label class="form-label">Full Name *</label>
                     <input type="text" name="full_name" class="form-control" value="{{ old('full_name', $client->full_name) }}" required>
                 </div>
 
                 <!-- Country -->
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Country</label>
+                    <label class="form-label">Country *</label>
                     <input type="text" name="country" class="form-control" value="{{ old('country', $client->country) }}" required>
                 </div>
 
                 <!-- Email -->
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Email</label>
+                    <label class="form-label">Email *</label>
                     <input type="email" name="email" class="form-control" value="{{ old('email', $client->email) }}" required>
                 </div>
 
                 <!-- Mobile -->
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Mobile Number</label>
+                    <label class="form-label">Mobile Number *</label>
                     <input type="text" name="mobile_number" class="form-control" value="{{ old('mobile_number', $client->mobile_number) }}" required>
                 </div>
 
@@ -51,13 +51,13 @@
 
                 <!-- Address -->
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Address</label>
+                    <label class="form-label">Address *</label>
                     <input type="text" name="address" class="form-control" value="{{ old('address', $client->address) }}" required>
                 </div>
 
                 <!-- City -->
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">City</label>
+                    <label class="form-label">City *</label>
                     <input type="text" name="city" class="form-control" value="{{ old('city', $client->city) }}" required>
                 </div>
 

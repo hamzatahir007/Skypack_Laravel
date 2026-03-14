@@ -24,7 +24,7 @@
                     </li>
 
                     <li class="nav-item mx-lg-3">
-                        <a class="nav-link" href="{{ route('/listspace') }}">List Space</a>
+                        <a class="nav-link" href="{{ route('traveler.flights.create') }}">List Space</a>
                     </li>
 
                     <li class="nav-item mx-lg-3">
@@ -112,7 +112,8 @@
                     <div class="dropdown">
                         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="https://i.pravatar.cc/40" class="rounded-circle mr-2" width="36">
+                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg" class="rounded-circle mr-2" width="36">
+                            {{-- <img src="https://i.pravatar.cc/40" class="rounded-circle mr-2" width="36"> --}}
                             <span class="font-weight-semibold text-dark">
                                 {{ collect(explode(' ', session('client_name') ?? session('traveler_name')))->take(2)->implode(' ') }}
                             </span>

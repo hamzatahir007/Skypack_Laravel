@@ -94,71 +94,81 @@
 
                         <div class="row g-3">
 
-                            <div class="col-md-6">
-                                <label class="form-label">Full Name</label>
-                                <input type="text" name="full_name" class="form-control" required>
+                            <div class="col-md-6 mb-3 mt-2">
+                                <label class="form-label">Full Name *</label>
+                                <input placeholder="Full name" type="text" name="full_name" class="form-control"
+                                    required>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Country</label>
-                                <input type="text" name="country" class="form-control" required>
+                            <div class="col-md-6 mb-3 mt-2">
+                                <label class="form-label">Country *</label>
+                                <input placeholder="Enter country" type="text" name="country" class="form-control"
+                                    required>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" required>
+                            <div class="col-md-6 mb-3 mt-2">
+                                <label class="form-label">Email *</label>
+                                <input placeholder="Enter email" type="email" name="email" class="form-control"
+                                    required>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Mobile Number</label>
-                                <input type="text" name="mobile_number" class="form-control" required>
+                            <div class="col-md-6 mb-3 mt-2">
+                                <label class="form-label">Mobile Number *</label>
+                                <input placeholder="Enter mobile number" type="text" name="mobile_number"
+                                    class="form-control" required>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3 mt-2">
                                 <label class="form-label">Mobile Number 2</label>
-                                <input type="text" name="mobile_number_2" class="form-control">
+                                <input placeholder="Enter mobile number 2" type="text" name="mobile_number_2"
+                                    class="form-control">
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3 mt-2">
                                 <label class="form-label">Address</label>
-                                <input type="text" name="address" class="form-control">
+                                <input placeholder="Enter address" type="text" name="address" class="form-control">
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3 mt-2">
                                 <label class="form-label">City</label>
-                                <input type="text" name="city" class="form-control">
+                                <input placeholder="Enter city" type="text" name="city" class="form-control">
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" required>
+                            <div class="col-md-6 mb-3 mt-2">
+                                <label class="form-label">Password *</label>
+                                <input placeholder="Enter password" type="password" name="password" class="form-control"
+                                    required>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3 mt-2">
                                 <label class="form-label">Passport Expiry</label>
-                                <input type="date" name="passport_expiry" class="form-control">
+                                <input placeholder="Enter expiry date" type="date" name="passport_expiry"
+                                    class="form-control">
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3 mt-2">
                                 <label class="form-label">Passport Number</label>
-                                <input type="text" name="passport_no" class="form-control">
+                                <input placeholder="Enter passport number" type="text" name="passport_no"
+                                    class="form-control">
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3 mt-2">
                                 <label class="form-label">ID Number</label>
-                                <input type="text" name="ID_number" class="form-control">
+                                <input placeholder="Enter id number" type="text" name="ID_number"
+                                    class="form-control">
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3 mt-2">
                                 <label class="form-label">Profession</label>
-                                <input type="text" name="profession" class="form-control">
+                                <input placeholder="Enter profession" type="text" name="profession"
+                                    class="form-control">
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Gender</label>
                                 <select id="selectOp" name="gender" class="form-control">
                                     <option value="">Select</option>
-                                    <option value="male">Male</option>
+                                    <option value="male" selected>Male</option>
                                     <option value="female">Female</option>
                                 </select>
                             </div>
@@ -177,6 +187,24 @@
                                 <label class="form-label">Profile Image</label>
                                 <input type="file" name="profile_image" class="form-control" id="profile_image"
                                     required>
+                            </div>
+
+                            {{-- ── Two-Step Verification Toggle ── --}}
+                            <div class="col-12 mt-2">
+                                <label class="two-fa-box d-flex align-items-start gap-3 w-100">
+                                    <input class="form-check-input flex-shrink-0" type="checkbox"
+                                        name="two_fa_enabled" value="1"
+                                        {{ old('two_fa_enabled') ? 'checked' : '' }}>
+                                    <div>
+                                        <div class="fw-semibold text-dark">
+                                            🔒 Enable Two-Step Verification
+                                        </div>
+                                        <div class="small text-muted mt-1">
+                                            When enabled, we'll send a one-time code to your email each time you login.
+                                            Keeps your account extra secure.
+                                        </div>
+                                    </div>
+                                </label>
                             </div>
 
 

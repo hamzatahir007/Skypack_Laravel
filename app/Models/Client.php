@@ -37,7 +37,8 @@ class Client extends Model
         'update_by',
         'delete_by',
         'deleted_at',
-        'active'
+        'active',
+        'two_fa_enabled',
     ];
 
     // Hidden fields for arrays/JSON

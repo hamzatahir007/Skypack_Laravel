@@ -37,8 +37,8 @@
                         <td>{{ $traveler->mobile_number }}</td>
                         <td>{{ $traveler->email }}</td>
                         <td>{{ $traveler->profession }}</td>
-                        <td>{{ $traveler->active== 1 ? 'Active' : 'Not Active'  }}</td>
                         <td>{{ $traveler->gender }}</td>
+                        <td>{{ $traveler->active== 1 ? 'Active' : 'Not Active'  }}</td>
                         <td>
                             <a href="{{ route('travelers.edit', $traveler->id) }}" class="btn btn-sm btn-primary">Edit</a>
                             <form action="{{ route('travelers.destroy', $traveler->id) }}" method="POST" class="d-inline-block">

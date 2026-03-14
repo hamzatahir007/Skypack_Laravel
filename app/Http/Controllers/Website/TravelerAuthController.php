@@ -53,6 +53,30 @@ class TravelerAuthController extends Controller
         session()->forget('client_name');
         session()->forget('client_data');
 
+        // ── 2FA enabled? Send OTP ──────────────────
+        if ($traveler->two_fa_enabled) {
+            $otp       = rand(100000, 999999);
+            $expiresAt = now()->addMinutes(10);
+
+            // Save OTP in session (no DB column needed)
+            session([
+                'otp_traveler_id'  => $traveler->id,
+                'otp_code'       => $otp,
+                'otp_expires_at' => $expiresAt,
+            ]);
+
+            // Send OTP email
+            Mail::raw(
+                "Your LuggageLink verification code is: $otp\n\nThis code expires in 10 minutes.",
+                function ($message) use ($traveler, $otp) {
+                    $message->to($traveler->email)
+                        ->subject('Your Login OTP - LuggageLink');
+                }
+            );
+
+            return redirect()->route('traveler.otp.show')
+                ->with('info', 'OTP sent to ' . $traveler->email);
+        }
 
         // Store traveler session
         session([
@@ -64,6 +88,92 @@ class TravelerAuthController extends Controller
 
         return redirect()->route('traveler.dashboard')
             ->with('success', 'Welcome back, ' . $traveler->full_name . ' 👋');
+    }
+    // ─────────────────────────────────────────────
+    //  SHOW OTP PAGE
+    // ─────────────────────────────────────────────
+    public function showOtp()
+    {
+        // Guard: must have a pending OTP in session
+        if (!session('otp_traveler_id')) {
+            return redirect()->route('traveler.login')
+                ->with('error', 'Please login first.');
+        }
+
+        return view('website.pages.traveler.otp');
+    }
+
+    // ─────────────────────────────────────────────
+    //  VERIFY OTP — Step 2
+    // ─────────────────────────────────────────────
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|digits:6',
+        ]);
+
+        // Check session exists
+        if (!session('otp_traveler_id')) {
+            return redirect()->route('traveler.login')
+                ->with('error', 'Session expired. Please login again.');
+        }
+
+        // Check expiry
+        if (now()->isAfter(session('otp_expires_at'))) {
+            session()->forget(['otp_traveler_id', 'otp_code', 'otp_expires_at']);
+            return redirect()->route('traveler.login')
+                ->with('error', 'OTP expired. Please login again.');
+        }
+
+        // Check code
+        if ((int) $request->otp !== (int) session('otp_code')) {
+            return back()->with('error', 'Invalid OTP. Please try again.');
+        }
+
+        // ── OTP correct — log in ───────────────────
+        $traveler = Traveler::findOrFail(session('otp_traveler_id'));
+
+        session()->forget(['otp_traveler_id', 'otp_code', 'otp_expires_at']);
+
+        // Store client session
+        session([
+            'traveler_id' => $traveler->id,
+            'traveler_name' => $traveler->full_name,
+            'traveler_data' => $traveler,
+        ]);
+
+        return redirect()->route('traveler.dashboard')
+            ->with('success', 'Welcome back, ' . $traveler->full_name . ' 👋');
+    }
+
+    // ─────────────────────────────────────────────
+    //  RESEND OTP
+    // ─────────────────────────────────────────────
+    public function resendOtp()
+    {
+        if (!session('otp_traveler_id')) {
+            return redirect()->route('traveler.login')
+                ->with('error', 'Session expired. Please login again.');
+        }
+
+        $traveler    = Traveler::findOrFail(session('otp_traveler_id'));
+        $otp       = rand(100000, 999999);
+        $expiresAt = now()->addMinutes(10);
+
+        session([
+            'otp_code'       => $otp,
+            'otp_expires_at' => $expiresAt,
+        ]);
+
+        Mail::raw(
+            "Your new LuggageLink verification code is: $otp\n\nThis code expires in 10 minutes.",
+            function ($message) use ($traveler) {
+                $message->to($traveler->email)
+                    ->subject('Your New Login OTP - LuggageLink');
+            }
+        );
+
+        return back()->with('info', 'A new OTP has been sent to ' . $traveler->email);
     }
 
     public function register(Request $request): RedirectResponse
@@ -83,6 +193,7 @@ class TravelerAuthController extends Controller
             'ID_number' => 'nullable|string|max:50',
             'profession' => 'nullable|string|max:100',
             'gender' => 'nullable|in:male,female',
+            'two_fa_enabled' => 'nullable|boolean',
             'create_by' => 'nullable|in:male,female',
             'passport_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -90,15 +201,16 @@ class TravelerAuthController extends Controller
 
         // Handle file uploads
         if ($request->hasFile('passport_pic')) {
-            $validated['passport_pic'] = $request->file('passport_pic')->store('clients/passports', 'public');
+            $validated['passport_pic'] = $request->file('passport_pic')->store('travelers/passports', 'public');
         }
         if ($request->hasFile('profile_image')) {
-            $validated['profile_image'] = $request->file('profile_image')->store('clients/profiles', 'public');
+            $validated['profile_image'] = $request->file('profile_image')->store('travelers/profiles', 'public');
         }
 
         // Add system fields
         // $validated['create_by'] = auth()->id();   // Logged-in user ID
         $validated['active'] = $request->input('active', 1); // default to Active
+        $validated['two_fa_enabled'] = $request->boolean('two_fa_enabled');
 
         Traveler::create($validated);
 

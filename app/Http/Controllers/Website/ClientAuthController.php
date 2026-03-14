@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Client;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
@@ -52,6 +53,31 @@ class ClientAuthController extends Controller
         session()->forget('traveler_name');
         session()->forget('traveler_data');
 
+        // ── 2FA enabled? Send OTP ──────────────────
+        if ($client->two_fa_enabled) {
+            $otp       = rand(100000, 999999);
+            $expiresAt = now()->addMinutes(10);
+
+            // Save OTP in session (no DB column needed)
+            session([
+                'otp_client_id'  => $client->id,
+                'otp_code'       => $otp,
+                'otp_expires_at' => $expiresAt,
+            ]);
+
+            // Send OTP email
+            Mail::raw(
+                "Your LuggageLink verification code is: $otp\n\nThis code expires in 10 minutes.",
+                function ($message) use ($client, $otp) {
+                    $message->to($client->email)
+                        ->subject('Your Login OTP - LuggageLink');
+                }
+            );
+
+            return redirect()->route('client.otp.show')
+                ->with('info', 'OTP sent to ' . $client->email);
+        }
+
         // Store client session
         session([
             'client_id' => $client->id,
@@ -63,6 +89,93 @@ class ClientAuthController extends Controller
 
         return redirect()->route('client.dashboard')
             ->with('success', 'Welcome back, ' . $client->full_name . ' 👋');
+    }
+    // ─────────────────────────────────────────────
+    //  SHOW OTP PAGE
+    // ─────────────────────────────────────────────
+    public function showOtp()
+    {
+        // Guard: must have a pending OTP in session
+        if (!session('otp_client_id')) {
+            return redirect()->route('client.login')
+                ->with('error', 'Please login first.');
+        }
+
+        return view('website.pages.client.otp');
+    }
+
+    // ─────────────────────────────────────────────
+    //  VERIFY OTP — Step 2
+    // ─────────────────────────────────────────────
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|digits:6',
+        ]);
+
+        // Check session exists
+        if (!session('otp_client_id')) {
+            return redirect()->route('client.login')
+                ->with('error', 'Session expired. Please login again.');
+        }
+
+        // Check expiry
+        if (now()->isAfter(session('otp_expires_at'))) {
+            session()->forget(['otp_client_id', 'otp_code', 'otp_expires_at']);
+            return redirect()->route('client.login')
+                ->with('error', 'OTP expired. Please login again.');
+        }
+
+        // Check code
+        if ((int) $request->otp !== (int) session('otp_code')) {
+            return back()->with('error', 'Invalid OTP. Please try again.');
+        }
+
+        // ── OTP correct — log in ───────────────────
+        $client = Client::findOrFail(session('otp_client_id'));
+
+        session()->forget(['otp_client_id', 'otp_code', 'otp_expires_at']);
+
+        // Store client session
+        session([
+            'client_id' => $client->id,
+            'client_name' => $client->full_name,
+            'client_data' => $client,
+        ]);
+        // $this->createClientSession($client);
+
+        return redirect()->route('client.dashboard')
+            ->with('success', 'Welcome back, ' . $client->full_name . ' 👋');
+    }
+
+    // ─────────────────────────────────────────────
+    //  RESEND OTP
+    // ─────────────────────────────────────────────
+    public function resendOtp()
+    {
+        if (!session('otp_client_id')) {
+            return redirect()->route('client.login')
+                ->with('error', 'Session expired. Please login again.');
+        }
+
+        $client    = Client::findOrFail(session('otp_client_id'));
+        $otp       = rand(100000, 999999);
+        $expiresAt = now()->addMinutes(10);
+
+        session([
+            'otp_code'       => $otp,
+            'otp_expires_at' => $expiresAt,
+        ]);
+
+        Mail::raw(
+            "Your new LuggageLink verification code is: $otp\n\nThis code expires in 10 minutes.",
+            function ($message) use ($client) {
+                $message->to($client->email)
+                    ->subject('Your New Login OTP - LuggageLink');
+            }
+        );
+
+        return back()->with('info', 'A new OTP has been sent to ' . $client->email);
     }
 
     public function register(Request $request): RedirectResponse
@@ -82,6 +195,7 @@ class ClientAuthController extends Controller
             'ID_number' => 'nullable|string|max:50',
             'profession' => 'nullable|string|max:100',
             'gender' => 'nullable|in:male,female',
+            'two_fa_enabled' => 'nullable|boolean',
             'create_by' => 'nullable|in:male,female',
             'passport_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -98,6 +212,7 @@ class ClientAuthController extends Controller
         // Add system fields
         // $validated['create_by'] = auth()->id();   // Logged-in user ID
         $validated['active'] = $request->input('active', 1); // default to Active
+        $validated['two_fa_enabled'] = $request->boolean('two_fa_enabled');
 
         Client::create($validated);
 

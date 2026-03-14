@@ -20,7 +20,7 @@ class ClientController extends Controller
     /**
      * Display a listing of the clients.
      */
-    public function index() : View
+    public function index(): View
     {
         return view('clients.index', [
             'clients' => Client::latest()->paginate(10) // adjust pagination as needed
@@ -30,7 +30,7 @@ class ClientController extends Controller
     /**
      * Show the form for creating a new client.
      */
-    public function create() : View
+    public function create(): View
     {
         return view('clients.create');
     }
@@ -38,7 +38,7 @@ class ClientController extends Controller
     /**
      * Store a newly created client in storage.
      */
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'full_name' => 'required|string|max:255',
@@ -67,20 +67,20 @@ class ClientController extends Controller
             $validated['profile_image'] = $request->file('profile_image')->store('clients/profiles', 'public');
         }
 
-         // Add system fields
-    $validated['create_by'] = auth()->id();   // Logged-in user ID
-$validated['active'] = $request->input('active', 1); // default to Active
+        // Add system fields
+        $validated['create_by'] = auth()->id();   // Logged-in user ID
+        $validated['active'] = $request->input('active', 1); // default to Active
 
         Client::create($validated);
 
         return redirect()->route('clients.index')
-                         ->with('success', 'Client created successfully.');
+            ->with('success', 'Client created successfully.');
     }
 
     /**
      * Show the form for editing the specified client.
      */
-    public function edit(Client $client) : View
+    public function edit(Client $client): View
     {
         return view('clients.edit', compact('client'));
     }
@@ -88,7 +88,7 @@ $validated['active'] = $request->input('active', 1); // default to Active
     /**
      * Update the specified client in storage.
      */
-    public function update(Request $request, Client $client) : RedirectResponse
+    public function update(Request $request, Client $client): RedirectResponse
     {
         $validated = $request->validate([
             'full_name' => 'required|string|max:255',
@@ -121,24 +121,24 @@ $validated['active'] = $request->input('active', 1); // default to Active
         $client->update($validated);
 
         return redirect()->route('clients.index')
-                         ->with('success', 'Client updated successfully.');
+            ->with('success', 'Client updated successfully.');
     }
 
     /**
      * Remove the specified client from storage.
      */
-    public function destroy(Client $client) : RedirectResponse
+    public function destroy(Client $client): RedirectResponse
     {
-         $client->delete_by = auth()->id();         // kisne delete kiya
-    $client->deleted_at = now();                // kab delete hua
-    $client->save();
-//         $client->delete();
-// $client->delete_by = auth()->id();         // kisne delete kiya
-//     $client->save();
+        $client->delete_by = auth()->id();         // kisne delete kiya
+        $client->deleted_at = now();                // kab delete hua
+        $client->save();
+        //         $client->delete();
+        // $client->delete_by = auth()->id();         // kisne delete kiya
+        //     $client->save();
 
-    // $client->deleted_at = now();                // kab delete hua
-   
+        // $client->deleted_at = now();                // kab delete hua
+
         return redirect()->route('clients.index')
-                         ->with('success', 'Client deleted successfully.');
+            ->with('success', 'Client deleted successfully.');
     }
 }
