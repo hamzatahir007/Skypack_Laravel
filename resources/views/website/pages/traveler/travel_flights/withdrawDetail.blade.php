@@ -117,6 +117,7 @@
                             <th>Qty</th>
                             <th>Unit</th>
                             <th>Rate</th>
+                            <th>Weight</th>
                             <th>Amount</th>
                             <th></th>
                         </tr>
@@ -159,6 +160,8 @@
                                 </td>
                                 <td><input disabled name="details[{{ $i }}][rate]" class="form-control"
                                         value="{{ $d->rate }}"></td>
+                                <td><input disabled name="details[{{ $i }}][weight]" class="form-control"
+                                        value="{{ $d->weight }}"></td>
                                 <td><input disabled name="details[{{ $i }}][amount]" class="form-control"
                                         value="{{ $d->amount }}"></td>
                                 {{-- <td><button type="button" class="btn btn-danger btn-sm"

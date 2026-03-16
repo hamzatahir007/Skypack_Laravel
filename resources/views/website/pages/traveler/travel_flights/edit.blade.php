@@ -110,7 +110,7 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Rate Per KG (USD)</label>
                         <input type="number" step="0.01" name="rate_per_unit"
-                            value="{{ $travel_flight->rate_per_unit }}" class="form-control">
+                            value="{{ $travel_flight->rate_per_unit }}" class="form-control" readonly>
                     </div>
 
                     <div class="col-md-12 mb-3">

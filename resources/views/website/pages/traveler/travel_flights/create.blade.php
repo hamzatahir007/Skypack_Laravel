@@ -87,15 +87,34 @@
                         <input type="datetime-local" name="destination_date_time" class="form-control">
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    {{-- <div class="col-md-6 mb-3">
                         <label class="form-label">Weight (kg)</label>
                         <input type="text" step="0.01" name="weight" class="form-control">
+                    </div> --}}
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Weight (kg)</label>
+                        <input type="number" step="0.01" name="weight" id="weight" class="form-control"
+                            placeholder="Enter available weight in kg" value="{{ old('weight') }}">
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    {{-- <div class="col-md-6 mb-3">
                         <label class="form-label">Rate Per KG (USD)</label>
                         <input type="number" step="0.01" name="rate_per_unit" class="form-control">
+                    </div> --}}
+
+                    {{-- ── Rate: fixed $25/kg, read-only display only ── --}}
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Rate Per KG (USD)
+                            <span class="badge badge-info ml-1" style="font-size: 0.75rem;">Fixed</span>
+                        </label>
+                        <input type="hidden" name="rate_per_unit" value="25">
+
+                        {{-- This disabled input is just for display --}}
+                        <input type="text" class="form-control bg-light font-weight-bold text-success"
+                            value="$25.00 / kg" disabled>
                     </div>
+
 
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Flight Description</label>
@@ -164,17 +183,26 @@
 
 
 @push('scripts')
-<script>
-document.addEventListener('click', function (e) {
+    <script>
+        const RATE_PER_KG = 25.00;
 
-    // Add new restriction
-    if (e.target.classList.contains('add-restriction')) {
-        const wrapper = document.getElementById('restrictions-wrapper');
+        // Auto-calculate estimated total as traveler types weight
+        document.getElementById('weight').addEventListener('input', function() {
+            const kg = parseFloat(this.value) || 0;
+            const total = (kg * RATE_PER_KG).toFixed(2);
+            document.getElementById('estimated_total').value = '$' + total;
+        });
 
-        const row = document.createElement('div');
-        row.className = 'input-group mb-2';
+        document.addEventListener('click', function(e) {
 
-        row.innerHTML = `
+            // Add new restriction
+            if (e.target.classList.contains('add-restriction')) {
+                const wrapper = document.getElementById('restrictions-wrapper');
+
+                const row = document.createElement('div');
+                row.className = 'input-group mb-2';
+
+                row.innerHTML = `
             <input type="text"
                    name="restrictions[]"
                    class="form-control"
@@ -185,13 +213,13 @@ document.addEventListener('click', function (e) {
             </button>
         `;
 
-        wrapper.appendChild(row);
-    }
+                wrapper.appendChild(row);
+            }
 
-    // Remove restriction
-    if (e.target.classList.contains('remove-restriction')) {
-        e.target.closest('.input-group').remove();
-    }
-});
-</script>
+            // Remove restriction
+            if (e.target.classList.contains('remove-restriction')) {
+                e.target.closest('.input-group').remove();
+            }
+        });
+    </script>
 @endpush

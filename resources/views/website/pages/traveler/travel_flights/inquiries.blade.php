@@ -98,7 +98,7 @@
                                     @elseif ($inq->status == 'Delivered')
                                         <a href="{{ route('traveler.inquiry.withdrawCreate', $inq->id) }}"
                                             class="btn btn-sm btn-success me-1" title="Withdraw Amount">
-                                            ${{ $inq->details->sum('amount') }} <i class="fas fa-money-bill-wave"></i>
+                                            <i class="fas fa-money-bill-wave"></i>
                                         </a>
                                     @else
                                         <span class="text-secondary">No Action</span>

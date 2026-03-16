@@ -108,6 +108,7 @@
                             <th>Qty</th>
                             <th>Unit</th>
                             <th>Rate</th>
+                            <th>Weight</th>
                             <th>Amount</th>
                             <th></th>
                         </tr>
@@ -138,6 +139,8 @@
                                 </td>
                                 <td><input name="details[{{ $i }}][rate]" class="form-control"
                                         value="{{ $d->rate }}"></td>
+                                        <td><input name="details[{{ $i }}][weight]" class="form-control"
+                                        value="{{ $d->weight }}"></td>
                                 <td><input name="details[{{ $i }}][amount]" class="form-control"
                                         value="{{ $d->amount }}"></td>
                                 <td><button type="button" class="btn btn-danger btn-sm"
@@ -173,6 +176,7 @@
                 <td><input type="number" name="details[${rowIndex}][qty]" class="form-control" value="${data.qty ?? 1}"></td>
             <td><select id="selectOp" name="details[${rowIndex}][unit]" class="form-control">${unitOptions}</select></td>
             <td><input type="number" step="0.01" name="details[${rowIndex}][rate]" class="form-control" value="${data.rate ?? 0}"></td>
+            <td><input type="number" step="0.01" name="details[${rowIndex}][weight]" class="form-control" value="${data.weight ?? 0}"></td>
             <td><input type="number" step="0.01" name="details[${rowIndex}][amount]" class="form-control" value="${data.amount ?? 0}"></td>
             <td><button type="button" class="btn btn-danger btn-sm" onclick="this.closest('tr').remove()">X</button></td>
         </tr>
@@ -186,10 +190,11 @@
         document.querySelector('#detailsTable').addEventListener('input', function(e) {
             const tr = e.target.closest('tr');
             if (!tr) return;
-            const qty = parseFloat(tr.querySelector('input[name*="[qty]"]').value) || 0;
+            const weight = parseFloat(tr.querySelector('input[name*="[weight]"]').value) || 0;
+            // const qty = parseFloat(tr.querySelector('input[name*="[qty]"]').value) || 0;
             const rate = parseFloat(tr.querySelector('input[name*="[rate]"]').value) || 0;
             const amountInput = tr.querySelector('input[name*="[amount]"]');
-            amountInput.value = (qty * rate).toFixed(2);
+            amountInput.value = (weight * rate).toFixed(2);
         });
     </script>
 @endsection

@@ -10,6 +10,8 @@ use App\Models\TravelFlight;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Client;
+use App\Pricing;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
@@ -253,7 +255,8 @@ class ClientAuthController extends Controller
                 $selectedTravelerId = $flight->traveler_id;   // AUTO SELECT TRAVELER
             }
         }
-        return view('website.pages.client.inquiries.create', compact('clients', 'travelers', 'flights', 'items', 'selectedFlightId', 'selectedTravelerId'));
+        $pricing = ['rate_per_kg' => Pricing::RATE_PER_KG, 'platform_fee' => Pricing::CLIENT_PLATFORM_FEE];
+        return view('website.pages.client.inquiries.create', compact('clients', 'travelers', 'flights', 'items', 'selectedFlightId', 'selectedTravelerId', 'pricing'));
     }
 
 
@@ -271,8 +274,9 @@ class ClientAuthController extends Controller
             'details.*.qty' => 'nullable|integer',
             'details.*.rate' => 'nullable|numeric',
         ]);
+        $master = null;
 
-        DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request, &$master) {
             $master = InquiryMaster::create($request->only([
                 'client_id',
                 'travel_flight_id',
@@ -296,11 +300,20 @@ class ClientAuthController extends Controller
                     'description' => $d['description'] ?? null,
                     'qty' => $d['qty'] ?? 1,
                     'unit' => $d['unit'] ?? null,
+                    'weight' => $d['weight'] ?? 1,
                     'rate' => $d['rate'] ?? 0,
-                    'amount' => $d['amount'] ?? (($d['qty'] ?? 1) * ($d['rate'] ?? 0)),
+                    'amount' => $d['amount'] ?? (($d['weight'] ?? 1) * ($d['rate'] ?? 0)),
                 ]);
             }
         });
+
+
+        // ── NOTIFY traveler about new inquiry ──────────────────────
+        if ($master) {
+            $master->load(['client', 'traveler']);
+
+            NotificationService::inquiryCreated($master);
+        }
 
         return redirect()->route('client.inquiries')->with('success', 'Inquiry created.');
     }
@@ -353,8 +366,9 @@ class ClientAuthController extends Controller
                     'description' => $d['description'] ?? null,
                     'qty' => $d['qty'] ?? 1,
                     'unit' => $d['unit'] ?? null,
+                    'weight' => $d['weight'] ?? 1,
                     'rate' => $d['rate'] ?? 0,
-                    'amount' => $d['amount'] ?? (($d['qty'] ?? 1) * ($d['rate'] ?? 0)),
+                    'amount' => $d['amount'] ?? (($d['weight'] ?? 1) * ($d['rate'] ?? 0)),
                 ]);
             }
         });
@@ -377,9 +391,11 @@ class ClientAuthController extends Controller
     {
         $inq = InquiryMaster::with(['client', 'traveler', 'travelFlight', 'details'])->findOrFail($id);
         $totalAmount = $inq->details->sum('amount');
+        $totalKg     = $inq->details->sum('weight');
+        $breakdown   = Pricing::clientCheckout((float) $totalKg);
         $items = Inventory::where('active', 1)->get();
 
-        return view('website.pages.client.inquiries.deposit', compact('inq', 'totalAmount', 'items'));
+        return view('website.pages.client.inquiries.deposit', compact('inq', 'totalAmount', 'items', 'breakdown'));
     }
 
     public function checkout($id)
@@ -391,25 +407,44 @@ class ClientAuthController extends Controller
             return back()->with('error', 'Inquiry not accepted yet.');
         }
 
+        $totalKg   = $inq->details->sum('weight');
+        $breakdown = Pricing::clientCheckout((float) $totalKg);
+
         Stripe::setApiKey(config('services.stripe.secret'));
 
         $session = Session::create([
             'payment_method_types' => ['card'],
             'mode' => 'payment',
-            'line_items' => [[
-                'price_data' => [
-                    'currency' => 'usd',
-                    'product_data' => [
-                        'name' => 'Delivery Deposit for Inquiry #' . $inq->id,
+            'line_items' => [
+                [
+                    'price_data' => [
+                        'currency'     => Pricing::CURRENCY,
+                        'product_data' => [
+                            'name' => 'Baggage Space — ' . $totalKg . 'kg @ $' . Pricing::RATE_PER_KG . '/kg',
+                        ],
+                        'unit_amount'  => (int) round($breakdown['cargo_amount'] * 100),
                     ],
-                    'unit_amount' => $totalAmount * 100, // Stripe uses cents
+                    'quantity' => 1,
                 ],
-                'quantity' => 1,
-            ]],
+                // Item 2: Platform fee ($3.99)
+                [
+                    'price_data' => [
+                        'currency'     => Pricing::CURRENCY,
+                        'product_data' => [
+                            'name' => 'LuggageLink Platform Fee',
+                        ],
+                        'unit_amount'  => (int) round(Pricing::CLIENT_PLATFORM_FEE * 100),
+                    ],
+                    'quantity' => 1,
+                ],
+            ],
             'success_url' => route('client.inquiries.success') . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('client.inquiries.cancel'),
             'metadata' => [
-                'inquiry_id' => $inq->id,
+                'inquiry_id'   => $inq->id,
+                'cargo_amount' => $breakdown['cargo_amount'],
+                'platform_fee' => $breakdown['platform_fee'],
+                'total'        => $breakdown['total'],
             ],
         ]);
 
@@ -434,7 +469,12 @@ class ClientAuthController extends Controller
 
         $inq->status = 'Deposit';
         $inq->ucode = strtoupper(Str::random(6));
+        $inq->paid_amount    = $session->metadata->total ?? null;
         $inq->save();
+
+        // ── NOTIFY traveler: payment received ─────────────────────
+        NotificationService::paymentReceived($inq);
+
 
         return redirect()->route('client.inquiries')->with('success', 'Payment successful. Your delivery code is: ' . $inq->ucode);
     }
@@ -467,5 +507,17 @@ class ClientAuthController extends Controller
             ->with('success', 'Logged out successfully.');
 
         // return redirect()->route('website.pages.client.login');
+    }
+
+    // ─────────────────────────────────────────────
+    //  PRIVATE HELPER
+    // ─────────────────────────────────────────────
+    private function setClientSession(Client $client): void
+    {
+        session([
+            'client_id'   => $client->id,
+            'client_name' => $client->full_name,
+            'client_data' => $client,
+        ]);
     }
 }

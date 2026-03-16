@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InquiryMaster extends Model
 {
-        use SoftDeletes; // Enables soft deletes
+    use SoftDeletes; // Enables soft deletes
 
     protected $dates = ['deleted_at']; // Laravel will use this column
 
@@ -24,9 +24,10 @@ class InquiryMaster extends Model
         'contact_person',
         'contact_no',
         'Qrcode',
-         'delete_by',
+        'delete_by',
         'deleted_at',
         'traveler_id',
+        'paid_amount'
     ];
 
     public function details()

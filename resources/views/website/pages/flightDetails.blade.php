@@ -158,7 +158,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between mt-2">
-                            <div>Rate / Unit</div>
+                            <div>Rate / KG</div>
                             <div>{{ $flight->rate_per_unit ? number_format($flight->rate_per_unit, 2) . ' USD' : '-' }}
                             </div>
                         </div>

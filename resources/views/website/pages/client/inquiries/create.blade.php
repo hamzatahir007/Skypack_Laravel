@@ -115,6 +115,7 @@
                             <th>Qty</th>
                             <th>Unit</th>
                             <th>Rate</th>
+                            <th>Weight</th>
                             <th>Amount</th>
                             <th></th>
                         </tr>
@@ -155,8 +156,11 @@
                     ${unitOptions}
                 </select>
             </td>
+            <td><input type="number" step="0.01" name="details[${rowIndex}][rate]" class="form-control" value="25" readonly></td>
+            
+            
+            <td><input type="number" name="details[${rowIndex}][weight]" class="form-control" value="${data.weight ?? 0}"></td>
 
-            <td><input type="number" step="0.01" name="details[${rowIndex}][rate]" class="form-control" value="${data.rate ?? 0}"></td>
 
 <td>
   <input 
@@ -181,10 +185,10 @@
         document.querySelector('#detailsTable').addEventListener('input', function(e) {
             const tr = e.target.closest('tr');
             if (!tr) return;
-            const qty = parseFloat(tr.querySelector('input[name*="[qty]"]').value) || 0;
+            const weight = parseFloat(tr.querySelector('input[name*="[weight]"]').value) || 0;
             const rate = parseFloat(tr.querySelector('input[name*="[rate]"]').value) || 0;
             const amountInput = tr.querySelector('input[name*="[amount]"]');
-            amountInput.value = (qty * rate).toFixed(2);
+            amountInput.value = (weight * rate).toFixed(2);
         });
     </script>
 @endsection

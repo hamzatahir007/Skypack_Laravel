@@ -14,6 +14,7 @@ class InquiryDetail extends Model
         'description',
         'qty',
         'unit',
+        'weight',
         'rate',
         'amount',
     ];

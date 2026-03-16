@@ -14,6 +14,8 @@ use App\Models\InquiryDetail;
 use App\Mail\InquiryStatusMail;
 use App\Models\Inventory;
 use App\Models\WithdrawRequest;
+use App\Pricing;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -362,6 +364,8 @@ class TravelerAuthController extends Controller
         $inq = InquiryMaster::findOrFail($id);
         $inq->status = 'Accepted';
         $inq->save();
+        // ── NOTIFY client: inquiry accepted ───────────────────────
+        NotificationService::inquiryAccepted($inq);
 
         // optional email/send notification
         // if ($inq->client && $inq->client->email) {
@@ -375,11 +379,12 @@ class TravelerAuthController extends Controller
         $inq = InquiryMaster::findOrFail($id);
         $inq->status = 'Rejected';
         $inq->save();
-
+        // ── NOTIFY client: inquiry rejected ───────────────────────
+        NotificationService::inquiryRejected($inq);
         // optional email/send notification
-        if ($inq->client && $inq->client->email) {
-            Mail::to($inq->client->email)->send(new InquiryStatusMail($inq));
-        }
+        // if ($inq->client && $inq->client->email) {
+        //     Mail::to($inq->client->email)->send(new InquiryStatusMail($inq));
+        // }
         return back()->with('success', 'Inquiry Rejected');
     }
 
@@ -391,6 +396,10 @@ class TravelerAuthController extends Controller
             $inq->status = 'Delivered';
             // $inq->delivered_at = now();
             $inq->save();
+
+            // ── NOTIFY client: package delivered ──────────────────
+            NotificationService::packageDelivered($inq);
+
             return back()->with('success', 'Delivery confirmed');
         }
 
@@ -405,9 +414,11 @@ class TravelerAuthController extends Controller
         $widthreq = WithdrawRequest::where('inquiry_master_id', $inquiryId)
             ->where('traveler_id', session('traveler_id'))
             ->exists();
+        // Show breakdown on the detail page too
+        $cargoAmount = $inquiry->details->sum('amount');
+        $breakdown   = Pricing::travelerPayout((float) $cargoAmount);
 
-
-        return view('website.pages.traveler.travel_flights.withdraw', compact('inquiry', 'items', 'widthreq'));
+        return view('website.pages.traveler.travel_flights.withdraw', compact('inquiry', 'items', 'widthreq', 'breakdown'));
     }
 
     public function withdrawDetail($id)
@@ -418,31 +429,45 @@ class TravelerAuthController extends Controller
         $flights = \App\Models\TravelFlight::select('id', 'pnr_no')->get();
         $widthreq = WithdrawRequest::where('inquiry_master_id', $id)->latest()->first();
         $items = Inventory::where('active', 1)->get();
+        // Show breakdown on the detail page too
+        $cargoAmount = $inquiry->details->sum('amount');
+        $breakdown   = Pricing::travelerPayout((float) $cargoAmount);
 
-        return view('website.pages.traveler.travel_flights.withdrawDetail',  compact('inquiry', 'clients', 'travelers', 'flights', 'items', 'widthreq'));
+        return view('website.pages.traveler.travel_flights.withdrawDetail',  compact('inquiry', 'clients', 'travelers', 'flights', 'items',  'widthreq', 'breakdown'));
     }
 
     public function storeWithdraw(Request $request)
     {
         $request->validate([
             'inquiry_master_id' => 'required|exists:inquiry_master,id',
-            'amount' => 'required|numeric|min:1',
+            // 'amount' => 'required|numeric|min:1',
         ]);
 
-        $widthreq = WithdrawRequest::where('inquiry_master_id', $request->inquiry_master_id)
+        $alreadyRequested  = WithdrawRequest::where('inquiry_master_id', $request->inquiry_master_id)
             ->where('traveler_id', session('traveler_id'))
             ->exists();
 
-        if ($widthreq) {
+        if ($alreadyRequested) {
             return  redirect()->back()->with('error', 'Already requested.');
         }
+
+        // Recalculate server-side — never trust the form amount
+        $inquiry     = InquiryMaster::with('details')->findOrFail($request->inquiry_master_id);
+        $cargoAmount = $inquiry->details->sum('amount');
+        $breakdown   = Pricing::travelerPayout((float) $cargoAmount);
 
         WithdrawRequest::create([
             'inquiry_master_id' => $request->inquiry_master_id,
             'traveler_id' => session('traveler_id'),
-            'amount' => $request->amount,
+            'amount' => $breakdown['traveler_payout'], // net amount after deductions
+            // Optional: store breakdown columns if your table has them
+            // 'cargo_amount'   => $breakdown['cargo_amount'],
+            // 'platform_fee'   => $breakdown['platform_fee'],
+            // 'platform_share' => $breakdown['platform_share'],
         ]);
 
+        // ── NOTIFY admin: withdrawal requested ────────────────────
+        NotificationService::withdrawalRequested($inquiry, $breakdown['traveler_payout']);
         // return redirect()->route('traveler.inquiries')->with('success', 'Withdraw request sent successfully: ' . $inq->id);
         return redirect()->back()->with('success', 'Withdraw request sent successfully.');
     }
