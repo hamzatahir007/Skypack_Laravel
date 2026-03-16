@@ -6,6 +6,7 @@ use App\Models\InquiryMaster;
 use App\Models\Inventory;
 use App\Models\TravelFlight;
 use App\Models\WithdrawRequest;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -84,6 +85,12 @@ class WithdrawReqController extends Controller
                 // 4️⃣ Update withdraw status
                 $withdraw->status = $request->status;
                 $withdraw->save();
+
+                // 5️⃣ Notify traveler when admin approves withdrawal
+                if ($request->status === 'Completed') {
+                    $inquiry->load('traveler');
+                    NotificationService::withdrawalCompleted($inquiry, $withdraw->amount);
+                }
             }
 
             DB::commit();

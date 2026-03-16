@@ -17,9 +17,8 @@
     @endif
 
     @if ($account)
-        <div class="card bank-card shadow-sm border-0">
+        <div class="card bank-card shadow-sm border-1">
             <div class="card-body p-4">
-
                 <div class="row mb-3">
                     <div class="col-12">
                         <span class="badge bg-primary-soft text-primary px-3 py-2">
@@ -68,7 +67,7 @@
             </div>
         </div>
     @else
-        <div class="empty-state text-center p-5 bg-white shadow-sm rounded">
+        <div class="empty-state text-center p-5 bg-white shadow-sm rounded border-1">
             <div class="mb-3" style="font-size:48px;">🏦</div>
             <h5 class="fw-bold mb-2">No Bank Account Added</h5>
             <p class="text-muted mb-4">

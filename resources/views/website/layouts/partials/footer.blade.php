@@ -7,9 +7,9 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="footer_company">
                         <img src="{{ asset('img/bagspacelogo.png') }}" alt="Logo" class="footer_logo">
-                        <p>Plot # 135, Ground floor AL Dawood Building, CHS block 7&8, Berar Society, Karachi</p>
+                        {{-- <p>Plot # 135, Ground floor AL Dawood Building, CHS block 7&8, Berar Society, Karachi</p>
                         <p>+92 332 555 8664</p>
-                        <p>officiallamhey@gmail.com</p>
+                        <p>officiallamhey@gmail.com</p> --}}
                     </div>
                 </div>
 

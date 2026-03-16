@@ -74,14 +74,14 @@ class NotificationService
     // ─────────────────────────────────────────────────────────────
     public static function paymentReceived(InquiryMaster $inquiry): void
     {
-        $traveler = $inquiry->travelers;
-        $client   = $inquiry->clients;
+        $traveler = $inquiry->traveler;
+        $client   = $inquiry->client;
 
         if (!$traveler?->email) return;
 
         Mail::to($traveler->email)->send(new NotifyMail(
             heading: 'Payment Received for Inquiry #' . $inquiry->id,
-            body: "Hi {$traveler->full_name},\n\nThe client {$client->full_name} has completed payment for inquiry #{$inquiry->id}.\n\nDelivery Code: {$inquiry->ucode}\n\nPlease verify this code with the client upon delivery.",
+            body: "Hi {$traveler->full_name},\n\nThe client {$client->full_name} has completed payment for inquiry #{$inquiry->id}.\n\nPlease verify code with the client upon delivery.",
             actionUrl: url('/traveler/dashboard'),
             actionLabel: 'View Dashboard',
             color: 'success'
@@ -112,12 +112,14 @@ class NotificationService
     // ─────────────────────────────────────────────────────────────
     public static function withdrawalRequested(InquiryMaster $inquiry, float $amount): void
     {
-        $adminEmail = config('mail.admin_email', config('mail.from.address'));
+        // $adminEmail = config('mail.admin_email', config('mail.from.address'));
         $traveler   = $inquiry->traveler;
+        $admin = \App\Models\User::first(); // or ->where('name', 'Admin')->first()
 
-        if (!$adminEmail) return;
 
-        Mail::to($adminEmail)->send(new NotifyMail(
+        if (!$admin?->email) return;
+
+        Mail::to($admin->email)->send(new NotifyMail(
             heading: 'New Withdrawal Request',
             body: "A traveler has submitted a withdrawal request.\n\nTraveler: {$traveler->full_name}\nEmail: {$traveler->email}\nInquiry ID: #{$inquiry->id}\nAmount: \${$amount} USD\n\nPlease login to the admin panel to review and process this request.",
             actionUrl: url('/admin/withdrawRequest'),

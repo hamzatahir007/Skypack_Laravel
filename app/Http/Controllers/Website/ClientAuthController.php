@@ -461,7 +461,10 @@ class ClientAuthController extends Controller
             return redirect()->route('client.inquiries')->with('error', 'Payment not confirmed.');
         }
 
-        $inq = InquiryMaster::findOrFail($session->metadata->inquiry_id);
+        $inq = InquiryMaster::with(['client', 'traveler'])
+            ->findOrFail($session->metadata->inquiry_id);
+
+        // $inq = InquiryMaster::findOrFail($session->metadata->inquiry_id);
 
         if ($inq->status === 'Deposit') {
             return redirect()->route('client.inquiries')->with('success', 'Already paid.');
