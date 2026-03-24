@@ -112,7 +112,7 @@
                             ${{ number_format($breakdown['traveler_share'], 2) }}
                         </td>
                     </tr>
-                    <tr class="border-top">
+                    {{-- <tr class="border-top">
                         <td class="pl-4 text-muted py-3">
                             Platform Fee (deducted)
                             <div class="small text-muted">Service charge</div>
@@ -120,7 +120,7 @@
                         <td class="text-right pr-4 py-3 font-weight-bold text-danger">
                             − ${{ number_format($breakdown['platform_fee'], 2) }}
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr class="border-top bg-light">
                         <td class="pl-4 py-3 font-weight-bold text-dark" style="font-size: 1.05rem;">
                             You Will Receive

@@ -88,8 +88,9 @@
              color: #888 !important;
 
          }
-         .select2-results__option--selectable{
-            color: #888 !important;
+
+         .select2-results__option--selectable {
+             color: #888 !important;
          }
 
 
@@ -303,7 +304,7 @@
      @include('website.layouts.partials.header')
 
      <!-- Begin Page Content -->
-     <div class="container-fluid main-content-wrapper" style="margin-top: 150px">
+     <div class="container-fluid main-content-wrapper" style="padding-bottom: 0;" >
          @yield('content')
      </div>
      <!-- /.container-fluid -->

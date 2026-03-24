@@ -7,9 +7,6 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="footer_company">
                         <img src="{{ asset('img/bagspacelogo.png') }}" alt="Logo" class="footer_logo">
-                        {{-- <p>Plot # 135, Ground floor AL Dawood Building, CHS block 7&8, Berar Society, Karachi</p>
-                        <p>+92 332 555 8664</p>
-                        <p>officiallamhey@gmail.com</p> --}}
                     </div>
                 </div>
 
@@ -17,10 +14,9 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5 class="footer_title">Customer Service</h5>
                     <ul class="footer_links">
-                        <li><a href="#">FAQ'S</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="{{ route('about') }}">About Us</a></li>
+                        <li><a href="{{ route('how-it-works') }}">How It Works</a></li>
+                        <li><a href="{{ route('trust') }}">Trust & Safety</a></li>
                     </ul>
                 </div>
 
@@ -28,12 +24,11 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5 class="footer_title">Information</h5>
                     <ul class="footer_links">
-                        <li><a href="#">Disclaimer</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Cancellation Policy</a></li>
-                        <li><a href="#">Terms & Condition</a></li>
-                        <li><a href="#">Returns & Exchange Policy</a></li>
-                        <li><a href="#">Complaints Handling Mechanism</a></li>
+                        <li><a href="{{ route('privacy-policy') }}">Privacy Policy</a></li>
+                        <li><a href="{{ route('terms') }}">Terms & Conditions</a></li>
+                        <li><a href="{{ route('safety-guidelines') }}">Safety Guidelines</a></li>
+                        <li><a href="{{ route('prohibited-items') }}">Prohibited Items</a></li>
+                        <li><a href="{{ route('community-guidelines') }}">Community Guidelines</a></li>
                     </ul>
                 </div>
 

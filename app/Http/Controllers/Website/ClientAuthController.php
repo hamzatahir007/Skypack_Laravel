@@ -437,13 +437,23 @@ class ClientAuthController extends Controller
                     ],
                     'quantity' => 1,
                 ],
+                [
+                    'price_data' => [
+                        'currency'     => Pricing::CURRENCY,
+                        'product_data' => ['name' => 'Tax (5%)'],
+                        'unit_amount'  => (int) round($breakdown['tax'] * 100),
+                    ],
+                    'quantity' => 1,
+                ],
             ],
+
             'success_url' => route('client.inquiries.success') . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('client.inquiries.cancel'),
             'metadata' => [
                 'inquiry_id'   => $inq->id,
                 'cargo_amount' => $breakdown['cargo_amount'],
                 'platform_fee' => $breakdown['platform_fee'],
+                'tax'          => $breakdown['tax'],
                 'total'        => $breakdown['total'],
             ],
         ]);

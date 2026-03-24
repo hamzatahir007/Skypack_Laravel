@@ -2,12 +2,12 @@
 
 namespace App;
 
-/**
- * LuggageLink Global Pricing Constants
- * Change values here — they apply everywhere automatically.
- */
+
 final class Pricing
 {
+    /** Tax rate (e.g. 0.05 = 5%) */
+    const TAX_RATE = 0.05;
+
     /** Fixed rate charged to client per kg */
     const RATE_PER_KG = 25.00;
 
@@ -26,34 +26,26 @@ final class Pricing
     /** Stripe currency */
     const CURRENCY = 'usd';
 
-    /**
-     * Calculate what client pays at checkout.
-     *
-     * @param  float $kg  Total weight in kg
-     * @return array  [cargo_amount, platform_fee, total]
-     */
     public static function clientCheckout(float $kg): array
     {
         $cargo = round($kg * self::RATE_PER_KG, 2);
         $fee   = self::CLIENT_PLATFORM_FEE;
+        $subtotal = round($cargo + $fee, 2);
+        $tax     = round($subtotal * self::TAX_RATE, 2);
         return [
             'cargo_amount'   => $cargo,
             'platform_fee'   => $fee,
-            'total'          => round($cargo + $fee, 2),
+            'tax'   => $tax,
+            'total'        => round($subtotal + $tax, 2),
         ];
     }
 
-    /**
-     * Calculate traveler payout breakdown.
-     *
-     * @param  float $cargoAmount  The cargo amount (kg × rate, no platform fee)
-     * @return array  [traveler_share, platform_share, platform_fee, traveler_payout]
-     */
     public static function travelerPayout(float $cargoAmount): array
     {
         $travelerShare   = round($cargoAmount * self::TRAVELER_SHARE_PERCENT / 100, 2);
         $platformShare   = round($cargoAmount * self::PLATFORM_SHARE_PERCENT / 100, 2);
-        $travelerPayout  = round($travelerShare - self::TRAVELER_PLATFORM_FEE, 2);
+        // $travelerPayout  = round($travelerShare - self::TRAVELER_PLATFORM_FEE, 2);
+        $travelerPayout  = round($travelerShare, 2);
 
         return [
             'cargo_amount'      => $cargoAmount,

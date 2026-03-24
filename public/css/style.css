@@ -2148,6 +2148,7 @@ p {
 }
 
 .footer_area {
+    position: relative;
     background-color: #F4F5F7;
     color: #fff;
     font-family: 'Poppins', sans-serif;
@@ -3327,7 +3328,7 @@ p {
 ===========================*/
 
 .footer_area {
-    margin-top: -150px;
+    margin-top: 0px !important;
 }
 
 .footer_link .link {

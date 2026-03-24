@@ -21,6 +21,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // // Force HTTPS
+        // URL::forceScheme('https');
+
+        // // Auto-sync new uploads to public/storage on every request
+        // // This fixes the symlink issue on shared hosting
+        // if (app()->environment('production')) {
+        //     $source = storage_path('app/public');
+        //     $dest   = public_path('storage');
+
+        //     if (is_dir($source)) {
+        //         $this->syncFolders($source, $dest);
+        //     }
+        // }
         Paginator::useBootstrapFive();
 
         Relation::enforceMorphMap([

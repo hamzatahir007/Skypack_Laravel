@@ -83,6 +83,14 @@ Route::get('/', [IndexAuthController::class, 'dashboard'])->name('/');
 Route::get('/listspace', [IndexAuthController::class, 'listspace'])->name('/listspace');
 Route::get('/browsespace', [IndexAuthController::class, 'listspace'])->name('/browsespace');
 Route::get('/flight/{id}', [IndexAuthController::class, 'show'])->name('flight.details');
+Route::get('/about',                fn() => view('website.pages.about'))->name('about');
+Route::get('/how-it-works',         fn() => view('website.pages.how-it-works'))->name('how-it-works');
+Route::get('/trust-safety',         fn() => view('website.pages.trust'))->name('trust');
+Route::get('/safety-guidelines',    fn() => view('website.pages.safety-guidelines'))->name('safety-guidelines');
+Route::get('/prohibited-items',     fn() => view('website.pages.prohibited-items'))->name('prohibited-items');
+Route::get('/community-guidelines', fn() => view('website.pages.community-guidelines'))->name('community-guidelines');
+Route::get('/privacy-policy',       fn() => view('website.pages.privacy-policy'))->name('privacy-policy');
+Route::get('/terms',                fn() => view('website.pages.terms'))->name('terms');
 
 // Website Login & Register
 Route::prefix('client')->name('client.')->group(function () {

@@ -124,6 +124,15 @@
                             ${{ number_format($breakdown['platform_fee'], 2) }}
                         </td>
                     </tr>
+                    <tr class="border-top">
+                        <td class="pl-4 text-muted py-3">
+                            Tax
+                            <div class="small text-muted">5% on subtotal</div>
+                        </td>
+                        <td class="text-right pr-4 py-3 font-weight-bold">
+                            ${{ number_format($breakdown['tax'], 2) }}
+                        </td>
+                    </tr>
                     <tr class="border-top bg-light">
                         <td class="pl-4 py-3 font-weight-bold text-dark" style="font-size: 1.05rem;">
                             Total to Pay
@@ -144,7 +153,7 @@
             <form method="POST" action="{{ route('client.inquiries.checkout', $inq->id) }}">
                 @csrf
                 <button class="btn btn-primary px-4">
-                     <i class="fas fa-lock mr-2"></i> Pay ${{ number_format($breakdown['total'], 2) }} USD
+                    <i class="fas fa-lock mr-2"></i> Pay ${{ number_format($breakdown['total'], 2) }} USD
                 </button>
             </form>
         </div>
