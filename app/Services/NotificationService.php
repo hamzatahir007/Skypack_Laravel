@@ -145,4 +145,37 @@ class NotificationService
             color: 'success'
         ));
     }
+
+
+    // ─────────────────────────────────────────────────────────────
+    //  8. MESSAGE sent  →  notify the receiver
+    // ─────────────────────────────────────────────────────────────
+    public static function messageSent(
+        string $receiverEmail,
+        string $receiverName,
+        string $senderName,
+        int    $inquiryId,
+        string $receiverType,
+        string $messageTitle,      // ← new
+        string $messageBody        // ← new
+    ): void {
+        if (!$receiverEmail) return;
+
+        $threadBase = $receiverType === 'traveler'
+            ? url('/traveler/messages')
+            : url('/client/messages');
+
+        Mail::to($receiverEmail)->send(new \App\Mail\NotifyMail(
+            heading: 'New Message from ' . $senderName,
+            body: "Hi {$receiverName},\n\nYou have a new message from {$senderName} regarding Inquiry #{$inquiryId}.\n\n"
+                . "────────────────────\n"
+                . "Subject: {$messageTitle}\n\n"
+                . "{$messageBody}\n"
+                . "────────────────────\n\n"
+                . "Login to reply to this message.",
+            actionUrl: $threadBase,
+            actionLabel: 'Reply Now',
+            color: 'primary'
+        ));
+    }
 }

@@ -108,12 +108,51 @@ class MessageController extends Controller
             'image' => $path,
         ]);
 
+        // ── NOTIFY the receiver by email ───────────────────────────
+        $this->notifyMessageReceiver($me, $request);
+
+
         if (session()->has('client_id'))  return redirect()->route('client.messages.thread', [$request->inquiry_id, $request->travel_flight_id])
             ->with('success', 'Message sent successfully.');
 
 
         if (session()->has('traveler_id'))  return redirect()->route('traveler.messages.thread', [$request->inquiry_id, $request->travel_flight_id])
             ->with('success', 'Message sent successfully.');
+    }
+
+    // ── Private helper: resolve receiver and send notification ────
+    private function notifyMessageReceiver(array $me, $request): void
+    {
+        try {
+            $receiverType = $request->receiver_type;
+            $receiverId   = $request->receiver_id;
+            $inquiryId    = $request->inquiry_id;
+
+            // Get sender name
+            $sender     = $me['type'] === 'client'
+                ? \App\Models\Client::find($me['id'])
+                : \App\Models\Traveler::find($me['id']);
+            $senderName = $sender?->full_name ?? 'Someone';
+
+            // Get receiver
+            $receiver = $receiverType === 'client'
+                ? \App\Models\Client::find($receiverId)
+                : \App\Models\Traveler::find($receiverId);
+
+            if (!$receiver?->email) return;
+
+            \App\Services\NotificationService::messageSent(
+                receiverEmail: $receiver->email,
+                receiverName: $receiver->full_name,
+                senderName: $senderName,
+                inquiryId: (int) $inquiryId,
+                receiverType: $receiverType,
+                messageTitle: $request->title,       // ← pass title
+                messageBody: $request->description  // ← pass body
+            );
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Message notification failed: ' . $e->getMessage());
+        }
     }
 
     public function show(Message $message)
