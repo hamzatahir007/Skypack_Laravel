@@ -25,6 +25,37 @@ class MessageController extends Controller
         if (session()->has('traveler_id')) return ['id' => session('traveler_id'), 'type' => 'traveler'];
         abort(403);
     }
+    public function showlist()
+    {
+        $me = $this->sessionUser();
+
+        // Get all inquiries that have messages involving this traveler/client
+        // Group by inquiry_id and count messages per inquiry
+        $threads = \App\Models\Message::where(function ($q) use ($me) {
+            $q->where(function ($s) use ($me) {
+                $s->where('sender_id', $me['id'])->where('sender_type', $me['type']);
+            })->orWhere(function ($r) use ($me) {
+                $r->where('receiver_id', $me['id'])->where('receiver_type', $me['type']);
+            });
+        })
+            ->select(
+                'inquiry_id',
+                'travel_flight_id',
+                \Illuminate\Support\Facades\DB::raw('COUNT(*) as total_messages'),
+                \Illuminate\Support\Facades\DB::raw('SUM(CASE WHEN read_at IS NULL AND receiver_id = ' . $me['id'] . ' AND receiver_type = "' . $me['type'] . '" THEN 1 ELSE 0 END) as unread_count'),
+                \Illuminate\Support\Facades\DB::raw('MAX(created_at) as last_message_at')
+            )
+            ->groupBy('inquiry_id', 'travel_flight_id')
+            ->orderByDesc('last_message_at')
+            ->with([
+                'inquiry.client',
+                'inquiry.traveler',
+                'travelFlight',
+            ])
+            ->get();
+
+        return view('website.pages.messages.list', compact('threads', 'me'));
+    }
     public function thread($inquiryId, $flightId)
     {
         $me = $this->sessionUser();

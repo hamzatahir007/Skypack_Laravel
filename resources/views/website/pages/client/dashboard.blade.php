@@ -23,12 +23,7 @@
             </a>
         </div>
 
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="{{ route('client.messages.thread', [0,0]) }}" class="dashboard-card d-block text-center">
-                <div class="dashboard-icon">💬</div>
-                <div class="dashboard-title">Messages</div>
-            </a>
-        </div>
+     
 
         <div class="col-md-3 col-sm-6 mb-4">
             <a href="{{ route('client.logout') }}"

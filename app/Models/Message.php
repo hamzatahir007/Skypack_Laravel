@@ -10,19 +10,29 @@ class Message extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'inquiry_id','travel_flight_id',
-        'sender_id','sender_type',
-        'receiver_id','receiver_type',
-        'title','description','image','read_at'
+        'inquiry_id',
+        'travel_flight_id',
+        'sender_id',
+        'sender_type',
+        'receiver_id',
+        'receiver_type',
+        'title',
+        'description',
+        'image',
+        'read_at'
     ];
 
-    public function inquiry() {
+    public function inquiry()
+    {
         return $this->belongsTo(InquiryMaster::class);
     }
-
+    public function travelFlight()
+    {
+        return $this->belongsTo(\App\Models\TravelFlight::class, 'travel_flight_id');
+    }
     public function sender()
     {
-            return $this->morphTo();
+        return $this->morphTo();
 
         // return $this->sender_type === 'client'
         //     ? $this->belongsTo(Client::class, 'sender_id')
@@ -31,7 +41,7 @@ class Message extends Model
 
     public function receiver()
     {
-            return $this->morphTo();
+        return $this->morphTo();
 
         // return $this->receiver_type === 'client'
         //     ? $this->belongsTo(Client::class, 'receiver_id')

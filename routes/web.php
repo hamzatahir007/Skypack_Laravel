@@ -181,6 +181,7 @@ Route::prefix('traveler')->name('traveler.')->group(function () {
         Route::get('inquiry/{inquiry}/withdraw-detail', [TravelerAuthController::class, 'withdrawDetail'])->name('inquiry.withdrawDetail');
 
 
+        Route::get('messages', [MessageController::class, 'showlist'])->name('messages.list');
         Route::get('messages/view/{message}', [MessageController::class, 'show'])->name('messages.show');
         Route::get('messages/{inquiry}/{flight}', [MessageController::class, 'thread'])->name('messages.thread');
         Route::get('messages/{inquiry}/{flight}/create', [MessageController::class, 'create'])->name('messages.create');
